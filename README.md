@@ -40,14 +40,19 @@ This mobile application is developed using React Native. The app enables users t
 ## Installation
 
 1. Clone or download this repository:
+
 `git clone https://github.com/Iskenderun-Technical-University/ymg-donem-projesi-visionGPT`
 
 
 2. Install dependencies in the project:
-`cd npm install`
+
+`cd ymg-donem-projesi-visionGPT`
+
+`npm install`
 
 
 3. Run the application:
+
 `npm expo start`
 
 
