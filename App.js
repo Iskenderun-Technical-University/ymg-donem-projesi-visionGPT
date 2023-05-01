@@ -1,4 +1,4 @@
-import { StatusBar } from "expo-status-bar";
+import { StatusBar } from "react-native";
 import ContentLoader from "react-native-easy-content-loader";
 import { useState, useRef } from "react";
 import {
@@ -92,6 +92,8 @@ const App = () => {
       submitToChatGPT(responseJson.responses[0].fullTextAnnotation.text);
       console.log(responseJson.responses[0].fullTextAnnotation.text);
       console.log('submittedChatGPT')
+
+  
       if (
         !responseJson.responses ||
         !responseJson.responses[0].fullTextAnnotation
@@ -205,6 +207,7 @@ const App = () => {
             <View style={styles.loader}>
               <Text style={styles.loadingText}>Loading..</Text>
                 <ContentLoader active pRows={5} tWidth={"100%"} pWidth={["40%", "20%", "30%", "25%","45%"]} >
+                  
                 </ContentLoader>
                 </View>
           }
