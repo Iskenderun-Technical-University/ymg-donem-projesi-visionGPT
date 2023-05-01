@@ -8,6 +8,10 @@ VisionGPT is a mobile application that allows users to read text from photos and
 
 This mobile application is developed using React Native. The app enables users to take a photo with their camera or select an existing photo from their device. Then, the text in the photo is detected and read using OCR (Optical Character Recognition) technology and sent to the ChatGPT API. The ChatGPT API accepts the text as a prompt and returns a response to the user.
 
+## Screenshot
+
+![newIphoneSS](https://user-images.githubusercontent.com/83416622/235541641-a189f723-0fd6-4d08-8114-d90b6c55e519.png)
+
 ## Features
 
 - Photo capturing and selection functionality
@@ -19,15 +23,12 @@ This mobile application is developed using React Native. The app enables users t
 
 - ✅ Design user interface
 - ✅ Use iOS and Android camera
-- 🔄 Detect text in images with OCR (soon)
-- 🔄 Solve questions in detected images with GPT (soon)
+- ✅ Detect text in images with OCR
+- ✅ Solve questions in detected images with GPT 
+- 🔄 UI improvements and login (soon)
+- 🔄 Firebase database and user actions
 - 🔄 Detect objects in images (soon)
 - 🔄 Communicate detected objects to the user with voice and NLP (soon)
-
-## UML
-
-![uml](https://user-images.githubusercontent.com/83416622/235539191-21aaa1a5-d6bc-412d-815f-5d4594324b85.png)
-
 
 
 ## Technologies
@@ -58,13 +59,11 @@ _Note: Depending on your operating system, installation and running instructions
 2. The text in the photo will be automatically detected and sent to the ChatGPT API.
 3. The response from the ChatGPT API will be displayed on the screen.
 
+## UML
+
+![uml](https://user-images.githubusercontent.com/83416622/235539191-21aaa1a5-d6bc-412d-815f-5d4594324b85.png)
+
 ## License
 
 This project is licensed under the [MIT License](LICENSE).
-
-## Screenshot
-
-![Screenshot 2023-05-02 at 00 53 16](https://user-images.githubusercontent.com/83416622/235538739-d3fa1bfe-699f-4761-bc79-58c9b436ad41.png)
-
-
 
