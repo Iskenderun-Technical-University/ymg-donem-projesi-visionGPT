@@ -81,6 +81,7 @@ _Note: Depending on your operating system, installation and running instructions
 
 ## UML
 
-![uml](https://user-images.githubusercontent.com/83416622/235539191-21aaa1a5-d6bc-412d-815f-5d4594324b85.png)
+![newUml](https://user-images.githubusercontent.com/83416622/236022745-8909715e-596e-4872-a185-79b06a3e9ea6.png)
+
 
 
