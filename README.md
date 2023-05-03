@@ -1,6 +1,6 @@
 [![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-24ddc0f5d75046c5622901739e7c5dd533143b0c8e959d652212380cedb1ea36.svg)](https://classroom.github.com/a/QA5O9x4M)
 
-# VisionGPT [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+# VisionGPT [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/Iskenderun-Technical-University/ymg-donem-projesi-visionGPT/blob/main/LICENSE)
 ![Android](https://img.shields.io/badge/Android-3DDC84?style=for-the-badge&logo=android&logoColor=white)
 ![iOS](https://img.shields.io/badge/iOS-000000?style=for-the-badge&logo=ios&logoColor=white)
 
@@ -81,6 +81,7 @@ _Note: Depending on your operating system, installation and running instructions
 
 ## UML
 
-![uml](https://user-images.githubusercontent.com/83416622/235539191-21aaa1a5-d6bc-412d-815f-5d4594324b85.png)
+![newUml](https://user-images.githubusercontent.com/83416622/236022745-8909715e-596e-4872-a185-79b06a3e9ea6.png)
+
 
 
