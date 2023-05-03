@@ -1,4 +1,4 @@
-import { StatusBar } from "react-native";
+import { StatusBar } from "expo-status-bar";
 import ContentLoader from "react-native-easy-content-loader";
 import {
   StyleSheet,
@@ -6,30 +6,55 @@ import {
   View,
   TouchableOpacity,
   ScrollView,
+  TextInput,
   Image,
 } from "react-native";
+import MainContext from "../context/MainContext";
+import {useContext } from "react";
 
-
-
-const Main = () => {
+const Main = ({navigation}) => {
+    const {image,googleResponse,loading,chatGPTResponse,isInputCardsVisible,clearPicture,pickImage,takeAndCropPhoto,count,setCount,inputCode,setInputCode,addAttempt} = useContext(MainContext);
     return (
         <View style={styles.container}>
           <View style={styles.titleWrapper}>
             <Text style={styles.titleText}>VisionGPT</Text>
-            <TouchableOpacity>
-            <Image source={(require('./assets/menuIcon.png'))} style={styles.menuIcon}/>
+            <TouchableOpacity onPress={()=>navigation.navigate('Menu')}>
+            <Image source={(require('../assets/menuIcon.png'))} style={styles.menuIcon}/>
             </TouchableOpacity>
           </View>
           <StatusBar style="dark" />
-          <ScrollView>
+          <View>
             { image === null && 
             <View style={styles.tutorialTips}>
             <Text style={styles.tutorialTipsTitle}>How to use</Text>
+            
+
             <Text style={styles.tutorialTipsContent}>
               1. To get started, take a photo or select an image from your gallery. {"\n"}
               2. Wait for the app to analyze the text in the photo. {"\n"}
               3. View the GPT-3 generated text analysis. {"\n"}
             </Text>
+            
+              {
+                count == 1 && image === null &&
+                <View style={styles.countTextWrapper}>
+                <Text style={[styles.countText,{color:'orange'}]}>{count} attempt left</Text>
+                </View>
+              }
+              { 
+                count > 1 && image === null &&
+                <View style={styles.countTextWrapper}>
+                <Text style={styles.countText}>{count} attempts left</Text>
+                </View>
+              }
+              {
+                count == 0 && image === null &&
+                <View style={styles.countTextWrapper}>
+                <Text style={[styles.countText,{color:'red'}]}>Your attempts are over</Text>
+                </View>
+              }
+              
+            
             </View>
             }
           {image && (
@@ -56,9 +81,23 @@ const Main = () => {
                     </ContentLoader>
                     </View>
               }
-    
+              {
+                count == 0 && image == null &&
+                <>
+                <View style={styles.countCodeWrapper}>
+                <TextInput style={styles.countCodeInput} secureTextEntry maxLength={8} keyboardType='numeric' onChangeText={text=>setInputCode(text)}/>
+                </View>
+                <View style={styles.codeButtonWrapper}>
+                <TouchableOpacity style={styles.codeButton} onPress={addAttempt}>
+                   <Text style={styles.codeButtonText}>Activate</Text> 
+                </TouchableOpacity>
+                </View>
+                </>
+              }
+            
           
             {isInputCardsVisible && (
+              
               <View style={styles.infoSectionCard}>
                 <View style={styles.infoSubTitleWrapper}>
                   <Text style={styles.infoText}>Take photo or Select image</Text>
@@ -80,7 +119,6 @@ const Main = () => {
                 </View>
               </View>
             )}
-            
               { chatGPTResponse !== '' ? 
               <View style={styles.chatGPTResponseWrapper}>
               <Text style={styles.chatGPTText}>
@@ -105,8 +143,7 @@ const Main = () => {
               :
                
                null}
-          </ScrollView>
-          
+          </View>
         </View>
   );
 }
@@ -116,6 +153,36 @@ export default Main;
 const styles = StyleSheet.create({
     container: {
       backgroundColor: "#FFFFFF",
+      flex:1,
+    },
+    codeButtonText:{
+      color:'white',
+    },
+    codeButtonWrapper:{
+      marginBottom:10,
+      alignItems:'center',
+      justifyContent:'center',
+    },
+    codeButton:{
+      height:25,
+      backgroundColor:'green',
+      width:60,
+      borderRadius:5,
+      alignItems:'center',
+      justifyContent: "center",
+    },
+    countCodeInput:{
+      color:'white',
+      fontSize:20,
+      textAlign:'center',
+      marginTop:3,
+    },
+    countCodeWrapper:{
+      backgroundColor:'grey',
+      height:30,
+      marginHorizontal:100,
+      borderRadius:10,
+      marginBottom:10,
     },
     infoDescription: {
       marginHorizontal: 20,
@@ -141,9 +208,22 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  countTextWrapper:{
+    paddingHorizontal: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop:70,
+    marginBottom:10,
+  },
   tutorialTipsTitle: {
     fontSize: 18,
     fontWeight: 'bold',
+    color: '#8E8E93',
+  },
+  countText:{
+    marginTop: 10,
+    fontSize: 14,
+    textAlign: 'left',
     color: '#8E8E93',
   },
   tutorialTipsContent: {
@@ -199,10 +279,8 @@ const styles = StyleSheet.create({
       backgroundColor: "#F2F2F7",
       marginHorizontal: 20,
       borderRadius: 20,
-      marginTop: "30%",
       height: 150,
       justifyContent: "center",
-      marginBottom:"100%",
     },
     picture: {
       width: "80%",
@@ -273,13 +351,13 @@ const styles = StyleSheet.create({
       marginBottom: 40,
     },
     chatGPTResponseWrapper: {
-      backgroundColor: "#34C759",
+      backgroundColor: "green",
       borderRadius: 10,
       marginHorizontal: 30,
       alignItems: "center",
       marginTop: 20,
       borderWidth: 3,
-      borderColor: "#34C759",
+      borderColor: "green",
     },
     clearButtonWrapper: {
       alignItems: "center",

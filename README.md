@@ -1,8 +1,15 @@
 [![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-24ddc0f5d75046c5622901739e7c5dd533143b0c8e959d652212380cedb1ea36.svg)](https://classroom.github.com/a/QA5O9x4M)
 
-# VisionGPT
+# VisionGPT [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+![Android](https://img.shields.io/badge/Android-3DDC84?style=for-the-badge&logo=android&logoColor=white)
+![iOS](https://img.shields.io/badge/iOS-000000?style=for-the-badge&logo=ios&logoColor=white)
+
+
 
 VisionGPT is a mobile application that allows users to read text from photos and communicate with the ChatGPT API to receive responses based on the text.
+The prompt that currently only for answering the lesson questions.
+
+(Email for beta .apk -> mertdonmez@gmx.com)
 
 ## About the Project
 
@@ -10,7 +17,23 @@ This mobile application is developed using React Native. The app enables users t
 
 ## Screenshot
 
-![newIphoneSS](https://user-images.githubusercontent.com/83416622/235541641-a189f723-0fd6-4d08-8114-d90b6c55e519.png)
+![newappss](https://user-images.githubusercontent.com/83416622/236014118-8fc5d466-3dcf-4028-8382-dd1a549a9747.png)
+
+
+
+## Roadmap
+
+- ✅ Design user interface (Done)
+- ✅ Use iOS and Android camera (Done)
+- ✅ Detect text in images with OCR (Done)
+- ✅ Solve questions in detected images with GPT (Done) 
+- ✅ Sessions, Firebase database and user actions (Done)
+- 🔄 Text input (soon) 
+- 🔄 UI improvements, Language and Theme settings (soon)
+- 🔄 Different prompts and tabs for different applications in one App (soon)
+- 🔄 GPT3 to GPT3.5 upgrade (soon)
+- 🔄 Detect objects in images (soon)
+- 🔄 Communicate detected objects to the user with voice and NLP (soon)
 
 ## Features
 
@@ -19,21 +42,10 @@ This mobile application is developed using React Native. The app enables users t
 - Communicating with the ChatGPT API
 - Displaying responses from the ChatGPT API
 
-## Roadmap
-
-- ✅ Design user interface
-- ✅ Use iOS and Android camera
-- ✅ Detect text in images with OCR
-- ✅ Solve questions in detected images with GPT 
-- 🔄 UI improvements and login (soon)
-- 🔄 Firebase database and user actions
-- 🔄 Detect objects in images (soon)
-- 🔄 Communicate detected objects to the user with voice and NLP (soon)
-
 
 ## Technologies
 
-- React Native
+- React Native 
 - OCR (Optical Character Recognition)
 - ChatGPT API
 
@@ -55,6 +67,9 @@ This mobile application is developed using React Native. The app enables users t
 
 `npm expo start`
 
+(you need OpenAI and Google Vision API)
+
+
 
 _Note: Depending on your operating system, installation and running instructions may vary. For detailed information, please refer to the React Native [documentation](https://reactnative.dev/docs/getting-started)._
 
@@ -68,7 +83,4 @@ _Note: Depending on your operating system, installation and running instructions
 
 ![uml](https://user-images.githubusercontent.com/83416622/235539191-21aaa1a5-d6bc-412d-815f-5d4594324b85.png)
 
-## License
-
-This project is licensed under the [MIT License](LICENSE).
 
