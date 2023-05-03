@@ -17,7 +17,9 @@ This mobile application is developed using React Native. The app enables users t
 
 ## Screenshot
 
-![newIphoneSS](https://user-images.githubusercontent.com/83416622/235541641-a189f723-0fd6-4d08-8114-d90b6c55e519.png)
+![newappss](https://user-images.githubusercontent.com/83416622/236014118-8fc5d466-3dcf-4028-8382-dd1a549a9747.png)
+
+
 
 ## Roadmap
 
@@ -25,10 +27,9 @@ This mobile application is developed using React Native. The app enables users t
 - ✅ Use iOS and Android camera (Done)
 - ✅ Detect text in images with OCR (Done)
 - ✅ Solve questions in detected images with GPT (Done) 
-- 🔄 UI improvements and login screen (soon)
-- 🔄 Firebase database and user actions (soon)
+- ✅ Sessions, Firebase database and user actions (Done)
 - 🔄 Text input (soon) 
-- 🔄 Language and Theme settings (soon)
+- 🔄 UI improvements, Language and Theme settings (soon)
 - 🔄 Different prompts and tabs for different applications in one App (soon)
 - 🔄 GPT3 to GPT3.5 upgrade (soon)
 - 🔄 Detect objects in images (soon)
