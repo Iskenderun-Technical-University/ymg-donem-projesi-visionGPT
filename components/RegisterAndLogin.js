@@ -7,24 +7,13 @@ import {
 } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import AuthContext from "../context/AuthContext";
-import { auth } from "../firebase";
-import { onAuthStateChanged } from "firebase/auth";
+import React, { useContext } from "react";
 
 
-import React, { useContext,useEffect } from "react";
+const RegisterAndLogin = ({ navigation }) => {
+  const { password, setPassword, handleLogin, email, setEmail, loading } = useContext(AuthContext);
 
-const RegisterAndLogin = ({navigation}) => {
-  const {password,setPassword,handleLogin,email,setEmail,loggedIn,setLoggedIn} = useContext(AuthContext);
-  
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        navigation.navigate('Main')
-        setLoggedIn(true);
-      }
-    })
-    return unsubscribe
-  }, [])
+
 
   return (
     <View style={styles.container}>
@@ -32,23 +21,42 @@ const RegisterAndLogin = ({navigation}) => {
       <View style={styles.titleWrapper}>
         <Text style={styles.loginText}>VisionGPT</Text>
       </View>
-      <View style={styles.emailSubTitleWrapper}>
-        <Text style={styles.tutorialTipsTitle}>Email</Text>
-      </View>
-      <View style={styles.textInputWrapperEmail}>
-        <TextInput style={styles.input} value={email} onChangeText={text => setEmail(text)}/>
-      </View>
-      <View style={styles.passwordSubTitleWrapper}>
-        <Text style={styles.tutorialTipsTitle}>Password</Text>
-      </View>
-      <View style={styles.textInputWrapperPassword}>
-        <TextInput style={styles.input} value={password} onChangeText={text => setPassword(text)} secureTextEntry/>
-      </View>
+      {
+        loading === false &&
+        <>
+          <View style={styles.emailSubTitleWrapper}>
+            <Text style={styles.tutorialTipsTitle}>Email</Text>
+          </View>
+          <View style={styles.textInputWrapperEmail}>
+            <TextInput style={styles.input} value={email} onChangeText={text => setEmail(text)} />
+          </View>
+          <View style={styles.passwordSubTitleWrapper}>
+            <Text style={styles.tutorialTipsTitle}>Password</Text>
+          </View>
+          <View style={styles.textInputWrapperPassword}>
+            <TextInput style={styles.input} value={password} onChangeText={text => setPassword(text)} secureTextEntry />
+          </View>
+        </>
+
+      }
+
       <View style={styles.loginButtonWrapper}>
-        <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
-          <Text style={styles.buttonTextStyle}>Login {">"} </Text>
-        </TouchableOpacity>
+        {loading === false &&
+          <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
+            <Text style={styles.buttonTextStyle}>Login {">"} </Text>
+          </TouchableOpacity>
+        }
+        {loading &&
+          <>
+            <Text style={styles.welcomeText}>Welcome</Text>
+            <Text style={styles.email}>{email}</Text>
+            <Text style={styles.justASec}>
+              Just a second...
+            </Text>
+          </>
+        }
       </View>
+
     </View>
   );
 };
@@ -56,6 +64,20 @@ const RegisterAndLogin = ({navigation}) => {
 export default RegisterAndLogin;
 
 const styles = StyleSheet.create({
+  justASec: {
+    color: 'white',
+    marginTop: 30,
+    fontSize: 24,
+  },
+  email: {
+    color: 'white',
+    marginTop: 10,
+  },
+  welcomeText: {
+    color: 'white',
+    marginTop: '40%',
+
+  },
   container: {
     backgroundColor: "black",
     flex: 1,
@@ -68,7 +90,7 @@ const styles = StyleSheet.create({
     fontSize: 36,
     color: "white",
   },
-  textInputWrapperEmail:{
+  textInputWrapperEmail: {
     backgroundColor: "#d9d9d9",
     marginHorizontal: 80,
     height: 30,
@@ -86,8 +108,8 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     justifyContent: "center",
     color: "black",
-    marginTop:4,
-    fontSize:14,
+    marginTop: 4,
+    fontSize: 14,
   },
   loginButton: {
     backgroundColor: "black",
@@ -111,12 +133,12 @@ const styles = StyleSheet.create({
   emailSubTitleWrapper: {
     justifyContent: "center",
     alignItems: "center",
-    marginTop:'50%',
+    marginTop: '50%',
   },
-  passwordSubTitleWrapper:{
+  passwordSubTitleWrapper: {
     justifyContent: "center",
     alignItems: "center",
-    marginTop:10,
+    marginTop: 10,
   },
   tutorialTipsTitle: {
     marginTop: 10,

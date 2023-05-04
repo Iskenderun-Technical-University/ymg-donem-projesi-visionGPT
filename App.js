@@ -1,7 +1,5 @@
-import { useState, useRef, useContext, useEffect } from "react";
-import {
-  StyleSheet
-} from "react-native";
+import { useState, useEffect } from "react";
+
 import * as ImagePicker from "expo-image-picker";
 import { Camera } from "expo-camera";
 import RegisterAndLogin from "./components/RegisterAndLogin";
@@ -11,18 +9,22 @@ import Main from "./components/Main";
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { auth, db } from "./firebase";
-import { signInWithEmailAndPassword,onAuthStateChanged } from "firebase/auth";
-import { useNavigation } from '@react-navigation/core'
+import { signInWithEmailAndPassword } from "firebase/auth";
+
 import Menu from "./components/Menu";
 import * as SecureStore from 'expo-secure-store';
-import { getFirestore, collection, query, where, getDocs, updateDoc, doc, getDoc } from "firebase/firestore";
+import {  collection, query, where, getDocs, updateDoc, doc, getDoc } from "firebase/firestore";
+import * as Clipboard from 'expo-clipboard';
+import APItokens from "./tokens/apiKeys";
+
 
 
 const Stack = createNativeStackNavigator();
 
 const App = () => {
-  const prompt = "You are an AI language model and you have to answer the following question as briefly as possible, providing only the correct answer without any explanations like ('Answer : B) example '). Here is the prompt: ";
+  const prompt = "You are an AI language model and you have to answer the following question as briefly as possible, providing only the correct answer without any explanations like 'C) Answer text'. Here is the prompt: ";
 
+  //STATES START
   const [isInputCardsVisible, setIsInputCardsVisible] = useState(true);
   const [image, setImage] = useState(null);
   const [googleResponse, setGoogleResponse] = useState("");
@@ -31,9 +33,11 @@ const App = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loggedIn, setLoggedIn] = useState(false);
-  const [count, setCount] = useState(0); //number of attempts will be set via firebase firestore cloud database
+  const [count, setCount] = useState(0); 
   const [docId, setDocId] = useState('');
   const [inputCode, setInputCode] = useState("");
+  //STATES END
+ 
 
 
 
@@ -41,6 +45,7 @@ const App = () => {
     signInWithEmailAndPassword(auth, email, password)
       .then(async (userCredentials) => {
         const user = userCredentials.user;
+        setLoading(true);
         console.log("Logged in with:", user.email);
         const userData = {
           email: user.email,
@@ -48,7 +53,6 @@ const App = () => {
         };
         await SecureStore.setItemAsync("userData", JSON.stringify(userData));
         await SecureStore.setItemAsync("userEmail", user.email);
-  
         const userRef = collection(db, "userData");
         const q = query(userRef, where("email", "==", user.email));
         const querySnapshot = await getDocs(q);
@@ -56,12 +60,14 @@ const App = () => {
           const firestoreUserData = doc.data();
           setCount(firestoreUserData.count);
         });
+        setLoading(false);
       })
       .catch((error) => alert(error.message));
   };
   
 
   useEffect(() => {
+    setLoading(true);
     const restoreUserSession = async () => {
       const userEmail = await SecureStore.getItemAsync("userEmail");
       if (userEmail) {
@@ -76,6 +82,7 @@ const App = () => {
           setEmail(userData.email);
           setLoggedIn(true);
           setCount(userData.count);
+          setLoading(false);
           }
         );
       }
@@ -83,6 +90,14 @@ const App = () => {
     restoreUserSession();
   }, []);
   
+  const copyToClipboardChatGPTResponse = async () => {
+    await Clipboard.setStringAsync(chatGPTResponse);
+    alert('Copied!');
+  };
+  const copyToClipboardQuestion = async () => {
+    await Clipboard.setStringAsync(googleResponse.responses[0].fullTextAnnotation.text);
+    alert('Copied!');
+  };
 
   const uriToBase64 = async (uri) => {
     const response = await fetch(uri);
@@ -101,7 +116,7 @@ const App = () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer <OpenAI API>`,
+          Authorization: `Bearer ${APItokens.openai}`,
         },
         body: JSON.stringify({
           model: "text-davinci-003",
@@ -135,7 +150,7 @@ const App = () => {
       });
       let response = await fetch(
         "https://vision.googleapis.com/v1/images:annotate?key=" +
-        "Google Vision API",
+        `${APItokens.googlevision}`,
         {
           headers: {
             Accept: "application/json",
@@ -270,8 +285,9 @@ const App = () => {
   };
 
   return (
-    <MainContext.Provider value={{ image, googleResponse, loading, chatGPTResponse, isInputCardsVisible, clearPicture, pickImage, takeAndCropPhoto,count,setCount,inputCode,setInputCode,addAttempt }}>
-      <AuthContext.Provider value={{ password, setPassword, email, setEmail, handleLogin, loggedIn, setLoggedIn }}>
+    <MainContext.Provider value={{ image, googleResponse, loading, chatGPTResponse, isInputCardsVisible, clearPicture, pickImage, takeAndCropPhoto,count,setCount,inputCode,setInputCode,addAttempt,copyToClipboardChatGPTResponse,copyToClipboardQuestion}}>
+
+      <AuthContext.Provider value={{ password, setPassword, email, setEmail, handleLogin, loggedIn, setLoggedIn,loading }}>
         <NavigationContainer>
           <Stack.Navigator
             screenOptions={{
@@ -301,177 +317,5 @@ const App = () => {
 
   );
 }
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: "#FFFFFF",
-  },
-  infoDescription: {
-    marginHorizontal: 20,
-    fontSize: 14,
-    marginTop: 30,
-    color: "#8E8E93",
-    textAlign: "center",
-  },
-  menuIcon: {
-    width: 30,
-    height: 30,
-  },
-  titleWrapper: {
-    flexDirection: 'row',
-    marginTop: 70,
-    marginHorizontal: 16,
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  tutorialTips: {
-    marginTop: 80,
-    paddingHorizontal: 20,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  tutorialTipsTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#8E8E93',
-  },
-  tutorialTipsContent: {
-    marginTop: 10,
-    fontSize: 14,
-    textAlign: 'left',
-    color: '#8E8E93',
-  },
-  loadingText: {
-    marginTop: 10,
-    marginBottom: 5,
-    fontSize: 14,
-    textAlign: 'left',
-    marginLeft: 10,
-    color: '#8E8E93',
-  },
-  titleText: {
-    fontSize: 32,
-    color: "#000000",
-  },
-  takePhotoButton: {
-    backgroundColor: "#007AFF",
-    width: "30%",
-    height: 30,
-    borderRadius: 5,
-    marginHorizontal: 10,
-    justifyContent: "center",
-    textAlign: "auto",
-  },
-  buttonsWrapper: {
-    justifyContent: "center",
-    flexDirection: "row",
-    marginTop: 20,
-  },
-  buttonTextStyle: {
-    fontSize: 15,
-    textAlign: "center",
-    color: "white",
-  },
-  loader: {
-    marginTop: 20,
-    marginHorizontal: 50,
-  },
-  infoSubTitleWrapper: {
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  infoText: {
-    fontSize: 18,
-    color: "#000000",
-  },
-  infoSectionCard: {
-    backgroundColor: "#F2F2F7",
-    marginHorizontal: 20,
-    borderRadius: 20,
-    marginTop: "30%",
-    height: 150,
-    justifyContent: "center",
-    marginBottom: "100%",
-  },
-  picture: {
-    width: "80%",
-    height: 250,
-    borderRadius: 10,
-  },
-  pictureWrapper: {
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 50,
-  },
-  clearPictureButton: {
-    backgroundColor: "#FF3B30",
-    width: "30%",
-    height: 30,
-    borderRadius: 10,
-    marginTop: 10,
-    justifyContent: "center",
-  },
-  clearButtonText: {
-    textAlign: "center",
-    justifyContent: "center",
-    fontSize: 18,
-    color: "white",
-  },
-  takePhotoButtonTest: {
-    color: "red",
-  },
-  flipCameraText: {
-    color: "red",
-  },
-  camera: {
-    backgroundColor: "red",
-  },
-  cameraCaptureScreen: {
-    marginTop: 50,
-    height: 250,
-    width: "80%",
-    justifyContent: "center",
-  },
-  cameraWrapper: {
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  buttonContainer: {
-    backgroundColor: "#34C759",
-    width: "30%",
-    height: 30,
-    borderRadius: 10,
-    marginTop: 10,
-    justifyContent: "center",
-  },
-  captureText: {
-    textAlign: "center",
-    justifyContent: "center",
-    fontSize: 18,
-    color: "white",
-  },
-  googleResponseText: {
-    marginTop: 10,
-    fontSize: 10,
-    textAlign: 'left',
-    color: '#8E8E93',
-  },
-  chatGPTText: {
-    color: "white",
-    fontSize: 20,
-    marginBottom: 40,
-  },
-  chatGPTResponseWrapper: {
-    backgroundColor: "#34C759",
-    borderRadius: 10,
-    marginHorizontal: 30,
-    alignItems: "center",
-    marginTop: 20,
-    borderWidth: 3,
-    borderColor: "#34C759",
-  },
-  clearButtonWrapper: {
-    alignItems: "center",
-    marginBottom: 200
-  },
-});
+
 export default App;
