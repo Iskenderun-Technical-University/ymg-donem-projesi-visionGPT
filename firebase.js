@@ -1,18 +1,11 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
+import firebaseConfig from './tokens/firebaseConfigs';
 
-const firebaseConfig = {
-  apiKey: //firebase config 
-  authDomain: //firebase config 
-  projectId: //firebase config 
-  storageBucket: //firebase config 
-  messagingSenderId: //firebase config 
-  appId: //firebase config 
-  measurementId: //firebase config 
-};
+const firebaseConfigs = firebaseConfig;
 
-const app = initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfigs);
 
 export const auth = getAuth();
 export const db = getFirestore(app);
