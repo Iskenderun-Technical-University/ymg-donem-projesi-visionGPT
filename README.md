@@ -28,12 +28,14 @@ This mobile application is developed using React Native. The app enables users t
 - ✅ Detect text in images with OCR (Done)
 - ✅ Solve questions in detected images with GPT (Done) 
 - ✅ Sessions, Firebase database and user actions (Done)
-- 🔄 Text input (soon) 
-- 🔄 UI improvements, Language and Theme settings (soon)
+- ✅ First .apk build (Done)
+- 🔄 Register with Google and Email (soon) 
+- 🔄 UI improvements, Language and Theme settings,text input (soon)
 - 🔄 Different prompts and tabs for different applications in one App (soon)
 - 🔄 GPT3 to GPT3.5 upgrade (soon)
 - 🔄 Detect objects in images (soon)
 - 🔄 Communicate detected objects to the user with voice and NLP (soon)
+- 🔄 🚀 Publish on App Store and Play Store (soon)
 
 ## Features
 
