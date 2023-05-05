@@ -13,16 +13,14 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 
 import Menu from "./components/Menu";
 import * as SecureStore from 'expo-secure-store';
-import {  collection, query, where, getDocs, updateDoc, doc, getDoc } from "firebase/firestore";
+import { collection, query, where, getDocs, updateDoc, doc, getDoc } from "firebase/firestore";
 import * as Clipboard from 'expo-clipboard';
 import APItokens from "./tokens/apiKeys";
-
+import prompt from "./tokens/prompt";
 
 
 const Stack = createNativeStackNavigator();
-
 const App = () => {
-  const prompt = "You are an AI language model and you have to answer the following question as briefly as possible, providing only the correct answer without any explanations like 'C) Answer text'. Here is the prompt: ";
 
   //STATES START
   const [isInputCardsVisible, setIsInputCardsVisible] = useState(true);
@@ -33,11 +31,11 @@ const App = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loggedIn, setLoggedIn] = useState(false);
-  const [count, setCount] = useState(0); 
+  const [count, setCount] = useState(0);
   const [docId, setDocId] = useState('');
   const [inputCode, setInputCode] = useState("");
   //STATES END
- 
+
 
 
 
@@ -64,7 +62,7 @@ const App = () => {
       })
       .catch((error) => alert(error.message));
   };
-  
+
 
   useEffect(() => {
     setLoading(true);
@@ -72,24 +70,24 @@ const App = () => {
       const userEmail = await SecureStore.getItemAsync("userEmail");
       if (userEmail) {
         setEmail(userEmail);
-        const userRef = collection(db, "userData"); 
+        const userRef = collection(db, "userData");
         const q = query(userRef, where("email", "==", userEmail));
         const querySnapshot = await getDocs(q);
         querySnapshot.forEach((doc) => {
           const userData = doc.data();
           console.log("User session restored. Email:", userData.email, "count:", userData.count);
-          setDocId(doc.id); 
+          setDocId(doc.id);
           setEmail(userData.email);
           setLoggedIn(true);
           setCount(userData.count);
           setLoading(false);
-          }
+        }
         );
       }
     };
     restoreUserSession();
   }, []);
-  
+
   const copyToClipboardChatGPTResponse = async () => {
     await Clipboard.setStringAsync(chatGPTResponse);
     alert('Copied!');
@@ -109,31 +107,67 @@ const App = () => {
       reader.readAsDataURL(blob);
     });
   };
-
-  const submitToChatGPT = async (question) => {
+  
+  //GPT 3.5
+  const submitToChatGPT = async (question) => { 
     try {
-      const response = await fetch("https://api.openai.com/v1/completions", {
+      const response = await fetch("https://api.openai.com/v1/chat/completions", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${APItokens.openai}`,
         },
         body: JSON.stringify({
-          model: "text-davinci-003",
+          model: "gpt-3.5-turbo", 
           temperature: 0.7,
-          prompt: prompt + question,
+          messages: [
+            {
+              role: "system",
+              content: prompt
+            },
+            {
+              role: "user",
+              content: question
+            }
+          ],
           max_tokens: 500,
           top_p: 1,
         }),
       });
       const data = await response.json();
       console.log(data);
-      setChatGPTResponse(data.choices[0].text);
+      setChatGPTResponse(data.choices[0].message.content);
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
+  };
+  //GPT model Davinci
+  // const submitToChatGPT = async (question) => {
+  //   try {
+  //     const response = await fetch("https://api.openai.com/v1/completions", {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         Authorization: `Bearer ${APItokens.openai}`,
+  //       },
+  //       body: JSON.stringify({
+  //         model: "text-davinci-003", 
+  //         temperature: 0.7,
+  //         prompt: prompt + question,
+  //         max_tokens: 500,
+  //         top_p: 1,
+  //       }),
+  //     });
+  //     const data = await response.json();
+  //     console.log(data);
+  //     setChatGPTResponse(data.choices[0].text);
+  //   } catch (error) {
+  //     console.log(error)
+  //   }
 
-  }
+  // }
+
+
 
   const submitToGoogle = async (base64) => {
     try {
@@ -194,12 +228,12 @@ const App = () => {
       console.log("User document not found.");
       return;
     }
-  
+
     const userDocRef = doc(db, "userData", docId);
     const userDocSnapshot = await getDoc(userDocRef);
     const userData = userDocSnapshot.data();
-    console.log(userData.code,userData.isCodeActive)
-  
+    console.log(userData.code, userData.isCodeActive)
+
     if (userData.isCodeActive && userData.code === inputCode) {
       await updateDoc(userDocRef, {
         count: 25, //if user has code give 25 more attemps 
@@ -211,29 +245,29 @@ const App = () => {
       alert("Invalid code or code is not active.");
     }
   };
-  
+
 
   const takeAndCropPhoto = async () => {
 
     if (count > 0) {
       const userDocRef = doc(db, "userData", docId);
-      
-      
+
+
       try {
         const { status } = await Camera.requestCameraPermissionsAsync();
         if (status !== "granted") {
           alert("Sorry, we need camera permissions to make this work!");
           return;
         }
-  
-  
+
+
         const result = await ImagePicker.launchCameraAsync({
           mediaTypes: ImagePicker.MediaTypeOptions.Images,
           allowsEditing: true,
           aspect: [5, 3],
           quality: 1,
         });
-  
+
         if (!result.canceled) {
           setImage(result.assets[0].uri);
           const base64 = await uriToBase64(result.assets[0].uri);
@@ -248,46 +282,46 @@ const App = () => {
       }
     } else {
       alert("Your 25 attempts are over.\n Contact with Owner.");
-    } 
+    }
   };
 
   const pickImage = async () => {
     if (count > 0) {
       const userDocRef = doc(db, "userData", docId);
-      
-      
+
+
       const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
-    if (status !== "granted") {
-      alert("Sorry, we need camera roll permissions to make this work!");
-      return;
-    }
+      if (status !== "granted") {
+        alert("Sorry, we need camera roll permissions to make this work!");
+        return;
+      }
 
-    const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsEditing: true,
-      MediaTypeOptions: "images",
-      aspect: [5, 3],
-      quality: 1,
-    });
+      const result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        allowsEditing: true,
+        MediaTypeOptions: "images",
+        aspect: [5, 3],
+        quality: 1,
+      });
 
-    if (!result.canceled) {
-      setImage(result.assets[0].uri);
-      const base64 = await uriToBase64(result.assets[0].uri);
-      submitToGoogle(base64);
-      setIsInputCardsVisible(false);
-      await updateDoc(userDocRef, { count: count - 1 });
-      setCount(count - 1);
-    }
+      if (!result.canceled) {
+        setImage(result.assets[0].uri);
+        const base64 = await uriToBase64(result.assets[0].uri);
+        submitToGoogle(base64);
+        setIsInputCardsVisible(false);
+        await updateDoc(userDocRef, { count: count - 1 });
+        setCount(count - 1);
+      }
     } else {
       alert("Your 25 attempts are over.");
     }
-    
+
   };
 
   return (
-    <MainContext.Provider value={{ image, googleResponse, loading, chatGPTResponse, isInputCardsVisible, clearPicture, pickImage, takeAndCropPhoto,count,setCount,inputCode,setInputCode,addAttempt,copyToClipboardChatGPTResponse,copyToClipboardQuestion}}>
+    <MainContext.Provider value={{ image, googleResponse, loading, chatGPTResponse, isInputCardsVisible, clearPicture, pickImage, takeAndCropPhoto, count, setCount, inputCode, setInputCode, addAttempt, copyToClipboardChatGPTResponse, copyToClipboardQuestion }}>
 
-      <AuthContext.Provider value={{ password, setPassword, email, setEmail, handleLogin, loggedIn, setLoggedIn,loading }}>
+      <AuthContext.Provider value={{ password, setPassword, email, setEmail, handleLogin, loggedIn, setLoggedIn, loading }}>
         <NavigationContainer>
           <Stack.Navigator
             screenOptions={{
