@@ -1,15 +1,18 @@
 [![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-24ddc0f5d75046c5622901739e7c5dd533143b0c8e959d652212380cedb1ea36.svg)](https://classroom.github.com/a/QA5O9x4M)
 
-# VisionGPT [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/Iskenderun-Technical-University/ymg-donem-projesi-visionGPT/blob/main/LICENSE)
-![Android](https://img.shields.io/badge/Android-3DDC84?style=for-the-badge&logo=android&logoColor=white)
-![iOS](https://img.shields.io/badge/iOS-000000?style=for-the-badge&logo=ios&logoColor=white)
-
+# VisionGPT [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/Iskenderun-Technical-University/ymg-donem-projesi-visionGPT/blob/main/LICENSE)![Android](https://img.shields.io/badge/Android-3DDC84?style=for-the-badge&logo=android&logoColor=white)![iOS](https://img.shields.io/badge/iOS-000000?style=for-the-badge&logo=ios&logoColor=white)
 
 
 VisionGPT is a mobile application that allows users to read text from photos and communicate with the ChatGPT API to receive responses based on the text.
 The prompt that currently only for answering the lesson questions.
 
 (Email for beta .apk -> mertdonmez@gmx.com)
+
+## New Updates
+- VisionGPT upgraded to GPT-3.5 Turbo
+- Now the texts in the picture and the answer can be copied
+
+
 
 ## About the Project
 
@@ -29,10 +32,10 @@ This mobile application is developed using React Native. The app enables users t
 - ✅ Solve questions in detected images with GPT (Done) 
 - ✅ Sessions, Firebase database and user actions (Done)
 - ✅ First .apk build (Done)
+- ✅ GPT3 to GPT3.5 upgrade (Done)
 - 🔄 Register with Google and Email (soon) 
 - 🔄 UI improvements, Language and Theme settings,text input (soon)
 - 🔄 Different prompts and tabs for different applications in one App (soon)
-- 🔄 GPT3 to GPT3.5 upgrade (soon)
 - 🔄 Detect objects in images (soon)
 - 🔄 Communicate detected objects to the user with voice and NLP (soon)
 - 🔄 🚀 Publish on App Store and Play Store (soon)

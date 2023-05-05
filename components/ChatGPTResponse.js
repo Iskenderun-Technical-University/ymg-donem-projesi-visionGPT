@@ -58,7 +58,8 @@ const styles = StyleSheet.create({
     chatGPTText: {
       color: "#333333",
       fontSize: 20,
-      marginBottom: 40,
+      marginBottom: 30,
+      marginTop:10,
       textAlign: "center",
     },
     chatGPTResponseWrapper: {
@@ -68,6 +69,7 @@ const styles = StyleSheet.create({
       marginTop: 20,
       borderWidth: 3,
       borderColor: "rgba(0, 255, 0, 0.5)",
+      justifyContent:'center',
     },
     
   });
