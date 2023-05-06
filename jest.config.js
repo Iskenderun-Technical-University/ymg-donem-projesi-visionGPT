@@ -1,9 +1,9 @@
 module.exports = {
-  preset: 'react-native',
+  preset: 'jest-expo',
   transformIgnorePatterns: [
-    'node_modules/(?!(react-native|expo-status-bar|@testing-library/react-native|@react-native|react-native-easy-content-loader|expo-image-picker|expo-modules-core|expo-camera)/)',
+    'node_modules/(?!(jest-)?react-native|react-?native|@react-native(?:-community)?|expo(nent)?|@expo(nent)?/.*|react-navigation|@react-navigation/.*|@unimodules/.*|unimodules|sentry-expo|native-base|expo-image-picker|firebase)',
   ],
-  moduleNameMapper: {
-    '^expo-camera$': '<rootDir>/__mocks__/expo-camera.js',
+  transform: {
+    '^.+\\.[jt]sx?$': ['babel-jest', { presets: ['@babel/preset-env'] }],
   },
 };

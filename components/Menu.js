@@ -9,15 +9,17 @@ import { auth } from '../firebase';
 
 
 const Menu = ({navigation}) => {
-    const {password,setPassword,handleLogin,email,setEmail,loggedIn,setLoggedIn} = useContext(AuthContext);
+    const {password,setPassword,handleLogin,email,setEmail,loggedIn,setLoggedIn,setCount} = useContext(AuthContext);
 
     
     const logout = async () => {
       try {
         await signOut(auth);
-        await SecureStore.deleteItemAsync("userToken");
+        await SecureStore.deleteItemAsync("userEmail");
+        console.log('logout');
         setLoggedIn(false);
         setEmail('');
+        setCount(0);
         setPassword('');
         navigation.navigate('Login')
       } catch (e) {

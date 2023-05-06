@@ -1,11 +1,12 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
-import firebaseConfig from './tokens/firebaseConfigs';
+import secretTokens from './tokens/SecretTokens';
 
-const firebaseConfigs = firebaseConfig;
 
-const app = initializeApp(firebaseConfigs);
+const firebaseConfig = secretTokens.firebase_settings;
+
+const app = initializeApp(firebaseConfig);
 
 export const auth = getAuth();
 export const db = getFirestore(app);
