@@ -26,27 +26,22 @@ const App = () => {
   const [googleResponse, setGoogleResponse] = useState("");
   const [chatGPTResponse, setChatGPTResponse] = useState("");
   const [loading, setLoading] = useState(false);
-  const [loadingAnswer,setLoadingAnswer] = useState(false);
+  const [loadingAnswer, setLoadingAnswer] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loggedIn, setLoggedIn] = useState(false);
   const [count, setCount] = useState(0);
   const [docId, setDocId] = useState('');
   const [inputCode, setInputCode] = useState("");
-  const [googleReplied,setGoogleReplied] = useState(false);
+  const [googleReplied, setGoogleReplied] = useState(false);
   //STATES END
-
-  const prompt = "You are an AI language model. Your task is to provide a concise and accurate answer to the following question, without any explanations or additional context. Format your response like this: 'C) Answer text'. "
-
-
-
 
 
   const handleLogin = () => {
     signInWithEmailAndPassword(auth, email, password)
       .then(async (userCredentials) => {
         const user = userCredentials.user;
-        
+
         console.log("Logged in with:", user.email);
         const userData = {
           email: user.email
@@ -64,11 +59,11 @@ const App = () => {
             setDocId(doc.id);
           });
           setLoggedIn(true);
-          
+
         } catch (error) {
           console.log(error);
         }
-        
+
       })
       .catch((error) => alert(error.message));
   };
@@ -118,8 +113,8 @@ const App = () => {
       reader.readAsDataURL(blob);
     });
   };
-  
-  const submitToChatGPT = async (question) => { 
+
+  const submitToChatGPT = async (question) => {
 
     try {
       setLoadingAnswer(true);
@@ -130,12 +125,12 @@ const App = () => {
           Authorization: `Bearer ${secretTokens.openai}`,
         },
         body: JSON.stringify({
-          model: "gpt-3.5-turbo", 
+          model: "gpt-3.5-turbo",
           temperature: 0.7,
           messages: [
             {
               role: "system",
-              content: prompt
+              content: secretTokens.prompt
             },
             {
               role: "user",
@@ -197,7 +192,7 @@ const App = () => {
       });
       let response = await fetch(
         "https://vision.googleapis.com/v1/images:annotate?key=" +
-          `${secretTokens.google_vision}`,
+        `${secretTokens.google_vision}`,
         {
           headers: {
             Accept: "application/json",
@@ -220,14 +215,14 @@ const App = () => {
         setGoogleResponse("");
         setGoogleReplied(false);
         setLoading(false);
-        alert( "No text was found in the image.");
+        alert("No text was found in the image.");
       }
     } catch (error) {
       console.log(error, "submitToGoogle");
       alert(error)
     }
   };
-  
+
 
   const clearPicture = () => {
     setImage(null);
@@ -333,9 +328,9 @@ const App = () => {
   };
 
   return (
-    <MainContext.Provider value={{ image, googleResponse, loading, chatGPTResponse, isInputCardsVisible, clearPicture, pickImage, takeAndCropPhoto, count, setCount, inputCode, setInputCode, addAttempt, copyToClipboardChatGPTResponse, copyToClipboardQuestion,googleReplied,setGoogleReplied,setLoadingAnswer,loadingAnswer }}>
+    <MainContext.Provider value={{ image, googleResponse, loading, chatGPTResponse, isInputCardsVisible, clearPicture, pickImage, takeAndCropPhoto, count, setCount, inputCode, setInputCode, addAttempt, copyToClipboardChatGPTResponse, copyToClipboardQuestion, googleReplied, setGoogleReplied, setLoadingAnswer, loadingAnswer }}>
 
-      <AuthContext.Provider value={{ password, setPassword, email, setEmail, handleLogin, loggedIn, setLoggedIn, loading,setCount }}>
+      <AuthContext.Provider value={{ password, setPassword, email, setEmail, handleLogin, loggedIn, setLoggedIn, loading, setCount }}>
         <NavigationContainer>
           <Stack.Navigator
             screenOptions={{
