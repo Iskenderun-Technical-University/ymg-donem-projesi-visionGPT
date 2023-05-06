@@ -8,6 +8,7 @@ const MainUITitle = ({navigation}) => {
       <Text style={styles.titleText}>VisionGPT</Text>
       <TouchableOpacity onPress={() => navigation.navigate("Menu")}>
         <Image
+          testID="menu-icon"
           source={require("../assets/menuIcon.png")}
           style={styles.menuIcon}
         />

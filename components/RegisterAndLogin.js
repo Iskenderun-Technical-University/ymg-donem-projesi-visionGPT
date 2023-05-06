@@ -28,13 +28,13 @@ const RegisterAndLogin = ({ navigation }) => {
             <Text style={styles.tutorialTipsTitle}>Email</Text>
           </View>
           <View style={styles.textInputWrapperEmail}>
-            <TextInput style={styles.input} value={email} onChangeText={text => setEmail(text)} />
+            <TextInput style={styles.input} value={email} placeholder={email} onChangeText={text => setEmail(text)} />
           </View>
           <View style={styles.passwordSubTitleWrapper}>
             <Text style={styles.tutorialTipsTitle}>Password</Text>
           </View>
           <View style={styles.textInputWrapperPassword}>
-            <TextInput style={styles.input} value={password} onChangeText={text => setPassword(text)} secureTextEntry />
+            <TextInput style={styles.input} value={password} placeholder={password} onChangeText={text => setPassword(text)} secureTextEntry />
           </View>
         </>
 
@@ -66,7 +66,7 @@ export default RegisterAndLogin;
 const styles = StyleSheet.create({
   justASec: {
     color: 'white',
-    marginTop: 30,
+    marginTop: 50,
     fontSize: 24,
   },
   email: {
@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
   welcomeText: {
     color: 'white',
     marginTop: '40%',
-
+    fontSize:20,
   },
   container: {
     backgroundColor: "black",

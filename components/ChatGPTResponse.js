@@ -1,15 +1,20 @@
 import { StyleSheet, Text, View,TouchableOpacity } from 'react-native'
 import React,{useContext} from 'react'
 import MainContext from '../context/MainContext'
+import AnswerLoading from "./AnswerLoading";
 
 const ChatGPTResponse = () => {
-    const {chatGPTResponse,copyToClipboardChatGPTResponse} = useContext(MainContext);
+    const {chatGPTResponse,copyToClipboardChatGPTResponse,loadingAnswer} = useContext(MainContext);
   return (
     <>
-    {chatGPTResponse !== "" ? (
+    {
+      loadingAnswer && 
+      <AnswerLoading />
+    }
+    {chatGPTResponse !== "" && (
           <View style={styles.chatGPTResponseWrapper}>
             <View style={styles.cardTitleWrapper}>
-              <Text style={styles.cardTitleText}>Response</Text>
+              <Text style={styles.cardTitleText}>Answer</Text>
             </View>
             <Text style={styles.chatGPTText}>{chatGPTResponse}</Text>
             <View style={styles.copyButtonWrapper}>
@@ -21,7 +26,8 @@ const ChatGPTResponse = () => {
               </TouchableOpacity>
             </View>
           </View>
-        ) : null}
+        )}
+    
     </>
   )
 }

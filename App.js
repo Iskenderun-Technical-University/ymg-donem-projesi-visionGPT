@@ -10,13 +10,11 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { auth, db } from "./firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
-
 import Menu from "./components/Menu";
 import * as SecureStore from 'expo-secure-store';
 import { collection, query, where, getDocs, updateDoc, doc, getDoc } from "firebase/firestore";
 import * as Clipboard from 'expo-clipboard';
-import APItokens from "./tokens/apiKeys";
-import prompt from "./tokens/prompt";
+import secretTokens from './tokens/SecretTokens';
 
 
 const Stack = createNativeStackNavigator();
@@ -28,13 +26,18 @@ const App = () => {
   const [googleResponse, setGoogleResponse] = useState("");
   const [chatGPTResponse, setChatGPTResponse] = useState("");
   const [loading, setLoading] = useState(false);
+  const [loadingAnswer,setLoadingAnswer] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loggedIn, setLoggedIn] = useState(false);
   const [count, setCount] = useState(0);
   const [docId, setDocId] = useState('');
   const [inputCode, setInputCode] = useState("");
+  const [googleReplied,setGoogleReplied] = useState(false);
   //STATES END
+
+  const prompt = "You are an AI language model. Your task is to provide a concise and accurate answer to the following question, without any explanations or additional context. Format your response like this: 'C) Answer text'. "
+
 
 
 
@@ -43,22 +46,29 @@ const App = () => {
     signInWithEmailAndPassword(auth, email, password)
       .then(async (userCredentials) => {
         const user = userCredentials.user;
-        setLoading(true);
+        
         console.log("Logged in with:", user.email);
         const userData = {
-          email: user.email,
-          token: user.refreshToken,
+          email: user.email
         };
         await SecureStore.setItemAsync("userData", JSON.stringify(userData));
         await SecureStore.setItemAsync("userEmail", user.email);
+        const userEmail = await SecureStore.getItemAsync("userEmail");
         const userRef = collection(db, "userData");
-        const q = query(userRef, where("email", "==", user.email));
+        const q = query(userRef, where("email", "==", userEmail));
         const querySnapshot = await getDocs(q);
-        querySnapshot.forEach((doc) => {
-          const firestoreUserData = doc.data();
-          setCount(firestoreUserData.count);
-        });
-        setLoading(false);
+        try {
+          querySnapshot.forEach((doc) => {
+            const UserData = doc.data();
+            setCount(UserData.count);
+            setDocId(doc.id);
+          });
+          setLoggedIn(true);
+          
+        } catch (error) {
+          console.log(error);
+        }
+        
       })
       .catch((error) => alert(error.message));
   };
@@ -84,6 +94,7 @@ const App = () => {
         }
         );
       }
+      setLoading(false);
     };
     restoreUserSession();
   }, []);
@@ -108,14 +119,15 @@ const App = () => {
     });
   };
   
-  //GPT 3.5
   const submitToChatGPT = async (question) => { 
+
     try {
+      setLoadingAnswer(true);
       const response = await fetch("https://api.openai.com/v1/chat/completions", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${APItokens.openai}`,
+          Authorization: `Bearer ${secretTokens.openai}`,
         },
         body: JSON.stringify({
           model: "gpt-3.5-turbo", 
@@ -137,6 +149,7 @@ const App = () => {
       const data = await response.json();
       console.log(data);
       setChatGPTResponse(data.choices[0].message.content);
+      setLoadingAnswer(false);
     } catch (error) {
       console.log(error);
     }
@@ -184,7 +197,7 @@ const App = () => {
       });
       let response = await fetch(
         "https://vision.googleapis.com/v1/images:annotate?key=" +
-        `${APItokens.googlevision}`,
+          `${secretTokens.google_vision}`,
         {
           headers: {
             Accept: "application/json",
@@ -195,25 +208,26 @@ const App = () => {
         }
       );
       let responseJson = await response.json();
-      console.log(responseJson);
-      setGoogleResponse(responseJson);
-      setLoading(false);
-      submitToChatGPT(responseJson.responses[0].fullTextAnnotation.text);
-      console.log(responseJson.responses[0].fullTextAnnotation.text);
-      console.log('submittedChatGPT')
-
-
-      if (
-        !responseJson.responses ||
-        !responseJson.responses[0].fullTextAnnotation
-      ) {
-        alert("No text detected", "No text was found in the image.");
+      if (responseJson.responses[0].fullTextAnnotation?.text) {
+        console.log(responseJson.responses[0].fullTextAnnotation.text);
+        setGoogleResponse(responseJson.responses[0].fullTextAnnotation.text);
+        setGoogleReplied(true);
+        setLoading(false);
+        submitToChatGPT(responseJson.responses[0].fullTextAnnotation.text);
+        console.log("submittedChatGPT");
+      } else {
+        console.log(responseJson.responses[0]?.fullTextAnnotation?.text);
+        setGoogleResponse("");
+        setGoogleReplied(false);
+        setLoading(false);
+        alert( "No text was found in the image.");
       }
-
     } catch (error) {
-      console.log(error);
+      console.log(error, "submitToGoogle");
+      alert(error)
     }
   };
+  
 
   const clearPicture = () => {
     setImage(null);
@@ -221,6 +235,8 @@ const App = () => {
     setGoogleResponse('');
     setChatGPTResponse('');
     setLoading(false);
+    setGoogleReplied(false);
+    setLoadingAnswer(false);
   };
 
   const addAttempt = async () => {
@@ -251,8 +267,6 @@ const App = () => {
 
     if (count > 0) {
       const userDocRef = doc(db, "userData", docId);
-
-
       try {
         const { status } = await Camera.requestCameraPermissionsAsync();
         if (status !== "granted") {
@@ -319,9 +333,9 @@ const App = () => {
   };
 
   return (
-    <MainContext.Provider value={{ image, googleResponse, loading, chatGPTResponse, isInputCardsVisible, clearPicture, pickImage, takeAndCropPhoto, count, setCount, inputCode, setInputCode, addAttempt, copyToClipboardChatGPTResponse, copyToClipboardQuestion }}>
+    <MainContext.Provider value={{ image, googleResponse, loading, chatGPTResponse, isInputCardsVisible, clearPicture, pickImage, takeAndCropPhoto, count, setCount, inputCode, setInputCode, addAttempt, copyToClipboardChatGPTResponse, copyToClipboardQuestion,googleReplied,setGoogleReplied,setLoadingAnswer,loadingAnswer }}>
 
-      <AuthContext.Provider value={{ password, setPassword, email, setEmail, handleLogin, loggedIn, setLoggedIn, loading }}>
+      <AuthContext.Provider value={{ password, setPassword, email, setEmail, handleLogin, loggedIn, setLoggedIn, loading,setCount }}>
         <NavigationContainer>
           <Stack.Navigator
             screenOptions={{
