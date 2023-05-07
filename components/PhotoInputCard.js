@@ -2,10 +2,11 @@ import { StyleSheet, Text, View,TouchableOpacity } from 'react-native'
 import React,{useContext} from 'react'
 import MainContext from '../context/MainContext'
 
+
+
 const PhotoInputCard = () => {
     const {takeAndCropPhoto,pickImage,isInputCardsVisible} = useContext(MainContext)
   return (
-
     <>
     {isInputCardsVisible && (
     <View style={styles.infoSectionCard}>
@@ -23,9 +24,11 @@ const PhotoInputCard = () => {
                 style={styles.takePhotoButton}
                 onPress={pickImage}
               >
-                <Text style={styles.buttonTextStyle}>Select Picture</Text>
+                <Text style={styles.buttonTextStyle}>Select Image</Text>
               </TouchableOpacity>
+            
             </View>
+         
           </View>
     )}
           </>
@@ -35,13 +38,14 @@ const PhotoInputCard = () => {
 export default PhotoInputCard
 const styles = StyleSheet.create({
     takePhotoButton: {
-      backgroundColor: "#007AFF",
+      backgroundColor: "#7372fd",
       width: "30%",
       height: 30,
       borderRadius: 5,
       marginHorizontal: 10,
       justifyContent: "center",
       textAlign: "auto",
+      elevation:5,
     },
     buttonsWrapper: {
       justifyContent: "center",
@@ -67,6 +71,8 @@ const styles = StyleSheet.create({
       borderRadius: 20,
       height: 150,
       justifyContent: "center",
+      elevation:8,
+      marginBottom:50,
     },
 
   });

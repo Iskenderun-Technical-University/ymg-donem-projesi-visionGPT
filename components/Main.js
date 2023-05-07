@@ -1,21 +1,20 @@
 import { StatusBar } from "expo-status-bar";
-
 import { StyleSheet, View, ScrollView } from "react-native";
-
 import PhotoInputCard from "./PhotoInputCard";
 import Picture from "./Picture";
 import TutorialTips from "./TutorialTips";
 import AddAttemptInput from "./AddAttemptInput";
 import MainUITitle from "./MainUITitle";
-import QuestionLoading from "./QuestionLoading";
 import ChatGPTResponse from "./ChatGPTResponse";
-import ClearAnswerButton from "./ClearAnswerButton";
 import GoogleTextDetector from "./GoogleTextDetector";
+import ClearAndSolutionButtons from "./ClearAndSolutionButtons";
+
 
 
 
 
 const Main = ({navigation}) => {
+
    return (
     <View style={styles.container}>
       <MainUITitle navigation={navigation}/>
@@ -27,8 +26,9 @@ const Main = ({navigation}) => {
         <GoogleTextDetector />
         <AddAttemptInput />
         <PhotoInputCard />
+        
         <ChatGPTResponse />
-        <ClearAnswerButton />
+        <ClearAndSolutionButtons />
       </ScrollView>
       
     </View>
