@@ -66,7 +66,7 @@ describe('PhotoInputCard', () => {
       </MainContext.Provider>
     );
 
-    fireEvent.press(getByText('Select Picture'));
+    fireEvent.press(getByText('Select Image'));
     expect(mockContext.pickImage).toHaveBeenCalled();
   });
 });

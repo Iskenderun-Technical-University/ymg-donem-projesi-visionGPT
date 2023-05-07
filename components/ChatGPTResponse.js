@@ -2,21 +2,23 @@ import { StyleSheet, Text, View,TouchableOpacity } from 'react-native'
 import React,{useContext} from 'react'
 import MainContext from '../context/MainContext'
 import AnswerLoading from "./AnswerLoading";
+import SolutionButton from './SolutionButton';
 
 const ChatGPTResponse = () => {
     const {chatGPTResponse,copyToClipboardChatGPTResponse,loadingAnswer} = useContext(MainContext);
+    
   return (
     <>
     {
       loadingAnswer && 
       <AnswerLoading />
     }
-    {chatGPTResponse !== "" && (
+    {chatGPTResponse && (
           <View style={styles.chatGPTResponseWrapper}>
             <View style={styles.cardTitleWrapper}>
               <Text style={styles.cardTitleText}>Answer</Text>
             </View>
-            <Text style={styles.chatGPTText}>{chatGPTResponse}</Text>
+            <Text style={styles.chatGPTText}>{chatGPTResponse.answer}</Text>
             <View style={styles.copyButtonWrapper}>
               <TouchableOpacity
                 style={styles.copyButton}
@@ -37,11 +39,12 @@ export default ChatGPTResponse
 const styles = StyleSheet.create({
     
     cardTitleWrapper: {
-      marginRight: "75%",
+      marginLeft:5,
       marginTop: 3,
     },
     cardTitleText: {
       color: "black",
+      
     },
     copyButtonText: {
       color: "white",
@@ -58,24 +61,28 @@ const styles = StyleSheet.create({
       borderRadius: 5,
       justifyContent: "center",
       alignItems: "center",
-      borderWidth: 0.3,
       borderColor: "white",
+      marginRight:10,
+      marginBottom:5,
+      elevation:5,
     },
     chatGPTText: {
-      color: "#333333",
-      fontSize: 20,
-      marginBottom: 30,
+      color: "black",
+      fontSize: 16,
+      marginBottom: 20,
       marginTop:10,
-      textAlign: "center",
+      textAlign: 'center',
     },
     chatGPTResponseWrapper: {
-      backgroundColor: "rgba(0, 255, 0, 0.4)",
-      borderRadius: 10,
+      backgroundColor: "rgba(246, 254, 239, 1)",
+      borderRadius: 20,
       marginHorizontal: 16,
       marginTop: 20,
       borderWidth: 3,
-      borderColor: "rgba(0, 255, 0, 0.5)",
+      borderColor: "rgba(193, 229, 215, 1)",
       justifyContent:'center',
+      elevation:5,
+      
     },
     
   });

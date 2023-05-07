@@ -9,7 +9,7 @@ const Picture = () => {
       {
         image &&
         <View style={styles.pictureWrapper}>
-          <Image source={{ uri: image }} style={styles.picture} testID="picture" />
+          <Image source={{ uri: image }} style={styles.picture} resizeMode="contain" testID="picture" />
         </View>
       }
     </>
@@ -19,16 +19,17 @@ const Picture = () => {
 export default Picture;
 const styles = StyleSheet.create({
   picture: {
-    width: "95%",
+    width: "96%",
     height: 250,
     borderRadius: 10,
-    borderWidth:1,
-    borderColor:'grey'
   },
   pictureWrapper: {
     justifyContent: "center",
     alignItems: "center",
     marginTop: 16,
+    elevation:10,
+    marginBottom:20,
+    
   },
 
 

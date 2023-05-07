@@ -95,11 +95,11 @@ const App = () => {
   }, []);
 
   const copyToClipboardChatGPTResponse = async () => {
-    await Clipboard.setStringAsync(chatGPTResponse);
+    await Clipboard.setStringAsync(chatGPTResponse.solution);
     alert('Copied!');
   };
   const copyToClipboardQuestion = async () => {
-    await Clipboard.setStringAsync(googleResponse.responses[0].fullTextAnnotation.text);
+    await Clipboard.setStringAsync(googleResponse);
     alert('Copied!');
   };
 
@@ -142,8 +142,7 @@ const App = () => {
         }),
       });
       const data = await response.json();
-      console.log(data);
-      setChatGPTResponse(data.choices[0].message.content);
+      setChatGPTResponse(JSON.parse(data.choices[0].message.content));
       setLoadingAnswer(false);
     } catch (error) {
       console.log(error);
@@ -204,14 +203,14 @@ const App = () => {
       );
       let responseJson = await response.json();
       if (responseJson.responses[0].fullTextAnnotation?.text) {
-        console.log(responseJson.responses[0].fullTextAnnotation.text);
+       
         setGoogleResponse(responseJson.responses[0].fullTextAnnotation.text);
         setGoogleReplied(true);
         setLoading(false);
         submitToChatGPT(responseJson.responses[0].fullTextAnnotation.text);
         console.log("submittedChatGPT");
       } else {
-        console.log(responseJson.responses[0]?.fullTextAnnotation?.text);
+        
         setGoogleResponse("");
         setGoogleReplied(false);
         setLoading(false);
@@ -273,7 +272,7 @@ const App = () => {
         const result = await ImagePicker.launchCameraAsync({
           mediaTypes: ImagePicker.MediaTypeOptions.Images,
           allowsEditing: true,
-          aspect: [5, 3],
+          
           quality: 1,
         });
 
@@ -309,7 +308,7 @@ const App = () => {
         mediaTypes: ImagePicker.MediaTypeOptions.Images,
         allowsEditing: true,
         MediaTypeOptions: "images",
-        aspect: [5, 3],
+        
         quality: 1,
       });
 

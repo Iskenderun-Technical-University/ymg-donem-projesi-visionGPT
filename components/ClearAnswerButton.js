@@ -2,6 +2,7 @@ import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import React, { useContext } from 'react'
 import MainContext from '../context/MainContext'
 
+
 const ClearAnswerButton = () => {
     const { chatGPTResponse, clearPicture } = useContext(MainContext);
     return (
@@ -25,12 +26,13 @@ export default ClearAnswerButton
 const styles = StyleSheet.create({
 
     clearPictureButton: {
-        backgroundColor: "#FF3B30",
-        width: "30%",
+        backgroundColor: "#CC3636",
         height: 30,
+        width:100,
         borderRadius: 10,
         marginTop: 10,
         justifyContent: "center",
+        elevation:10,
     },
     clearButtonText: {
         textAlign: "center",
@@ -39,7 +41,7 @@ const styles = StyleSheet.create({
         color: "white",
     },
     clearButtonWrapper: {
-        alignItems: "center",
-        marginBottom: 200,
+        alignItems: 'flex-start',
+        marginRight:16,
     },
 });

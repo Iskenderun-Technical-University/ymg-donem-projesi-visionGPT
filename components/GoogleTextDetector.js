@@ -5,6 +5,9 @@ import QuestionLoading from './QuestionLoading'
 
 const GoogleTextDetector = () => {
     const {googleReplied,googleResponse,copyToClipboardQuestion,clearPicture,image,loading}=useContext(MainContext)
+    if(googleResponse !==''){
+      console.log(googleResponse);
+    }
   return (
     <>
     {loading &&
@@ -75,14 +78,17 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         justifyContent: "center",
         alignItems: "center",
-        borderWidth: 0.3,
+        marginRight:13,
+        marginBottom:5,
         borderColor: "white",
+        elevation:5,
       },
       googleResponseWrapper: {
         backgroundColor: "#F6F1F1",
         borderRadius: 10,
         marginTop: 3,
         marginHorizontal:16,
+        elevation:10,
       },
       googleResponseText: {
         marginTop: 10,

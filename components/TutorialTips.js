@@ -14,7 +14,7 @@ const TutorialTips = () => {
             1. To get started, take a photo or select an image from your
             gallery. {"\n"}
             2. Wait for the app to analyze the text in the photo. {"\n"}
-            3. View the GPT-3 generated text analysis. {"\n"}
+            3. View the GPT-3.5 Turbo generated text analysis. {"\n"}
           </Text>
 
           {count == 1 && image === null && (
