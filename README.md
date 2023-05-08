@@ -1,6 +1,13 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-24ddc0f5d75046c5622901739e7c5dd533143b0c8e959d652212380cedb1ea36.svg)](https://classroom.github.com/a/QA5O9x4M)
 
-# VisionGPT [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/Iskenderun-Technical-University/ymg-donem-projesi-visionGPT/blob/main/LICENSE)![Android](https://img.shields.io/badge/Android-3DDC84?style=for-the-badge&logo=android&logoColor=white)![iOS](https://img.shields.io/badge/iOS-000000?style=for-the-badge&logo=ios&logoColor=white)
+
+
+<h1 align='center'>
+<img src="https://img.shields.io/badge/Android-3DDC84?style=for-the-badge&logo=android&logoColor=white" alt="Android"> <img src="https://img.shields.io/badge/iOS-000000?style=for-the-badge&logo=ios&logoColor=white" alt="iOS"> <img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT"><br>VisionGPT</h1>
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/83416622/236870768-2b6b9f3f-f898-4456-be46-9797002a5928.png" alt="smallicon">
+</p>
+
+
 
 
 VisionGPT is a mobile application that allows users to read text from photos and communicate with the ChatGPT API to receive responses based on the text.
@@ -20,7 +27,8 @@ This mobile application is developed using React Native. The app enables users t
 
 ## Screenshot
 
-![newappss](https://user-images.githubusercontent.com/83416622/236014118-8fc5d466-3dcf-4028-8382-dd1a549a9747.png)
+![fourscreennew](https://user-images.githubusercontent.com/83416622/236878638-36e1b0f4-67e4-4370-a957-cc2e8741b114.png)
+
 
 
 
