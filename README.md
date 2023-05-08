@@ -84,6 +84,11 @@ _Note: Depending on your operating system, installation and running instructions
 2. The text in the photo will be automatically detected and sent to the ChatGPT API.
 3. The response from the ChatGPT API will be displayed on the screen.
 
+## Contributing
+
+If you would like to contribute to this project, please check out the [Contributing Guide](CONTRIBUTING.md).
+
+
 ## UML
 
 ![newUml](https://user-images.githubusercontent.com/83416622/236022745-8909715e-596e-4872-a185-79b06a3e9ea6.png)
