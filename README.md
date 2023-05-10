@@ -13,7 +13,6 @@ The prompt that currently only for answering the lesson questions.
 - Now the texts in the picture and the answer can be copied
 
 
-
 ## About the Project
 
 This mobile application is developed using React Native. The app enables users to take a photo with their camera or select an existing photo from their device. Then, the text in the photo is detected and read using OCR (Optical Character Recognition) technology and sent to the ChatGPT API. The ChatGPT API accepts the text as a prompt and returns a response to the user.
@@ -22,6 +21,8 @@ This mobile application is developed using React Native. The app enables users t
 
 ![newappss](https://user-images.githubusercontent.com/83416622/236014118-8fc5d466-3dcf-4028-8382-dd1a549a9747.png)
 
+## Screen recording
+![Screen Recording 2023-05-10 at 03 25 55](https://github.com/mert-donmez/VisionGPT/assets/83416622/6ca3521c-4a1c-4fac-88f1-f62ff760cbd3)
 
 
 ## Roadmap
