@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -20,8 +20,9 @@ import {
 } from "@expo-google-fonts/inter";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 
-const RegisterScreen = () => {
+const RegisterScreen = ({ navigation }) => {
 const [isCheckboxChecked,setIsCheckboxChecked] = useState(false);
+
   let [fontsLoaded] = useFonts({
     Inter_900Black,
     Inter_300Light,
@@ -66,7 +67,7 @@ const [isCheckboxChecked,setIsCheckboxChecked] = useState(false);
             colors={["white", "rgba(157,154,253,1)"]}
             style={styles.gradient}
           >
-            <Text style={styles.registerText}>Sign Up</Text>
+            <Text style={styles.registerText}>Register</Text>
             <Text style={styles.registerTextSub}>Get started free</Text>
 
             <View style={styles.registerInfoWrapper}>
@@ -164,10 +165,18 @@ const [isCheckboxChecked,setIsCheckboxChecked] = useState(false);
                         <Image source={require('../assets/appleiconwhitenew.png')} resizeMode="contain" style={styles.appleicon}/>
                         <Text style={styles.appleButtonText}>Apple</Text>
                         </TouchableOpacity>
+                        
                         </LinearGradient>
+                        
                 
             
               </View>
+              
+              <TouchableOpacity style={styles.alreadyHaveAnAccountWrapper} onPress={()=>navigation.navigate('Login')}>
+              <Text style={styles.alreadyHaveAnAccountText}>Already have an account ?</Text>
+              <Text style={styles.alreadyHaveAnAccountTextSingIn}>Login</Text>
+              </TouchableOpacity>
+              
             </View>
           </LinearGradient>
         </View>
@@ -181,6 +190,12 @@ const styles = StyleSheet.create({
         marginTop:15,
         marginLeft:'10%'
     },
+    alreadyHaveAnAccountWrapper:{
+      flexDirection:'row',
+      justifyContent:'center',
+      alignItems:'center',
+      marginTop:20,
+    },
     googleButtonGradient:{
         borderRadius:10,
         elevation:10,
@@ -189,10 +204,27 @@ const styles = StyleSheet.create({
     continueWithText:{
         color: "black",
         textAlign: "center",
-        marginLeft: 16,
+        
         fontSize: 18,
         fontFamily: "Inter_200ExtraLight",
         marginBottom:20,
+    },
+    alreadyHaveAnAccountText:{
+        color: "black",
+        textAlign: "center",
+
+        fontSize: 16,
+        fontFamily: "Inter_200ExtraLight",
+        marginTop:15,
+       
+    },
+    alreadyHaveAnAccountTextSingIn:{
+      color: "black",
+      textAlign: "center",
+      marginLeft: 16,
+      fontSize: 18,
+      fontFamily: "Inter_400Regular",
+      marginTop:15,
     },
     googleAppleButtonWrapper:{
         flexDirection:'row',
@@ -239,9 +271,9 @@ const styles = StyleSheet.create({
     divider:{
         height: StyleSheet.hairlineWidth,
         backgroundColor:'black',
-        marginTop:30,
-        marginHorizontal:24,
-        marginBottom:30,
+        marginTop:15,
+        marginHorizontal:70,
+        marginBottom:10,
     },
   gradientButton: {
     alignItems: "center",
@@ -311,14 +343,14 @@ const styles = StyleSheet.create({
   registerTextSub: {
     color: "black",
     textAlign: "center",
-    marginLeft: 16,
+
     fontSize: 18,
     fontFamily: "Inter_200ExtraLight",
   },
   registerText: {
     color: "black",
     textAlign: "center",
-    marginLeft: 16,
+
     marginTop: 16,
     fontSize: 36,
     fontFamily: "Inter_300Light",

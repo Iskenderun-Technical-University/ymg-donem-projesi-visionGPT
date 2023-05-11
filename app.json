@@ -1,5 +1,6 @@
 {
   "expo": {
+    "scheme": "vision-gpt",
     "plugins": [
       [
         "expo-camera",
@@ -10,7 +11,7 @@
     ],
     "name": "VisionGPT",
     "slug": "vision-gpt",
-    "version": "2.0.2",
+    "version": "2.0.5",
     "orientation": "portrait",
     "icon": "./assets/newIcon.png",
     "userInterfaceStyle": "dark",
@@ -23,15 +24,18 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.mertdonmez.visiongpt"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/newIcon.png",
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "#ffffff",
+        "googleServicesFile": "./google-services.json"
       },
       "permissions": [
-        "android.permission.CAMERA"
+        "android.permission.CAMERA",
+        "android.permission.RECORD_AUDIO"
       ],
       "package": "com.mertdonmez.visiongpt"
     },
