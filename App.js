@@ -1,24 +1,25 @@
 import { useState, useEffect } from "react";
-
 import * as ImagePicker from "expo-image-picker";
 import { Camera } from "expo-camera";
-import RegisterAndLogin from "./components/RegisterAndLogin";
 import MainContext from './context/MainContext';
 import AuthContext from './context/AuthContext';
 import Main from "./components/Main";
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { auth, db } from "./firebase";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword} from "firebase/auth";
 import Menu from "./components/Menu";
 import * as SecureStore from 'expo-secure-store';
-import { collection, query, where, getDocs, updateDoc, doc, getDoc } from "firebase/firestore";
+import { collection, query, where, getDocs, updateDoc, doc, getDoc,addDoc } from "firebase/firestore";
 import * as Clipboard from 'expo-clipboard';
 import secretTokens from './tokens/SecretTokens';
-
+import LoginScreen from "./components/LoginScreen";
+import RegisterScreen from "./components/RegisterScreen";
 
 const Stack = createNativeStackNavigator();
+
 const App = () => {
+
 
   //STATES START
   const [isInputCardsVisible, setIsInputCardsVisible] = useState(true);
@@ -30,23 +31,55 @@ const App = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loggedIn, setLoggedIn] = useState(false);
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState(10);
   const [docId, setDocId] = useState('');
   const [inputCode, setInputCode] = useState("");
   const [googleReplied, setGoogleReplied] = useState(false);
   //STATES END
+  
 
+    const loginOrRegister = async (userInfo) => {
+      const userRef = collection(db, "userData");
+      const q = query(userRef, where("email", "==", userInfo.email));
+      const querySnapshot = await getDocs(q);
+      if (querySnapshot.empty) {
+        console.log("User does not exist. Registering...");
+        await SecureStore.setItemAsync("userEmail", userInfo.email);
+        const userRef = collection(db, "userData");
+        await addDoc(userRef, {
+          email: userInfo.email,
+          count: 25,
+          isCodeActive: false,
+          code: generateSixDigitCode(),
+        });
+        console.log("User registered.");
+        setEmail(userInfo.email);
+        setLoggedIn(true);
+        setCount(25);
+      } else {
+        await SecureStore.setItemAsync("userEmail", userInfo.email);
+        console.log("User exists. Logging in...");
+        querySnapshot.forEach((doc) => {
+          const UserData = doc.data();
+          setCount(UserData.count);
+          setEmail(UserData.email);
+          getDocumentId();
+        });
+        setLoggedIn(true);
+      }
+    };
+    
+  
+  
+  
 
+ 
   const handleLogin = () => {
     signInWithEmailAndPassword(auth, email, password)
       .then(async (userCredentials) => {
         const user = userCredentials.user;
-
         console.log("Logged in with:", user.email);
-        const userData = {
-          email: user.email
-        };
-        await SecureStore.setItemAsync("userData", JSON.stringify(userData));
+        
         await SecureStore.setItemAsync("userEmail", user.email);
         const userEmail = await SecureStore.getItemAsync("userEmail");
         const userRef = collection(db, "userData");
@@ -56,7 +89,7 @@ const App = () => {
           querySnapshot.forEach((doc) => {
             const UserData = doc.data();
             setCount(UserData.count);
-            setDocId(doc.id);
+            getDocumentId();
           });
           setLoggedIn(true);
 
@@ -67,6 +100,32 @@ const App = () => {
       })
       .catch((error) => alert(error.message));
   };
+
+  
+
+
+  const generateSixDigitCode = () => {
+    const code = Math.floor(100000 + Math.random() * 900000);
+    return code;
+  };
+
+
+
+  
+
+  const getDocumentId = async () => {
+    const userEmail = await SecureStore.getItemAsync("userEmail");
+    const userRef = collection(db, "userData");
+    const q = query(userRef, where("email", "==", userEmail));
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) => {
+      setDocId(doc.id);
+      console.log(doc.id);
+    });
+  };
+
+  
+
 
 
   useEffect(() => {
@@ -81,7 +140,7 @@ const App = () => {
         querySnapshot.forEach((doc) => {
           const userData = doc.data();
           console.log("User session restored. Email:", userData.email, "count:", userData.count);
-          setDocId(doc.id);
+          getDocumentId();
           setEmail(userData.email);
           setLoggedIn(true);
           setCount(userData.count);
@@ -329,7 +388,7 @@ const App = () => {
   return (
     <MainContext.Provider value={{ image, googleResponse, loading, chatGPTResponse, isInputCardsVisible, clearPicture, pickImage, takeAndCropPhoto, count, setCount, inputCode, setInputCode, addAttempt, copyToClipboardChatGPTResponse, copyToClipboardQuestion, googleReplied, setGoogleReplied, setLoadingAnswer, loadingAnswer }}>
 
-      <AuthContext.Provider value={{ password, setPassword, email, setEmail, handleLogin, loggedIn, setLoggedIn, loading, setCount }}>
+      <AuthContext.Provider value={{ password, setPassword, email, setEmail, handleLogin, loggedIn, setLoggedIn, loading, setCount,loginOrRegister }}>
         <NavigationContainer>
           <Stack.Navigator
             screenOptions={{
@@ -343,7 +402,8 @@ const App = () => {
               ]
             ) : (
               [
-                <Stack.Screen key="Login" name="Login" component={RegisterAndLogin} />,
+                <Stack.Screen key="Login" name="Login" component={LoginScreen} />,
+                <Stack.Screen key="Register" name="Register" component={RegisterScreen} />,
                 <Stack.Screen key="Main" name="Main" component={Main} />,
                 <Stack.Screen key="Menu" name="Menu" component={Menu} />,
               ]

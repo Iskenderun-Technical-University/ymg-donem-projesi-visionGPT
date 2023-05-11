@@ -8,6 +8,8 @@ import MainUITitle from "./MainUITitle";
 import ChatGPTResponse from "./ChatGPTResponse";
 import GoogleTextDetector from "./GoogleTextDetector";
 import ClearAndSolutionButtons from "./ClearAndSolutionButtons";
+import RegisterScreen from "./RegisterScreen";
+import LoginScreen from "./LoginScreen";
 
 
 
@@ -26,7 +28,6 @@ const Main = ({navigation}) => {
         <GoogleTextDetector />
         <AddAttemptInput />
         <PhotoInputCard />
-        
         <ChatGPTResponse />
         <ClearAndSolutionButtons />
       </ScrollView>
