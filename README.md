@@ -83,7 +83,7 @@ This mobile application is developed using React Native. The app enables users t
 
 `npm expo start`
 
-(you need OpenAI, Google Vision API, Google OAuth client ID's for IOS, Android and Web. (web client ID for expo client ID))
+(you need OpenAI, Google Vision API also Google OAuth client ID's for IOS, Android and Web. (web client ID for expo client ID))
 
 
 
