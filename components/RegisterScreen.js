@@ -19,9 +19,12 @@ import {
   Inter_400Regular,
 } from "@expo-google-fonts/inter";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
+import secretTokens from "../tokens/SecretTokens";
+import AuthContext from "../context/AuthContext";
 
 const RegisterScreen = ({ navigation }) => {
 const [isCheckboxChecked,setIsCheckboxChecked] = useState(false);
+const { password, setPassword, email, setEmail, loading,loginOrRegister,handleRegister} = useContext(AuthContext);
 
   let [fontsLoaded] = useFonts({
     Inter_900Black,
@@ -38,7 +41,7 @@ const [isCheckboxChecked,setIsCheckboxChecked] = useState(false);
 
   const alertFunc = ()=>{
     if (isCheckboxChecked === false){
-        alert('You accepted terms of use');
+        alert(secretTokens.termsOfUse);
         setIsCheckboxChecked(true);
     }
     else{
@@ -46,6 +49,14 @@ const [isCheckboxChecked,setIsCheckboxChecked] = useState(false);
     }
 
 
+  }
+
+  const isAcceptTermsOfUse = ()=>{
+    if (isCheckboxChecked){
+      handleRegister();
+    }else{
+      alert('You have to accept terms of use.');
+    }
   }
 
 
@@ -64,7 +75,7 @@ const [isCheckboxChecked,setIsCheckboxChecked] = useState(false);
       <View style={styles.bottomWrapper}>
         <View style={styles.gradientContainer}>
           <LinearGradient
-            colors={["white", "rgba(157,154,253,1)"]}
+            colors={["white","white","white","rgba(115,114,253,0.1)"]}
             style={styles.gradient}
           >
             <Text style={styles.registerText}>Register</Text>
@@ -72,6 +83,10 @@ const [isCheckboxChecked,setIsCheckboxChecked] = useState(false);
 
             <View style={styles.registerInfoWrapper}>
               <View style={styles.emailTextTitle}>
+              <Image
+                  source={require("../assets/emailicon.png")}
+                  style={styles.inputEmailIcon}
+                />
                 <Text style={styles.emailText}>Email</Text>
               </View>
 
@@ -82,15 +97,18 @@ const [isCheckboxChecked,setIsCheckboxChecked] = useState(false);
                     style={styles.emailInput}
                     placeholderTextColor={"grey"}
                     placeholder="Your Email adress"
+                    value={email}
+                    onChangeText={(text)=>setEmail(text)}
                   />
                 </View>
-                <Image
-                  source={require("../assets/emailicon.png")}
-                  style={styles.inputEmailIcon}
-                />
+                
               </View>
 
               <View style={styles.emailTextTitle}>
+              <Image
+                  source={require("../assets/passwordicon.png")}
+                  style={styles.inputEmailIcon}
+                />
                 <Text style={styles.emailText}>Password</Text>
               </View>
 
@@ -101,22 +119,18 @@ const [isCheckboxChecked,setIsCheckboxChecked] = useState(false);
                     secureTextEntry
                     placeholderTextColor={"grey"}
                     placeholder="Your password"
+                    value={password}
+                    onChangeText={(text)=>setPassword(text)}
                   />
                 </View>
-                <Image
-                  source={require("../assets/passwordicon.png")}
-                  style={styles.inputEmailIcon}
-                />
+                
                 
               </View>
               <View style={styles.checkBox}>
               <BouncyCheckbox textStyle={{ fontFamily: "Inter_200ExtraLight" }} text='I Accept the Terms of Use' fillColor="purple" onPress={alertFunc}/>
-
               </View>
-              
-
               <View style={styles.registerButtonWrapper}>
-                <TouchableOpacity style={styles.registerButtonEmail}>
+                <TouchableOpacity style={styles.registerButtonEmail} onPress={isAcceptTermsOfUse}>
                   <LinearGradient
                     colors={[        
                     "rgba(115,114,253,1)",
@@ -153,15 +167,15 @@ const [isCheckboxChecked,setIsCheckboxChecked] = useState(false);
                     
                         <LinearGradient
                     colors={[        
-                        'black',
-                        "black",
+                        'grey',
+                        "grey",
                     ]}
                     start={[0,0]}
                     end={[1,1]}
                     style={styles.googleButtonGradient}
                   >
                         
-                    <TouchableOpacity style={styles.appleButton}>
+                    <TouchableOpacity style={styles.appleButton} disabled>
                         <Image source={require('../assets/appleiconwhitenew.png')} resizeMode="contain" style={styles.appleicon}/>
                         <Text style={styles.appleButtonText}>Apple</Text>
                         </TouchableOpacity>
@@ -311,13 +325,15 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   inputEmailIcon: {
-    height: 25,
-    width: 25,
+    height: 20,
+    width: 20,
+    marginRight:5,
   },
   emailTextTitle: {
     marginLeft: "15%",
     marginTop: 20,
     marginBottom: 5,
+    flexDirection:'row',
   },
   emailInput: {
     color: "black",
@@ -326,7 +342,6 @@ const styles = StyleSheet.create({
   },
   textInputWrapper: {
     flexDirection: "row",
-    marginHorizontal: "5%",
     justifyContent: "center",
   },
   textInputWrapperEmail: {
@@ -337,7 +352,6 @@ const styles = StyleSheet.create({
     borderColor: "rgba(115,114,253,0.7)",
     alignItems: "center",
     width: "80%",
-    marginRight: 10,
     elevation:10,
   },
   registerTextSub: {

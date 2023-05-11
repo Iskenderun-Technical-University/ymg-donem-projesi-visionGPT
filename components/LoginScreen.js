@@ -95,7 +95,7 @@ const LoginScreen = ({ navigation }) => {
       <View style={styles.bottomWrapper}>
         <View style={styles.gradientContainer}>
           <LinearGradient
-            colors={["white", "rgba(157,154,253,1)"]}
+            colors={["white","white","white","rgba(115,114,253,0.1)"]}
             style={styles.gradient}
           >
             <Text style={styles.registerText}>{loading ? 'Logging in..' : 'Login' }</Text>
@@ -103,9 +103,13 @@ const LoginScreen = ({ navigation }) => {
                 loading === false &&
                 <>
             <Text style={styles.registerTextSub}>Access your account</Text>
-            
+            <View style={{marginTop:40}} />
                 <View style={styles.registerInfoWrapper}>
               <View style={styles.emailTextTitle}>
+              <Image
+                  source={require("../assets/emailicon.png")}
+                  style={styles.inputEmailIcon}
+                />
                 <Text style={styles.emailText}>Email</Text>
               </View>
 
@@ -120,13 +124,13 @@ const LoginScreen = ({ navigation }) => {
                     onChangeText={text => setEmail(text)}
                   />
                 </View>
-                <Image
-                  source={require("../assets/emailicon.png")}
-                  style={styles.inputEmailIcon}
-                />
               </View>
 
               <View style={styles.emailTextTitle}>
+              <Image
+                  source={require("../assets/passwordicon.png")}
+                  style={styles.inputEmailIcon}
+                />
                 <Text style={styles.emailText}>Password</Text>
               </View>
 
@@ -141,15 +145,12 @@ const LoginScreen = ({ navigation }) => {
                     onChangeText={text => setPassword(text)}
                   />
                 </View>
-                <Image
-                  source={require("../assets/passwordicon.png")}
-                  style={styles.inputEmailIcon}
-                />
+                
                 
               </View>
               
               
-
+              
               <View style={styles.registerButtonWrapper}>
                 <TouchableOpacity style={styles.registerButtonEmail}
                  onPress={handleLogin}
@@ -196,15 +197,15 @@ const LoginScreen = ({ navigation }) => {
                     
                         <LinearGradient
                     colors={[        
-                        'black',
-                        "black",
+                        'grey',
+                        "grey",
                     ]}
                     start={[0,0]}
                     end={[1,1]}
                     style={styles.googleButtonGradient}
                   >
                         
-                    <TouchableOpacity style={styles.appleButton}>
+                    <TouchableOpacity style={styles.appleButton} disabled>
                         <Image source={require('../assets/appleiconwhitenew.png')} resizeMode="contain" style={styles.appleicon}/>
                         <Text style={styles.appleButtonText}>Apple</Text>
                         </TouchableOpacity>
@@ -259,12 +260,12 @@ const styles = StyleSheet.create({
     googleButtonGradient:{
         borderRadius:10,
         elevation:10,
-        
+        shadowColor: "black",
+
     },
     continueWithText:{
         color: "black",
         textAlign: "center",
-        
         fontSize: 18,
         fontFamily: "Inter_200ExtraLight",
         marginBottom:20,
@@ -275,7 +276,6 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontFamily: "Inter_200ExtraLight",
         marginTop:15,
-       
     },
     alreadyHaveAnAccountTextSingIn:{
       color: "black",
@@ -288,7 +288,7 @@ const styles = StyleSheet.create({
     googleAppleButtonWrapper:{
         flexDirection:'row',
         justifyContent:'space-between',
-        marginHorizontal:'20%'
+        marginHorizontal:'20%',
     },
     googleButtonText:{
         fontSize:18,
@@ -311,20 +311,18 @@ const styles = StyleSheet.create({
         marginRight:5,
     },
     googleButton:{
-        backgroundColor:'transparent',
         height:30,
         width:100,
         justifyContent:'center',
         alignItems:'center',
-        borderRadius:10,
         flexDirection:'row',
+
     },
     appleButton:{
         height:30,
         width:100,
         justifyContent:'center',
         alignItems:'center',
-        borderRadius:10,
         flexDirection:'row',
     },
     divider:{
@@ -365,18 +363,19 @@ const styles = StyleSheet.create({
     fontSize: 22,
     fontFamily: "Inter_400Regular",
   },
-  
   inputWrapper: {
     flexDirection: "row",
   },
   inputEmailIcon: {
-    height: 25,
-    width: 25,
+    height: 20,
+    width: 20,
+    marginRight:5,
   },
   emailTextTitle: {
     marginLeft: "15%",
     marginTop: 20,
     marginBottom: 5,
+    flexDirection:'row',
   },
   emailInput: {
     color: "black",
@@ -395,21 +394,18 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "rgba(115,114,253,0.7)",
     alignItems: "center",
-    width: "80%",
-    marginRight: 10,
+    width: "90%",
     elevation:10,
   },
   registerTextSub: {
     color: "black",
     textAlign: "center",
-
     fontSize: 18,
     fontFamily: "Inter_200ExtraLight",
   },
   registerText: {
     color: "black",
     textAlign: "center",
-
     marginTop: 16,
     fontSize: 36,
     fontFamily: "Inter_300Light",
