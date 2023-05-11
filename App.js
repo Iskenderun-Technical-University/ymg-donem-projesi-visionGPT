@@ -7,7 +7,7 @@ import Main from "./components/Main";
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { auth, db } from "./firebase";
-import { signInWithEmailAndPassword} from "firebase/auth";
+import { signInWithEmailAndPassword,createUserWithEmailAndPassword, sendEmailVerification} from "firebase/auth";
 import Menu from "./components/Menu";
 import * as SecureStore from 'expo-secure-store';
 import { collection, query, where, getDocs, updateDoc, doc, getDoc,addDoc } from "firebase/firestore";
@@ -15,6 +15,7 @@ import * as Clipboard from 'expo-clipboard';
 import secretTokens from './tokens/SecretTokens';
 import LoginScreen from "./components/LoginScreen";
 import RegisterScreen from "./components/RegisterScreen";
+
 
 const Stack = createNativeStackNavigator();
 
@@ -35,7 +36,10 @@ const App = () => {
   const [docId, setDocId] = useState('');
   const [inputCode, setInputCode] = useState("");
   const [googleReplied, setGoogleReplied] = useState(false);
+  const [isVerified, setIsVerified] = useState(false);
   //STATES END
+
+
   
 
     const loginOrRegister = async (userInfo) => {
@@ -50,12 +54,14 @@ const App = () => {
           email: userInfo.email,
           count: 25,
           isCodeActive: false,
+          isVerified: true,
           code: generateSixDigitCode(),
         });
         console.log("User registered.");
         setEmail(userInfo.email);
         setLoggedIn(true);
         setCount(25);
+        setIsVerified(true);
       } else {
         await SecureStore.setItemAsync("userEmail", userInfo.email);
         console.log("User exists. Logging in...");
@@ -63,6 +69,7 @@ const App = () => {
           const UserData = doc.data();
           setCount(UserData.count);
           setEmail(UserData.email);
+          setIsVerified(true);
           getDocumentId();
         });
         setLoggedIn(true);
@@ -70,8 +77,48 @@ const App = () => {
     };
     
   
+    const handleRegister = () => {
+      createUserWithEmailAndPassword(auth, email, password)
+        .then(async (userCredentials) => {
+          const user = userCredentials.user;
+          console.log("Registered with:", user.email);
+          await SecureStore.setItemAsync("userEmail", user.email);
+          const userRef = collection(db, "userData");
+          await addDoc(userRef, {
+            email: user.email,
+            count: 25,
+            isCodeActive: false,
+            isVerified: false,
+            code: generateSixDigitCode(),
+          });
+          sendEmailVerification(auth.currentUser);
+          console.log("User registered.");
+          setEmail(user.email);
+          setLoggedIn(true);
+          getDocumentId();
+          setCount(25);
+          setIsVerified(false);
+        })
+        .catch((error) => alert(error.message));
+    };
+
   
-  
+    const changeToVerified = async () => {
+      const userDocRef = doc(db, "userData", docId);
+      await updateDoc(userDocRef, { isVerified: true });
+      setIsVerified(true);
+    };
+
+
+    const checkIsVerifiedInFirestore = async () => {
+      const userDocRef = doc(db, "userData", docId);
+      const userDocSnapshot = await getDoc(userDocRef);
+      const userData = userDocSnapshot.data();
+      if (userData.isVerified) {
+        setIsVerified(true);
+        return true;
+      }
+    };
 
  
   const handleLogin = () => {
@@ -79,7 +126,6 @@ const App = () => {
       .then(async (userCredentials) => {
         const user = userCredentials.user;
         console.log("Logged in with:", user.email);
-        
         await SecureStore.setItemAsync("userEmail", user.email);
         const userEmail = await SecureStore.getItemAsync("userEmail");
         const userRef = collection(db, "userData");
@@ -89,6 +135,9 @@ const App = () => {
           querySnapshot.forEach((doc) => {
             const UserData = doc.data();
             setCount(UserData.count);
+            setEmail(UserData.email);
+            setIsVerified(UserData.isVerified);
+            console.log('is verified',UserData.isVerified);
             getDocumentId();
           });
           setLoggedIn(true);
@@ -101,7 +150,7 @@ const App = () => {
       .catch((error) => alert(error.message));
   };
 
-  
+
 
 
   const generateSixDigitCode = () => {
@@ -110,8 +159,6 @@ const App = () => {
   };
 
 
-
-  
 
   const getDocumentId = async () => {
     const userEmail = await SecureStore.getItemAsync("userEmail");
@@ -125,8 +172,6 @@ const App = () => {
   };
 
   
-
-
 
   useEffect(() => {
     setLoading(true);
@@ -144,6 +189,11 @@ const App = () => {
           setEmail(userData.email);
           setLoggedIn(true);
           setCount(userData.count);
+          setIsVerified(userData.isVerified);
+          console.log(userData.isVerified);
+          if(userData.isVerified ===true){
+            changeToVerified();
+          }
           setLoading(false);
         }
         );
@@ -152,6 +202,8 @@ const App = () => {
     };
     restoreUserSession();
   }, []);
+
+  
 
   const copyToClipboardChatGPTResponse = async () => {
     await Clipboard.setStringAsync(chatGPTResponse.solution);
@@ -386,9 +438,9 @@ const App = () => {
   };
 
   return (
-    <MainContext.Provider value={{ image, googleResponse, loading, chatGPTResponse, isInputCardsVisible, clearPicture, pickImage, takeAndCropPhoto, count, setCount, inputCode, setInputCode, addAttempt, copyToClipboardChatGPTResponse, copyToClipboardQuestion, googleReplied, setGoogleReplied, setLoadingAnswer, loadingAnswer }}>
+    <MainContext.Provider value={{ image, googleResponse, loading, chatGPTResponse, isInputCardsVisible, clearPicture, pickImage, takeAndCropPhoto, count, setCount, inputCode, setInputCode, addAttempt, copyToClipboardChatGPTResponse, copyToClipboardQuestion, googleReplied, setGoogleReplied, setLoadingAnswer, loadingAnswer,isVerified }}>
 
-      <AuthContext.Provider value={{ password, setPassword, email, setEmail, handleLogin, loggedIn, setLoggedIn, loading, setCount,loginOrRegister }}>
+      <AuthContext.Provider value={{ password, setPassword, email, setEmail, handleLogin, loggedIn, setLoggedIn, loading, setCount,loginOrRegister,handleRegister }}>
         <NavigationContainer>
           <Stack.Navigator
             screenOptions={{
@@ -396,11 +448,15 @@ const App = () => {
             }}
           >
             {loggedIn ? (
+              
               [
+                
                 <Stack.Screen key="Main" name="Main" component={Main} />,
                 <Stack.Screen key="Menu" name="Menu" component={Menu} />,
               ]
-            ) : (
+            ) 
+            : 
+            (
               [
                 <Stack.Screen key="Login" name="Login" component={LoginScreen} />,
                 <Stack.Screen key="Register" name="Register" component={RegisterScreen} />,
