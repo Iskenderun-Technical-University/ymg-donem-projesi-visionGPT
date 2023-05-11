@@ -18,6 +18,7 @@ The prompt that currently only for answering the lesson questions.
 ## New Updates
 - VisionGPT upgraded to GPT-3.5 Turbo
 - Now the texts in the picture and the answer can be copied
+- Google Authentication 
 
 
 ## About the Project
@@ -42,7 +43,8 @@ This mobile application is developed using React Native. The app enables users t
 - ✅ Sessions, Firebase database and user actions (Done)
 - ✅ First .apk build (Done)
 - ✅ GPT3 to GPT3.5 upgrade (Done)
-- ✅ Register with Google,Apple and Email (Done) 
+- ✅ Register and Login with Google auth (Done) 
+- 🔄 Register with Apple and Email (soon)
 - 🔄 UI improvements, Language and Theme settings,text input (soon)
 - 🔄 Different prompts and tabs for different applications in one App (soon)
 - 🔄 Detect objects in images (soon)
