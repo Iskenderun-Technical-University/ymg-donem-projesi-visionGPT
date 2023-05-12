@@ -62,6 +62,7 @@ const App = () => {
         setLoggedIn(true);
         setCount(25);
         setIsVerified(true);
+        getDocumentId();
       } else {
         await SecureStore.setItemAsync("userEmail", userInfo.email);
         console.log("User exists. Logging in...");

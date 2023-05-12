@@ -44,7 +44,7 @@ This mobile application is developed using React Native. The app enables users t
 - ✅ First .apk build (Done)
 - ✅ GPT3 to GPT3.5 upgrade (Done)
 - ✅ Register and Login with Google auth (Done) 
-- 🔄 Register with Apple and Email (soon)
+- ✅ Register with Email (Done)(Apple Soon)
 - 🔄 UI improvements, Language and Theme settings,text input (soon)
 - 🔄 Different prompts and tabs for different applications in one App (soon)
 - 🔄 Detect objects in images (soon)
