@@ -1,16 +1,19 @@
-import { StyleSheet, Text, View,TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View,TouchableOpacity,Image } from 'react-native'
 import React from 'react'
 import AuthContext from '../context/AuthContext';
 import {useContext } from "react";
 import * as SecureStore from 'expo-secure-store';
 import { signOut } from 'firebase/auth';
 import { auth } from '../firebase';
+import MainContext from '../context/MainContext';
+
 
 
 
 const Menu = ({navigation}) => {
-    const {password,setPassword,handleLogin,email,setEmail,loggedIn,setLoggedIn,setCount} = useContext(AuthContext);
+    const {setPassword,email,setEmail,setLoggedIn,setCount} = useContext(AuthContext);
 
+    const {isVerified,count} = useContext(MainContext)
     
     const logout = async () => {
       try {
@@ -29,51 +32,101 @@ const Menu = ({navigation}) => {
     
 
   return (
-    <View style={styles.container}>
-        <View style={styles.backIconWrapper}>
+    <>
+    <View style={styles.backIconWrapper}>
             <TouchableOpacity onPress={()=>navigation.navigate('Main')}>
             <Text style={styles.backIconText}>{"<"} Back</Text>
             </TouchableOpacity>
+            
+            <TouchableOpacity style={styles.logoutButton} onPress={logout}>
+             <Text style={styles.buttonTextStyle}>Logout</Text>
+             <Image style={styles.logoutIcon} source={require('../assets/logoutIconBlue.png')}/>
+            </TouchableOpacity>
+  
         </View>
+    <View style={styles.container}>
+        
+
+      <View style={styles.allText}>
+        
+
+        <View style={styles.verifiedViewWrapper}>
+          
+          <Text style={styles.allTextFonts}>
+            {isVerified ? 'Verified' : 'Not Verified'}
+          </Text>
+          {
+            isVerified ? 
+          <Image  style={styles.verifiedIcon} source={require('../assets/verified_icon.png')}/>
+            : 
+          <Image  style={styles.verifiedIcon} source={require('../assets/notVerifiedIcon.png')}/>
+          }
+          
+        </View>
+  
+        <Text style={styles.allTextFonts}>{email}</Text>  
+        <Text style={styles.allTextFonts}>Attemps: {count}</Text>
+        
       
-      <View style={styles.loginButtonWrapper}>
-      <Text>{email}</Text>
-        <TouchableOpacity style={styles.loginButton} onPress={logout}>
-          <Text style={styles.buttonTextStyle}>Logout </Text>
-        </TouchableOpacity>
+
       </View>
+
+        
+      
     </View>
+    </>
   )
 }
 
 export default Menu
 
 const styles = StyleSheet.create({
+  rightArrowIcon:{
+    width:15,
+    height:15,
+  },
+  logoutIcon:{
+    width:20,
+    height:20,
+    marginLeft:5,
+  },
+  allTextFonts:{
+    fontSize:16,
+    marginTop:5,
+  },
+  verifiedViewWrapper:{ 
+    flexDirection:'row',
+    alignItems:'center',
+  
+  },
+  allText:{
+    justifyContent:'center',
+    alignItems:'center',
+    marginBottom:100,
+  },
+  verifiedIcon:{
+      width:30,
+      height:30,
+    },
     container:{
-        backgroundColor:'white',
         flex:1,
+        justifyContent:'center',
     },
     backIconWrapper:{
         marginTop:60,
         marginHorizontal:16,
+        flexDirection:'row',
+        justifyContent:'space-between',
+        alignItems:'center',
     },
-    loginButton: {
-        backgroundColor: "white",
-        width: "30%",
-        height: 30,
-        borderRadius: 10,
-        marginHorizontal: 10,
+    logoutButton: {
         justifyContent: "center",
-        textAlign: "auto",
-        alignItems: "center",
+        flexDirection:'row',
+       
       },
       backIconText:{
-        fontSize:24,
-        color:'black',
-      },
-      loginButtonWrapper: {
-        alignItems: "center",
-        marginTop: 30,
+        fontSize:20,
+        color:'#007AFF',
       },
       buttonTextStyle: {
         color: "#007AFF",

@@ -8,7 +8,7 @@ const TutorialTips = () => {
     <>
       {image === null && (
         <View style={styles.tutorialTips}>
-          <Text style={styles.tutorialTipsTitle}>How to use. {isVerified ? 'verified' : 'not verified'}</Text>
+          <Text style={styles.tutorialTipsTitle}>How to use</Text>
 
           <Text style={styles.tutorialTipsContent}>
             1. To get started, take a photo or select an image from your

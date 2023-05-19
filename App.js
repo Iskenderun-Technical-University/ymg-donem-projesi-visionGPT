@@ -111,15 +111,7 @@ const App = () => {
     };
 
 
-    const checkIsVerifiedInFirestore = async () => {
-      const userDocRef = doc(db, "userData", docId);
-      const userDocSnapshot = await getDoc(userDocRef);
-      const userData = userDocSnapshot.data();
-      if (userData.isVerified) {
-        setIsVerified(true);
-        return true;
-      }
-    };
+    
 
  
   const handleLogin = () => {
@@ -238,7 +230,7 @@ const App = () => {
         },
         body: JSON.stringify({
           model: "gpt-3.5-turbo",
-          temperature: 0.7,
+          temperature: 1,
           messages: [
             {
               role: "system",

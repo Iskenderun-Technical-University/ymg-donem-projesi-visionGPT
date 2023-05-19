@@ -174,8 +174,8 @@ const LoginScreen = ({ navigation }) => {
               <View style={styles.googleAppleButtonWrapper}>
               <LinearGradient
                     colors={[        
-                        'white',
-                        "white",
+                        '#DDDDDD',
+                        "#DDDDDD",
                     ]}
                     start={[0,0]}
                     end={[1,1]}
@@ -183,7 +183,7 @@ const LoginScreen = ({ navigation }) => {
                   >
 
                     <TouchableOpacity style={styles.googleButton}
-                            disabled={!request}
+                            disabled={true}
                             onPress={loginWithGoogle
                             }
 
