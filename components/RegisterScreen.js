@@ -150,15 +150,15 @@ const { password, setPassword, email, setEmail, loading,loginOrRegister,handleRe
               <View style={styles.googleAppleButtonWrapper}>
               <LinearGradient
                     colors={[        
-                        'white',
-                        "white",
-                    ]}
+                      '#DDDDDD',
+                      "#DDDDDD",
+                  ]}
                     start={[0,0]}
                     end={[1,1]}
                     style={styles.googleButtonGradient}
                   >
 
-                    <TouchableOpacity style={styles.googleButton}>
+                    <TouchableOpacity style={styles.googleButton} disabled={true}>
                         <Image source={require('../assets/googleicon.png')} style={styles.googleicon}/>
                         <Text style={styles.googleButtonText}>Google</Text>
                         </TouchableOpacity>
