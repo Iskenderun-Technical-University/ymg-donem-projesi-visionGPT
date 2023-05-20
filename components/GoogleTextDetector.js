@@ -1,13 +1,12 @@
 import { StyleSheet, Text, View,TouchableOpacity } from 'react-native'
-import React,{useContext} from 'react'
+import React,{useContext, useEffect} from 'react'
 import MainContext from '../context/MainContext'
 import QuestionLoading from './QuestionLoading'
 
 const GoogleTextDetector = () => {
     const {googleReplied,googleResponse,copyToClipboardQuestion,clearPicture,image,loading}=useContext(MainContext)
-    if(googleResponse !==''){
-      console.log(googleResponse);
-    }
+    
+    
   return (
     <>
     {loading &&
