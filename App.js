@@ -111,7 +111,7 @@ const App = () => {
     };
 
 
-    
+      
 
  
   const handleLogin = () => {
@@ -151,18 +151,21 @@ const App = () => {
     return code;
   };
 
+ 
+    const getDocumentId = async () => {
+      const userEmail = await SecureStore.getItemAsync("userEmail");
+      const userRef = collection(db, "userData");
+      const q = query(userRef, where("email", "==", userEmail));
+      const querySnapshot = await getDocs(q);
+      querySnapshot.forEach((doc) => {
+        setDocId(doc.id);
+        console.log(doc.id);
+      });
+    };
+   
+ 
 
-
-  const getDocumentId = async () => {
-    const userEmail = await SecureStore.getItemAsync("userEmail");
-    const userRef = collection(db, "userData");
-    const q = query(userRef, where("email", "==", userEmail));
-    const querySnapshot = await getDocs(q);
-    querySnapshot.forEach((doc) => {
-      setDocId(doc.id);
-      console.log(doc.id);
-    });
-  };
+  
 
   
 
@@ -172,6 +175,7 @@ const App = () => {
       const userEmail = await SecureStore.getItemAsync("userEmail");
       if (userEmail) {
         setEmail(userEmail);
+    
         const userRef = collection(db, "userData");
         const q = query(userRef, where("email", "==", userEmail));
         const querySnapshot = await getDocs(q);
@@ -252,31 +256,6 @@ const App = () => {
       console.log(error);
     }
   };
-  //GPT model Davinci
-  // const submitToChatGPT = async (question) => {
-  //   try {
-  //     const response = await fetch("https://api.openai.com/v1/completions", {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //         Authorization: `Bearer ${APItokens.openai}`,
-  //       },
-  //       body: JSON.stringify({
-  //         model: "text-davinci-003", 
-  //         temperature: 0.7,
-  //         prompt: prompt + question,
-  //         max_tokens: 500,
-  //         top_p: 1,
-  //       }),
-  //     });
-  //     const data = await response.json();
-  //     console.log(data);
-  //     setChatGPTResponse(data.choices[0].text);
-  //   } catch (error) {
-  //     console.log(error)
-  //   }
-
-  // }
 
 
 
@@ -387,6 +366,8 @@ const App = () => {
           setIsInputCardsVisible(false);
           await updateDoc(userDocRef, { count: count - 1 });
           setCount(count - 1);
+          
+          
         }
       }
       catch (error) {
@@ -423,12 +404,20 @@ const App = () => {
         setIsInputCardsVisible(false);
         await updateDoc(userDocRef, { count: count - 1 });
         setCount(count - 1);
+        
+        
       }
     } else {
       alert("Your 25 attempts are over.");
     }
 
   };
+
+
+
+
+  
+
 
   return (
     <MainContext.Provider value={{ image, googleResponse, loading, chatGPTResponse, isInputCardsVisible, clearPicture, pickImage, takeAndCropPhoto, count, setCount, inputCode, setInputCode, addAttempt, copyToClipboardChatGPTResponse, copyToClipboardQuestion, googleReplied, setGoogleReplied, setLoadingAnswer, loadingAnswer,isVerified }}>
