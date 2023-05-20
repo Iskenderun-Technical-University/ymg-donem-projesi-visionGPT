@@ -16,8 +16,8 @@
     "icon": "./assets/newIcon.png",
     "userInterfaceStyle": "dark",
     "splash": {
-      "image": "./assets/newSplash.png",
-      "resizeMode": "contain",
+      "image": "./assets/newSplashScreenImage.png",
+      "resizeMode": "cover",
       "backgroundColor": "#ffffff"
     },
     "assetBundlePatterns": [
