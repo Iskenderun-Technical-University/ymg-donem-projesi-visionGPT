@@ -14,6 +14,7 @@ import ClearAndSolutionButtons from "./ClearAndSolutionButtons";
 
 
 
+
 const Main = ({navigation}) => {
 
    return (

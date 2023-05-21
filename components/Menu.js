@@ -45,7 +45,7 @@ const Menu = ({navigation}) => {
     <View style={styles.container}>
         <View style={styles.header}>
             <TouchableOpacity style={styles.backButtonWrapper} onPress={()=>navigation.navigate('Main')}>
-                <MaterialIcons name="arrow-back" size={24} color="black" />
+                
                 <Text style={styles.backButtonText}>Main</Text>
             </TouchableOpacity>
             
@@ -61,32 +61,33 @@ const Menu = ({navigation}) => {
             </Text>
             </View>
         </View>
+        <View style={styles.beProWrapper}>
+          <Image source={require('../assets/hearIcon.png')} style={styles.redPremiumIcon} />
+          <View>
+          <Text style={styles.proTitle}>Upgrade to PRO!</Text>
+          <Text style={styles.subProTitle}>no ads no restrictions</Text>
+          </View>
+          <Image style={styles.rightArrowIcon} source={require('../assets/rightArrowIcon.png')} />
+          
+        </View>
         <ScrollView>
         <Text style={styles.settingsName}>User</Text>
         
         <View style={styles.settingsWrapper}>
-        <View style={styles.divider}/>
-        <View style={styles.settingRow}>
-          <View style={styles.leftTexts}>
-          <Image style={[styles.rightArrowIcon,{marginHorizontal:5}]} source={require('../assets/diamondIcon.png')} />
-          <Text style={styles.settingText}>Upgrade to PRO! </Text>
-          </View>
-          <View style={styles.rightTexts}>
-          <Image style={styles.rightArrowIcon} source={require('../assets/rightArrowIcon.png')} />
-          </View>
-          </View>
+        
+        
           
-          <View style={styles.divider}/>
+          
           <View style={styles.settingRow}>
           <View style={styles.leftTexts}>
-          <Image style={[styles.rightArrowIcon,{marginRight:5,marginLeft:5,}]} source={require('../assets/checkIcon.png')} />
+          <Image style={styles.rightArrowIcon} source={require('../assets/checkIcon.png')} />
           <Text style={styles.settingText}>Verify Email</Text>
           </View>
           <View style={styles.rightTexts}>
           <Image style={styles.rightArrowIcon} source={require('../assets/rightArrowIcon.png')} />
           </View>
           </View>
-          <View style={styles.divider}/>
+          
           
 
         </View>
@@ -96,10 +97,10 @@ const Menu = ({navigation}) => {
           
 
         <View style={styles.settingsWrapper}>
-        <View style={styles.divider}/>
+        
           <View style={styles.settingRow}>
           <View style={styles.leftTexts}>
-          <Image style={[styles.rightArrowIcon,{marginRight:5,marginLeft:5,}]} source={require('../assets/newThemeIcon.png')} />
+          <Image style={styles.rightArrowIcon} source={require('../assets/newThemeIcon.png')} />
           <Text style={styles.settingText}>Theme</Text>
           </View>
           <View style={styles.rightTexts}>
@@ -107,10 +108,10 @@ const Menu = ({navigation}) => {
           <Image style={styles.changeIcon} source={require('../assets/changeIcon.png')} />
           </View>
           </View>
-          <View style={styles.divider}/>
+          
           <View style={styles.settingRow}>
           <View style={styles.leftTexts}>
-          <Image style={[styles.rightArrowIcon,{marginRight:5,marginLeft:5,}]} source={require('../assets/languageIcon.png')} />
+          <Image style={styles.rightArrowIcon} source={require('../assets/languageIcon.png')} />
           <Text style={styles.settingText}>Language</Text>
           </View>
           <View style={styles.rightTexts}>
@@ -118,16 +119,16 @@ const Menu = ({navigation}) => {
           <Image style={styles.changeIcon} source={require('../assets/changeIcon.png')} />
           </View>
           </View>
-          <View style={styles.divider}/>
+          
 
         </View>
         <Text style={styles.settingsName}>Help</Text>
 
         <View style={styles.settingsWrapper}>
-        <View style={styles.divider}/>
+        
         <View style={styles.settingRow}>
           <View style={styles.leftTexts}>
-          <Image style={[styles.rightArrowIcon,{marginRight:5,marginLeft:5,}]} source={require('../assets/helpCenterIcon.png')} />
+          <Image style={styles.rightArrowIcon} source={require('../assets/helpCenterIcon.png')} />
           <Text style={styles.settingText}>Help Center</Text>
           </View>
           <View style={styles.rightTexts}>
@@ -135,37 +136,36 @@ const Menu = ({navigation}) => {
           </View>
           </View>
           
-          <View style={styles.divider}/>
+          
           <View style={styles.settingRow}>
           <View style={styles.leftTexts}>
-          <Image style={[styles.rightArrowIcon,{marginRight:5,marginLeft:5,}]} source={require('../assets/faqIcon.png')} />
+          <Image style={styles.rightArrowIcon} source={require('../assets/faqIcon.png')} />
           <Text style={styles.settingText}>FAQ</Text>
           </View>
           <View style={styles.rightTexts}>
           <Image style={styles.rightArrowIcon} source={require('../assets/rightArrowIcon.png')} />
           </View>
           </View>
-          <View style={styles.divider}/>
+          
           <View style={styles.settingRow}>
           <View style={styles.leftTexts}>
-          <Image style={[styles.rightArrowIcon,{marginRight:5,marginLeft:5,}]} source={require('../assets/privacyIcon.png')} />
+          <Image style={styles.rightArrowIcon} source={require('../assets/privacyIcon.png')} />
           <Text style={styles.settingText}>Privacy Policy</Text>
           </View>
           <View style={styles.rightTexts}>
           <Image style={styles.rightArrowIcon} source={require('../assets/rightArrowIcon.png')} />
           </View>
           </View>
-          <View style={styles.divider}/>
           
-
+          
         </View>
         <Text style={styles.settingsName}>About</Text>
 
         <View style={styles.settingsWrapper}>
-        <View style={styles.divider}/>
+        
         <View style={styles.settingRow}>
           <View style={styles.leftTexts}>
-          <Image style={[styles.rightArrowIcon,{marginRight:5,marginLeft:5,}]} source={require('../assets/aboutIcon.png')} />
+          <Image style={styles.rightArrowIcon} source={require('../assets/aboutIcon.png')} />
           <Text style={styles.settingText}>About VisionGPT</Text>
           </View>
           <View style={styles.rightTexts}>
@@ -173,17 +173,17 @@ const Menu = ({navigation}) => {
           </View>
           </View>
           
-          <View style={styles.divider}/>
+          
           <View style={styles.settingRow}>
           <View style={styles.leftTexts}>
-          <Image style={[styles.rightArrowIcon,{marginRight:5,marginLeft:5,}]} source={require('../assets/aboutIcon.png')} />
+          <Image style={styles.rightArrowIcon} source={require('../assets/aboutIcon.png')} />
           <Text style={styles.settingText}>About Developer</Text>
           </View>
           <View style={styles.rightTexts}>
           <Image style={styles.rightArrowIcon} source={require('../assets/rightArrowIcon.png')} />
           </View>
           </View>
-          <View style={styles.divider}/>
+          
           
 
         </View>
@@ -206,15 +206,43 @@ const Menu = ({navigation}) => {
 }
 
 const styles = StyleSheet.create({
+  proTitle:{
+    color:'white',
+    fontSize:28,
+    fontWeight:'300',
+  },
+  subProTitle:{
+    color:'white',
+    
+  },
+  redPremiumIcon:{
+    width:70,
+    height:70,
+    marginLeft:30,
+    
+
+  },
+  beProWrapper:{
+    backgroundColor:'#9254C8',
+    height:100,
+    marginHorizontal:20,
+    borderRadius:10,
+    marginBottom:10,
+    flexDirection:'row',
+    alignItems:'center',
+    justifyContent:'space-between',
+    elevation:20,
+  },
   settingsName:{
-    marginHorizontal:40,
+    marginHorizontal:20,
     marginBottom:5,
     fontWeight:'300',
   },
   logoutRow:{
     flexDirection:'row',
     alignItems:'center',
-    justifyContent:'center'
+    justifyContent:'center',
+    marginBottom:100,
   },
   appOwnerText:{
     color:'grey',
@@ -242,6 +270,7 @@ const styles = StyleSheet.create({
   rightArrowIcon:{
     height:20,
     width:20,
+    marginHorizontal:10,
   },
   settingTextRight:{
     marginRight:5,
@@ -257,7 +286,7 @@ const styles = StyleSheet.create({
     flexDirection:'row',
     alignItems:'center',
     justifyContent:'space-between',
-
+    marginVertical:10,
   },
   settingText:{
     fontSize:20,
@@ -267,10 +296,10 @@ const styles = StyleSheet.create({
    
   },
   settingsWrapper:{
-    marginHorizontal:40,
+    marginHorizontal:20,
     marginBottom:20,
-    backgroundColor:'white',
-    
+    backgroundColor:'#EEF1FF',
+    borderRadius:10,  
   },
   userInfoWrapper:{
     
