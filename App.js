@@ -15,6 +15,7 @@ import * as Clipboard from 'expo-clipboard';
 import secretTokens from './tokens/SecretTokens';
 import LoginScreen from "./components/LoginScreen";
 import RegisterScreen from "./components/RegisterScreen";
+import NewMainScreen from "./components/NewMainScreen";
 
 
 const Stack = createNativeStackNavigator();
@@ -432,7 +433,7 @@ const App = () => {
             {loggedIn ? (
               
               [
-                
+                <Stack.Screen key="NewMainScreen" name="NewMainScreen" component={NewMainScreen} />,
                 <Stack.Screen key="Main" name="Main" component={Main} />,
                 <Stack.Screen key="Menu" name="Menu" component={Menu} />,
               ]
@@ -442,6 +443,7 @@ const App = () => {
               [
                 <Stack.Screen key="Login" name="Login" component={LoginScreen} />,
                 <Stack.Screen key="Register" name="Register" component={RegisterScreen} />,
+                <Stack.Screen key="NewMainScreen" name="NewMainScreen" component={NewMainScreen} />,
                 <Stack.Screen key="Main" name="Main" component={Main} />,
                 <Stack.Screen key="Menu" name="Menu" component={Menu} />,
               ]

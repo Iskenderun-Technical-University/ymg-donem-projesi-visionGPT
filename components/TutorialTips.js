@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View,Image } from 'react-native'
 import React, { useContext } from 'react'
 import MainContext from '../context/MainContext'
 
@@ -6,38 +6,22 @@ const TutorialTips = () => {
   const { count, image,isVerified } = useContext(MainContext);
   return (
     <>
-      {image === null && (
+    {
+      image === null && (
+        <View style={styles.howToUseSectionWrapper}>
+        <Image source={require('../assets/newVisionGPTIcon.png')} style={styles.visionGPTIcon} />
         <View style={styles.tutorialTips}>
           <Text style={styles.tutorialTipsTitle}>How to use</Text>
 
           <Text style={styles.tutorialTipsContent}>
-            1. To get started, take a photo or select an image from your
-            gallery. {"\n"}
-            2. Wait for the app to analyze the text in the photo. {"\n"}
-            3. View the GPT-3.5 Turbo generated text analysis. {"\n"}
+            1- Select an Image or Take a Picture{'\n'}
+            2- Crop the field with the texts{'\n'} you want to ask
           </Text>
-
-          {count == 1 && image === null && (
-            <View style={styles.countTextWrapper}>
-              <Text style={[styles.countText, { color: "orange" }]}>
-                {count} attempt left
-              </Text>
-            </View>
-          )}
-          {count > 1 && image === null && (
-            <View style={styles.countTextWrapper}>
-              <Text style={styles.countText}>{count} attempts left</Text>
-            </View>
-          )}
-          {count == 0 && image === null && (
-            <View style={styles.countTextWrapper}>
-              <Text style={[styles.countText, { color: "red" }]}>
-                Your attempts are over
-              </Text>
-            </View>
-          )}
         </View>
-      )}
+        </View>
+      )
+    }
+      
     </>
   )
 }
@@ -45,7 +29,16 @@ const TutorialTips = () => {
 export default TutorialTips;
 
 const styles = StyleSheet.create({
-
+  howToUseSectionWrapper:{
+    flexDirection:'row',
+    justifyContent:'center',
+    alignItems:'center',
+  },
+  visionGPTIcon:{
+    height:150,
+    width:150,
+    marginLeft:100,
+  },
   countCodeInput: {
     color: "white",
     fontSize: 20,
@@ -61,10 +54,8 @@ const styles = StyleSheet.create({
   },
 
   tutorialTips: {
-    marginTop: 80,
-    paddingHorizontal: 20,
-    justifyContent: "center",
-    alignItems: "center",
+    textAlign:'left',
+    paddingRight:100,
   },
   countTextWrapper: {
     paddingHorizontal: 20,
@@ -85,7 +76,7 @@ const styles = StyleSheet.create({
     color: "#8E8E93",
   },
   tutorialTipsContent: {
-    marginTop: 10,
+    marginTop:10,
     fontSize: 14,
     textAlign: "left",
     color: "#8E8E93",

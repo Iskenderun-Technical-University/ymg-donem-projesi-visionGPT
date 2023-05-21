@@ -44,9 +44,8 @@ const Menu = ({navigation}) => {
   return (
     <View style={styles.container}>
         <View style={styles.header}>
-            <TouchableOpacity style={styles.backButtonWrapper} onPress={()=>navigation.navigate('Main')}>
-                
-                <Text style={styles.backButtonText}>Main</Text>
+            <TouchableOpacity style={styles.backButtonWrapper} onPress={()=>navigation.goBack()}>
+                <Text style={styles.backButtonText}>{'<'} Back</Text>
             </TouchableOpacity>
             
         </View>
