@@ -121,35 +121,6 @@ const Menu = ({navigation}) => {
           <View style={styles.divider}/>
 
         </View>
-        <Text style={styles.settingsName}>About</Text>
-
-        <View style={styles.settingsWrapper}>
-        <View style={styles.divider}/>
-        <View style={styles.settingRow}>
-          <View style={styles.leftTexts}>
-          <Image style={[styles.rightArrowIcon,{marginRight:5,marginLeft:5,}]} source={require('../assets/aboutIcon.png')} />
-          <Text style={styles.settingText}>About VisionGPT</Text>
-          </View>
-          <View style={styles.rightTexts}>
-          <Image style={styles.rightArrowIcon} source={require('../assets/rightArrowIcon.png')} />
-          </View>
-          </View>
-          
-          <View style={styles.divider}/>
-          <View style={styles.settingRow}>
-          <View style={styles.leftTexts}>
-          <Image style={[styles.rightArrowIcon,{marginRight:5,marginLeft:5,}]} source={require('../assets/aboutIcon.png')} />
-          <Text style={styles.settingText}>About Developer</Text>
-          </View>
-          <View style={styles.rightTexts}>
-          <Image style={styles.rightArrowIcon} source={require('../assets/rightArrowIcon.png')} />
-          </View>
-          </View>
-          <View style={styles.divider}/>
-          
-
-        </View>
-
         <Text style={styles.settingsName}>Help</Text>
 
         <View style={styles.settingsWrapper}>
@@ -188,6 +159,36 @@ const Menu = ({navigation}) => {
           
 
         </View>
+        <Text style={styles.settingsName}>About</Text>
+
+        <View style={styles.settingsWrapper}>
+        <View style={styles.divider}/>
+        <View style={styles.settingRow}>
+          <View style={styles.leftTexts}>
+          <Image style={[styles.rightArrowIcon,{marginRight:5,marginLeft:5,}]} source={require('../assets/aboutIcon.png')} />
+          <Text style={styles.settingText}>About VisionGPT</Text>
+          </View>
+          <View style={styles.rightTexts}>
+          <Image style={styles.rightArrowIcon} source={require('../assets/rightArrowIcon.png')} />
+          </View>
+          </View>
+          
+          <View style={styles.divider}/>
+          <View style={styles.settingRow}>
+          <View style={styles.leftTexts}>
+          <Image style={[styles.rightArrowIcon,{marginRight:5,marginLeft:5,}]} source={require('../assets/aboutIcon.png')} />
+          <Text style={styles.settingText}>About Developer</Text>
+          </View>
+          <View style={styles.rightTexts}>
+          <Image style={styles.rightArrowIcon} source={require('../assets/rightArrowIcon.png')} />
+          </View>
+          </View>
+          <View style={styles.divider}/>
+          
+
+        </View>
+
+        
 
         <View style={styles.logoutRow}>
           <TouchableOpacity onPress={logout}>
