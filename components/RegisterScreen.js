@@ -62,11 +62,11 @@ const { password, setPassword, email, setEmail, loading,loginOrRegister,handleRe
 
   return (
     <>
-      <StatusBar style="dark" />
+      <StatusBar style="light" />
       <SafeAreaView style={styles.topWrapper}>
         <View style={styles.imageAndTitleWrapper}>
           <Image
-            source={require("../assets/cuttedicon.png")}
+            source={require("../assets/newVisionGPTIcon.png")}
             style={styles.image}
           />
           <Text style={styles.welcomeText}>Hello!</Text>
@@ -75,7 +75,7 @@ const { password, setPassword, email, setEmail, loading,loginOrRegister,handleRe
       <View style={styles.bottomWrapper}>
         <View style={styles.gradientContainer}>
           <LinearGradient
-            colors={["white","white","white","rgba(115,114,253,0.1)"]}
+            colors={["white","white"]}
             style={styles.gradient}
           >
             <Text style={styles.registerText}>Register</Text>
@@ -134,7 +134,7 @@ const { password, setPassword, email, setEmail, loading,loginOrRegister,handleRe
                   <LinearGradient
                     colors={[        
                     "rgba(115,114,253,1)",
-                    '#2A2F4F',
+                    'rgba(115,114,253,1)',
                     ]}
                     start={[0,0]}
                     end={[1,1]}
@@ -145,46 +145,7 @@ const { password, setPassword, email, setEmail, loading,loginOrRegister,handleRe
                 </TouchableOpacity>
               </View>
               <View style={styles.divider}/>
-              <Text style={styles.continueWithText}>Or continue with </Text>
-
-              <View style={styles.googleAppleButtonWrapper}>
-              <LinearGradient
-                    colors={[        
-                      '#DDDDDD',
-                      "#DDDDDD",
-                  ]}
-                    start={[0,0]}
-                    end={[1,1]}
-                    style={styles.googleButtonGradient}
-                  >
-
-                    <TouchableOpacity style={styles.googleButton} disabled={true}>
-                        <Image source={require('../assets/googleicon.png')} style={styles.googleicon}/>
-                        <Text style={styles.googleButtonText}>Google</Text>
-                        </TouchableOpacity>
-
-                        </LinearGradient>
-                    
-                        <LinearGradient
-                    colors={[        
-                        'grey',
-                        "grey",
-                    ]}
-                    start={[0,0]}
-                    end={[1,1]}
-                    style={styles.googleButtonGradient}
-                  >
-                        
-                    <TouchableOpacity style={styles.appleButton} disabled>
-                        <Image source={require('../assets/appleiconwhitenew.png')} resizeMode="contain" style={styles.appleicon}/>
-                        <Text style={styles.appleButtonText}>Apple</Text>
-                        </TouchableOpacity>
-                        
-                        </LinearGradient>
-                        
-                
-            
-              </View>
+              
               
               <TouchableOpacity style={styles.alreadyHaveAnAccountWrapper} onPress={()=>navigation.navigate('Login')}>
               <Text style={styles.alreadyHaveAnAccountText}>Already have an account ?</Text>
@@ -240,52 +201,11 @@ const styles = StyleSheet.create({
       fontFamily: "Inter_400Regular",
       marginTop:15,
     },
-    googleAppleButtonWrapper:{
-        flexDirection:'row',
-        justifyContent:'space-between',
-        marginHorizontal:'20%'
-    },
-    googleButtonText:{
-        fontSize:18,
-        color:'black',
-        fontFamily:"Inter_200ExtraLight",
-    },
-    appleButtonText:{
-        fontSize:18,
-        color:'white',
-        fontFamily:"Inter_200ExtraLight",
-    },
-    appleicon:{
-        width:20,
-        height:20,
-        marginRight:5,
-    },
-    googleicon:{
-        width:20,
-        height:20,
-        marginRight:5,
-    },
-    googleButton:{
-        backgroundColor:'transparent',
-        height:30,
-        width:100,
-        justifyContent:'center',
-        alignItems:'center',
-        borderRadius:10,
-        flexDirection:'row',
-    },
-    appleButton:{
-        height:30,
-        width:100,
-        justifyContent:'center',
-        alignItems:'center',
-        borderRadius:10,
-        flexDirection:'row',
-    },
+    
     divider:{
         height: StyleSheet.hairlineWidth,
         backgroundColor:'black',
-        marginTop:15,
+        marginTop:50,
         marginHorizontal:70,
         marginBottom:10,
     },
@@ -313,7 +233,7 @@ const styles = StyleSheet.create({
   },
   bottomWrapper: {
     flex: 1,
-    backgroundColor: "rgba(157,154,253,0.9)",
+    backgroundColor: "black",
   },
   registerButtonTextEmail: {
     color: "white",
@@ -357,7 +277,7 @@ const styles = StyleSheet.create({
   registerTextSub: {
     color: "black",
     textAlign: "center",
-
+    marginBottom:40,
     fontSize: 18,
     fontFamily: "Inter_200ExtraLight",
   },
@@ -384,7 +304,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   topWrapper: {
-    backgroundColor: "rgba(157,154,253,0.9)",
+    backgroundColor: "black",
     paddingTop: 10,
   },
   gradientContainer: {
@@ -400,7 +320,7 @@ const styles = StyleSheet.create({
   welcomeText: {
     fontSize: 60,
     fontFamily: "Inter_200ExtraLight",
-    color: "black",
+    color: "white",
   },
 });
 

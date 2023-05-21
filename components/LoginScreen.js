@@ -82,11 +82,11 @@ const LoginScreen = ({ navigation }) => {
 
   return (
     <>
-      <StatusBar style="dark" />
+      <StatusBar style="light" />
       <SafeAreaView style={styles.topWrapper}>
         <View style={styles.imageAndTitleWrapper}>
           <Image
-            source={require("../assets/cuttedicon.png")}
+            source={require("../assets/newVisionGPTIcon.png")}
             style={styles.image}
           />
           <Text style={styles.welcomeText}>Welcome{'\n'}Back!</Text>
@@ -95,7 +95,7 @@ const LoginScreen = ({ navigation }) => {
       <View style={styles.bottomWrapper}>
         <View style={styles.gradientContainer}>
           <LinearGradient
-            colors={["white","white","white","rgba(115,114,253,0.1)"]}
+            colors={["white","white","white","white"]}
             style={styles.gradient}
           >
             <Text style={styles.registerText}>{loading ? 'Logging in..' : 'Login' }</Text>
@@ -158,7 +158,7 @@ const LoginScreen = ({ navigation }) => {
                   <LinearGradient
                     colors={[        
                     "rgba(115,114,253,1)",
-                    '#2A2F4F',
+                    'rgba(115,114,253,1)',
                     ]}
                     start={[0,0]}
                     end={[1,1]}
@@ -169,53 +169,7 @@ const LoginScreen = ({ navigation }) => {
                 </TouchableOpacity>
               </View>
               <View style={styles.divider}/>
-              <Text style={styles.continueWithText}>Or login with </Text>
-
-              <View style={styles.googleAppleButtonWrapper}>
-              <LinearGradient
-                    colors={[        
-                        '#DDDDDD',
-                        "#DDDDDD",
-                    ]}
-                    start={[0,0]}
-                    end={[1,1]}
-                    style={styles.googleButtonGradient}
-                  >
-
-                    <TouchableOpacity style={styles.googleButton}
-                            disabled={true}
-                            onPress={loginWithGoogle
-                            }
-
-
-                    >
-                        <Image source={require('../assets/googleicon.png')} style={styles.googleicon}/>
-                        <Text style={styles.googleButtonText}>Google</Text>
-                        </TouchableOpacity>
-
-                        </LinearGradient>
-                    
-                        <LinearGradient
-                    colors={[        
-                        'grey',
-                        "grey",
-                    ]}
-                    start={[0,0]}
-                    end={[1,1]}
-                    style={styles.googleButtonGradient}
-                  >
-                        
-                    <TouchableOpacity style={styles.appleButton} disabled>
-                        <Image source={require('../assets/appleiconwhitenew.png')} resizeMode="contain" style={styles.appleicon}/>
-                        <Text style={styles.appleButtonText}>Apple</Text>
-                        </TouchableOpacity>
-                        
-                        </LinearGradient>
-                        
-                
-            
-              </View>
-              
+                      
               <TouchableOpacity style={styles.alreadyHaveAnAccountWrapper} onPress={()=>navigation.navigate('Register')}>
               <Text style={styles.alreadyHaveAnAccountText}>Don't have an account?</Text>
               <Text style={styles.alreadyHaveAnAccountTextSingIn}>Register</Text>
@@ -257,12 +211,7 @@ const styles = StyleSheet.create({
       alignItems:'center',
       marginTop:20,
     },
-    googleButtonGradient:{
-        borderRadius:10,
-        elevation:10,
-        shadowColor: "black",
-
-    },
+    
     continueWithText:{
         color: "black",
         textAlign: "center",
@@ -328,7 +277,7 @@ const styles = StyleSheet.create({
     divider:{
         height: StyleSheet.hairlineWidth,
         backgroundColor:'black',
-        marginTop:15,
+        marginTop:50,
         marginHorizontal:70,
         marginBottom:10,
     },
@@ -356,7 +305,7 @@ const styles = StyleSheet.create({
   },
   bottomWrapper: {
     flex: 1,
-    backgroundColor: "rgba(157,154,253,0.9)",
+    backgroundColor: "black",
   },
   registerButtonTextEmail: {
     color: "white",
@@ -425,7 +374,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   topWrapper: {
-    backgroundColor: "rgba(157,154,253,0.9)",
+    backgroundColor: "black",
     paddingTop: 10,
   },
   gradientContainer: {
@@ -441,7 +390,7 @@ const styles = StyleSheet.create({
   welcomeText: {
     fontSize: 40,
     fontFamily: "Inter_200ExtraLight",
-    color: "black",
+    color: "white",
     textAlign:'center',
   },
 });
