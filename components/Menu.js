@@ -50,7 +50,7 @@ const Menu = ({navigation}) => {
             </TouchableOpacity>
             
         </View>
-        <Text style={styles.settingsTitleText}>Settings</Text>
+        <Text style={styles.settingsTitleText}>Menu</Text>
 
         <View style={styles.userInfoWrapper}>
             <Image source={require('../assets/newIcon.png')} style={styles.avataricon} />
@@ -61,6 +61,7 @@ const Menu = ({navigation}) => {
             </Text>
             </View>
         </View>
+        <ScrollView>
         <Text style={styles.settingsName}>User</Text>
         
         <View style={styles.settingsWrapper}>
@@ -196,6 +197,7 @@ const Menu = ({navigation}) => {
             </TouchableOpacity>
             
           </View>
+          </ScrollView>
         
         
     </View>
