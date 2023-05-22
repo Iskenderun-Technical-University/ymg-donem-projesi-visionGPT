@@ -19,7 +19,7 @@ The prompt that currently only for answering the lesson questions.
 ## New Updates
 - VisionGPT upgraded to GPT-3.5 Turbo
 - Now the texts in the picture and the answer can be copied
-- Google Authentication 
+- Dark/Light Theme
 
 
 ## About the Project

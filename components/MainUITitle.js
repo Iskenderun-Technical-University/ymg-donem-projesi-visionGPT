@@ -11,10 +11,11 @@ const MainUITitle = ({navigation}) => {
   return (
     <View style={styles.titleWrapper}>
       <Text style={[styles.titleText,{color:theme.fontColor.primaryFontColor}]}>VisionGPT</Text>
-      <TouchableOpacity onPress={()=>navigation.navigate('Menu')}>
-        <MaterialIcons name="menu" color={theme.fontColor.primaryFontColor} size={30} />
+      <TouchableOpacity testID='menu-icon' onPress={()=>navigation.navigate('Menu')}>
+        <MaterialIcons  name="menu" color={theme.fontColor.primaryFontColor} size={30} />
       </TouchableOpacity>
     </View>
+    
   )
 }
 

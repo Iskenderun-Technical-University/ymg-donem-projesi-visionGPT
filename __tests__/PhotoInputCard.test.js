@@ -2,9 +2,11 @@ import React from 'react';
 import { render, fireEvent } from '@testing-library/react-native';
 import PhotoInputCard from '../components/PhotoInputCard';
 import MainContext from '../context/MainContext';
+import AppPreferencesContext from '../context/AppPreferencesContext';
 
 describe('PhotoInputCard', () => {
   it('renders the card when isInputCardsVisible is true', () => {
+    const contextValue = { theme: { fontColor: { primaryFontColor: '#000' } }, language: 'en' };
     const mockContext = {
       takeAndCropPhoto: jest.fn(),
       pickImage: jest.fn(),
@@ -13,7 +15,9 @@ describe('PhotoInputCard', () => {
 
     const { getByText } = render(
       <MainContext.Provider value={mockContext}>
+        <AppPreferencesContext.Provider value={contextValue}>
         <PhotoInputCard />
+      </AppPreferencesContext.Provider>
       </MainContext.Provider>
     );
 
@@ -26,10 +30,13 @@ describe('PhotoInputCard', () => {
       pickImage: jest.fn(),
       isInputCardsVisible: false,
     };
+    const contextValue = { theme: { fontColor: { primaryFontColor: '#000' } }, language: 'en' };
 
     const { queryByText } = render(
       <MainContext.Provider value={mockContext}>
+        <AppPreferencesContext.Provider value={contextValue}>
         <PhotoInputCard />
+        </AppPreferencesContext.Provider>
       </MainContext.Provider>
     );
 
@@ -42,10 +49,13 @@ describe('PhotoInputCard', () => {
       pickImage: jest.fn(),
       isInputCardsVisible: true,
     };
+    const contextValue = { theme: { fontColor: { primaryFontColor: '#000' } }, language: 'en' };
 
     const { getByText } = render(
       <MainContext.Provider value={mockContext}>
+        <AppPreferencesContext.Provider value={contextValue}>
         <PhotoInputCard />
+        </AppPreferencesContext.Provider>
       </MainContext.Provider>
     );
 
@@ -59,10 +69,13 @@ describe('PhotoInputCard', () => {
       pickImage: jest.fn(),
       isInputCardsVisible: true,
     };
+    const contextValue = { theme: { fontColor: { primaryFontColor: '#000' } }, language: 'en' };
 
     const { getByText } = render(
       <MainContext.Provider value={mockContext}>
+        <AppPreferencesContext.Provider value={contextValue}>
         <PhotoInputCard />
+        </AppPreferencesContext.Provider>
       </MainContext.Provider>
     );
 
