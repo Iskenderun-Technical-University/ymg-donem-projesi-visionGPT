@@ -3,6 +3,7 @@ import * as ImagePicker from "expo-image-picker";
 import { Camera } from "expo-camera";
 import MainContext from './context/MainContext';
 import AuthContext from './context/AuthContext';
+import AppPreferencesContext from './context/AppPreferencesContext';
 import Main from "./components/Main";
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -23,6 +24,32 @@ const Stack = createNativeStackNavigator();
 
 const App = () => {
 
+  const appPreferences ={
+    theme:{
+      light:{
+        fontColor:{
+          primaryFontColor:'black',
+          secondaryFontColor:'grey',
+        },
+        backgroundColor:'white',
+        statusBarTheme:'dark',
+        sectionBoxColor:'#EEF1FF',
+      },
+      dark:{
+        fontColor:{
+          primaryFontColor:'white',
+          secondaryFontColor:'#393E46',
+        },
+        backgroundColor:'#212A3E',
+        statusBarTheme:'light',
+        sectionBoxColor:'#6B778D',
+      }
+    },
+    language:{
+      primaryLanguage:'english',
+      secondaryLanguage:'turkish',
+    }
+  }
 
   //STATES START
   const [isInputCardsVisible, setIsInputCardsVisible] = useState(true);
@@ -39,8 +66,9 @@ const App = () => {
   const [inputCode, setInputCode] = useState("");
   const [googleReplied, setGoogleReplied] = useState(false);
   const [isVerified, setIsVerified] = useState(false);
+  const [theme,setTheme] = useState(appPreferences.theme.dark);
+  const [language,setLanguage] = useState(appPreferences.language.primaryLanguage);
   //STATES END
-
 
   
 
@@ -379,7 +407,7 @@ const App = () => {
         alert(error);
       }
     } else {
-      alert("Your 25 attempts are over.\n Contact with Owner.");
+      alert("Your attempts are over.\n Contact with Owner.");
     }
   };
 
@@ -413,7 +441,7 @@ const App = () => {
         
       }
     } else {
-      alert("Your 25 attempts are over.");
+      alert("Your attempts are over.");
     }
 
   };
@@ -428,6 +456,8 @@ const App = () => {
     <MainContext.Provider value={{ image, googleResponse, loading, chatGPTResponse, isInputCardsVisible, clearPicture, pickImage, takeAndCropPhoto, count, setCount, inputCode, setInputCode, addAttempt, copyToClipboardChatGPTResponse, copyToClipboardQuestion, googleReplied, setGoogleReplied, setLoadingAnswer, loadingAnswer,isVerified }}>
 
       <AuthContext.Provider value={{ password, setPassword, email, setEmail, handleLogin, loggedIn, setLoggedIn, loading, setCount,loginOrRegister,handleRegister }}>
+        <AppPreferencesContext.Provider value={{theme,setTheme,language,setLanguage,appPreferences}}>
+
         <NavigationContainer>
           <Stack.Navigator
             screenOptions={{
@@ -458,6 +488,7 @@ const App = () => {
 
           </Stack.Navigator>
         </NavigationContainer>
+        </AppPreferencesContext.Provider>
       </AuthContext.Provider>
     </MainContext.Provider>
 
