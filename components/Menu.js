@@ -14,16 +14,20 @@ import { MaterialIcons } from '@expo/vector-icons';
 const Menu = ({navigation}) => {
     
     const {setPassword,email,setEmail,setLoggedIn,setCount} = useContext(AuthContext);
-    const {theme,language,setTheme,setLanguage,appPreferences} = useContext(AppPreferencesContext);
+    const {theme,language,setTheme,setLanguage,appPreferences,changeThemeFromCache} = useContext(AppPreferencesContext);
     const {isVerified,count} = useContext(MainContext)
     
     const changeTheme = ()=>{
       if (theme.themeName === 'Dark'){
         setTheme(appPreferences.theme.light)
+        changeThemeFromCache(appPreferences.theme.light)
       }else{
         setTheme(appPreferences.theme.dark)
+        changeThemeFromCache(appPreferences.theme.dark)
       }
     }
+
+    
     
 
     const logout = async () => {

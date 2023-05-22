@@ -121,10 +121,7 @@ const LoginScreen = ({ navigation }) => {
                     value={email}
                     onChangeText={text => setEmail(text)}
                   />
-                  <Image
-                  source={require("../assets/emailicon.png")}
-                  style={styles.inputEmailIcon}
-                />
+                  <MaterialIcons name="mail" style={{marginRight:20}} color={'black'} size={20} />
                 </View>
               
 
@@ -143,10 +140,7 @@ const LoginScreen = ({ navigation }) => {
                     value={password}
                     onChangeText={text => setPassword(text)}
                   />
-                  <Image
-                  source={require("../assets/passwordicon.png")}
-                  style={styles.inputEmailIcon}
-                />
+                  <MaterialIcons name="lock" style={{marginRight:20}} color={'black'} size={20} />
                 </View>
              
               
