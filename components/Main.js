@@ -14,16 +14,23 @@ import { MaterialIcons } from '@expo/vector-icons';
 
 
 const Main = ({navigation}) => {
-  const {image} = useContext(MainContext);
+  const {image,count} = useContext(MainContext);
   const {theme,language} = useContext(AppPreferencesContext);
  
   return (
     <View style={[styles.container,{backgroundColor:theme.backgroundColor}]}>
       <View style={styles.titleWrapper}>
-      <MaterialIcons name="arrow-back-ios" color={theme.fontColor.primaryFontColor} size={20} />
-      <TouchableOpacity onPress={()=>navigation.goBack()}>
+      
+          <TouchableOpacity onPress={()=>navigation.goBack()} style={{flexDirection:'row',alignItems:'center'}}>
+            <MaterialIcons name="arrow-back-ios" color={theme.fontColor.primaryFontColor} size={20} />
                 <Text style={[styles.backText,{color:theme.fontColor.primaryFontColor}]}>Back</Text>
           </TouchableOpacity>
+
+          <View style={{flexDirection:'row',alignItems:'center',backgroundColor:count>0 ? '#AA77FF' : '#DF2E38',borderRadius:20,justifyContent:'center'}}>
+          <MaterialIcons name="local-activity" style={{marginLeft:10,marginRight:10}} color={'white'} size={20} />
+          <Text style={[styles.countText,{color:'white'}]}>{count}</Text>
+          </View>
+
       </View>
       {   
         image ==null &&
@@ -48,7 +55,13 @@ const Main = ({navigation}) => {
 export default Main;
 
 const styles = StyleSheet.create({
- 
+  backText:{
+    fontSize:18,
+  },
+  countText:{
+    fontSize:20,
+    marginRight:10,
+  },
   visionInputTitle:{
     fontSize:40,
     fontWeight:'300',
@@ -61,6 +74,7 @@ const styles = StyleSheet.create({
     marginHorizontal:16,
     flexDirection:'row',
     alignItems:'center',
+    justifyContent:'space-between',
   },
   backText:{
     fontSize:18,

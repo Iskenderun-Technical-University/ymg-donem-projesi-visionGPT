@@ -44,7 +44,7 @@ const App = () => {
         backgroundColor:'#212A3E',
         statusBarTheme:'light',
         sectionBoxColor:'#6B778D',
-        themeName:'Dark'
+        themeName:'Dark',
       }
     },
     language:{
@@ -80,6 +80,7 @@ const App = () => {
       }
     };
 
+
     const getThemeFromPhone = async () => {
       try {
         const theme = await SecureStore.getItemAsync("theme");
@@ -99,8 +100,11 @@ const App = () => {
         console.log(error);
       }
     };
-    
 
+    useEffect(()=>{
+      getThemeFromPhone();
+
+    },[])
 
     
 
@@ -114,7 +118,7 @@ const App = () => {
         const userRef = collection(db, "userData");
         await addDoc(userRef, {
           email: userInfo.email,
-          count: 25,
+          count: 5,
           isCodeActive: false,
           isVerified: true,
           code: generateSixDigitCode(),
@@ -123,7 +127,7 @@ const App = () => {
         setEmail(userInfo.email);
         setLoggedIn(true);
         saveThemeToPhone(theme);
-        setCount(25);
+        setCount(5);
         setIsVerified(true);
         getDocumentId();
       } else {
@@ -150,7 +154,7 @@ const App = () => {
           const userRef = collection(db, "userData");
           await addDoc(userRef, {
             email: user.email,
-            count: 25,
+            count: 5,
             isCodeActive: false,
             isVerified: false,
             code: generateSixDigitCode(),
@@ -161,7 +165,7 @@ const App = () => {
           setLoggedIn(true);
           saveThemeToPhone(theme);
           getDocumentId();
-          setCount(25);
+          setCount(5);
           setIsVerified(false);
         })
         .catch((error) => alert(error.message));
@@ -386,27 +390,21 @@ const App = () => {
   };
 
   const addAttempt = async () => {
-    if (!docId) {
-      console.log("User document not found.");
-      return;
-    }
-
     const userDocRef = doc(db, "userData", docId);
-    const userDocSnapshot = await getDoc(userDocRef);
-    const userData = userDocSnapshot.data();
-    console.log(userData.code, userData.isCodeActive)
-
-    if (userData.isCodeActive && userData.code === inputCode) {
-      await updateDoc(userDocRef, {
-        count: 25, //if user has code give 25 more attemps 
-        isCodeActive: false,
-      });
-      setCount(25);
-      alert("Code accepted!");
+    const userDoc = await getDoc(userDocRef);
+    const userData = userDoc.data();
+    if (userData.code == inputCode && userData.isCodeActive == true) {
+      await updateDoc(userDocRef, { count: 5 });
+      await updateDoc(userDocRef, { isCodeActive: false });
+      setCount(5);
+      setInputCode("");
+      alert("Code is correct. You have 5 attempts.");
     } else {
-      alert("Invalid code or code is not active.");
+      alert("Code is wrong or not active.");
     }
   };
+
+
 
 
   const takeAndCropPhoto = async () => {

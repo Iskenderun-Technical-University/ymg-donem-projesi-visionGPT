@@ -49,10 +49,16 @@ const Menu = ({navigation}) => {
   return (
     <View style={[styles.container,{backgroundColor:theme.backgroundColor}]}>
         <View style={styles.titleWrapper}>
-      <MaterialIcons name="arrow-back-ios" color={theme.fontColor.primaryFontColor} size={20} />
-      <TouchableOpacity onPress={()=>navigation.goBack()}>
+      
+          <TouchableOpacity onPress={()=>navigation.goBack()} style={{flexDirection:'row',alignItems:'center'}}>
+          <MaterialIcons name="arrow-back-ios" color={theme.fontColor.primaryFontColor} size={20} />
                 <Text style={[styles.backText,{color:theme.fontColor.primaryFontColor}]}>Back</Text>
           </TouchableOpacity>
+          <View style={{flexDirection:'row',alignItems:'center',backgroundColor:count>0 ? '#AA77FF' : '#DF2E38',borderRadius:20,justifyContent:'center'}}>
+          <MaterialIcons name="local-activity" style={{marginLeft:10,marginRight:10}} color={'white'} size={20} />
+          <Text style={[styles.countText,{color:'white'}]}>{count}</Text>
+          </View>
+          
       </View>
         <Text style={[styles.settingsTitleText,{color:theme.fontColor.primaryFontColor}]}>Menu</Text>
         <View style={styles.userInfoWrapper}>
@@ -64,17 +70,17 @@ const Menu = ({navigation}) => {
             </Text>
             </View>
         </View>
-        <View style={styles.beProWrapper}>
-          <Image source={require('../assets/hearIcon.png')} style={styles.redPremiumIcon} />
+        <View style={[styles.beProWrapper,{backgroundColor: '#AA77FF'}]}>
+        <MaterialIcons name="auto-awesome" style={[styles.inputTextIcon,{marginLeft:10}]} color={'white'} size={40} />
           <View>
-          <Text style={styles.proTitle}>Upgrade to PRO!</Text>
-          <Text style={styles.subProTitle}>no ads no restrictions</Text>
+          <Text style={[styles.proTitle,{color:'white'}]}>Upgrade to PRO!</Text>
+          <Text style={{color:'white'}}>no ads no restrictions</Text>
           </View>
-          <MaterialIcons name="arrow-forward-ios" style={{marginRight:10}} color={theme.fontColor.primaryFontColor} size={20} />
+          <MaterialIcons name="arrow-forward-ios" style={{marginRight:10}} color={'white'} size={20} />
           
         </View>
         <ScrollView>
-        <Text style={[styles.settingsName,{color:theme.fontColor.secondaryFontColor}]}>User</Text>
+        <Text style={[styles.settingsName,{color:theme.fontColor.primaryFontColor,marginTop:50}]}>User</Text>
         <View style={[styles.settingsWrapper,{backgroundColor:theme.sectionBoxColor}]}>
           <View style={styles.settingRow}>
           <View style={styles.leftTexts}>
@@ -91,7 +97,7 @@ const Menu = ({navigation}) => {
         </View>
 
         
-          <Text style={[styles.settingsName,{color:theme.fontColor.secondaryFontColor}]}>Preferences</Text>
+          <Text style={[styles.settingsName,{color:theme.fontColor.primaryFontColor}]}>Preferences</Text>
           
 
         <View style={[styles.settingsWrapper,{backgroundColor:theme.sectionBoxColor}]}>
@@ -102,7 +108,7 @@ const Menu = ({navigation}) => {
           <Text style={[styles.settingText,{color:theme.fontColor.primaryFontColor}]}>Theme</Text>
           </View>
           <View style={styles.rightTexts}>
-          <Text style={[styles.settingTextRight,{color:theme.fontColor.secondaryFontColor}]}>{theme.themeName}</Text>
+          <Text style={[styles.settingTextRight,{color:theme.fontColor.primaryFontColor}]}>{theme.themeName}</Text>
           <MaterialIcons name="cached" style={{marginRight:10}} color={theme.fontColor.primaryFontColor} size={20} />
           </View>
           </TouchableOpacity>
@@ -113,14 +119,14 @@ const Menu = ({navigation}) => {
           <Text style={[styles.settingText,{color:theme.fontColor.primaryFontColor}]}>Language</Text>
           </View>
           <View style={styles.rightTexts}>
-          <Text style={[styles.settingTextRight,{color:theme.fontColor.secondaryFontColor}]}>{language}</Text>
+          <Text style={[styles.settingTextRight,{color:theme.fontColor.primaryFontColor}]}>{language}</Text>
           <MaterialIcons name="cached" style={{marginRight:10}} color={theme.fontColor.primaryFontColor} size={20} />
           </View>
           </View>
           
 
         </View>
-        <Text style={[styles.settingsName,{color:theme.fontColor.secondaryFontColor}]}>Help</Text>
+        <Text style={[styles.settingsName,{color:theme.fontColor.primaryFontColor}]}>Help</Text>
 
         <View style={[styles.settingsWrapper,{backgroundColor:theme.sectionBoxColor}]}>
         
@@ -157,7 +163,7 @@ const Menu = ({navigation}) => {
           
           
         </View>
-        <Text style={[styles.settingsName,{color:theme.fontColor.secondaryFontColor}]}>About</Text>
+        <Text style={[styles.settingsName,{color:theme.fontColor.primaryFontColor}]}>About</Text>
 
         <View style={[styles.settingsWrapper,{backgroundColor:theme.sectionBoxColor}]}>
         
@@ -204,33 +210,35 @@ const Menu = ({navigation}) => {
 }
 
 const styles = StyleSheet.create({
+  
   backText:{
     fontSize:18,
+  },
+  countText:{
+    fontSize:20,
+    marginRight:10,
   },
   titleWrapper:{
     flexDirection:'row',
     marginTop:70,
     marginHorizontal:16,
+    justifyContent:'space-between',
+    alignItems:'center'
   },
   proTitle:{
-    color:'white',
-    fontSize:28,
+    
+    fontSize:22,
     fontWeight:'300',
   },
-  subProTitle:{
-    color:'white',
-    
-  },
   redPremiumIcon:{
-    width:70,
-    height:70,
+    width:50,
+    height:50,
     marginLeft:30,
     
 
   },
   beProWrapper:{
-    backgroundColor:'#9254C8',
-    height:100,
+    height:60,
     marginHorizontal:20,
     borderRadius:10,
     marginBottom:10,
@@ -248,7 +256,7 @@ const styles = StyleSheet.create({
     flexDirection:'row',
     alignItems:'center',
     justifyContent:'center',
-    marginBottom:100,
+    marginBottom:200,
   },
   appOwnerText:{
     color:'grey',
