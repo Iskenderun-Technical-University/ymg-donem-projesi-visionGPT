@@ -47,9 +47,17 @@ This mobile application is developed using React Native. The app enables users t
 - ✅ Register and Login with Google and Apple auth (Temporarily disabled in the last update) 
 - ✅ Register with Email (Done)
 - 🔄 Language and theme settings (soon)
-- 🔄 Detect objects in images (soon)
-- 🔄 Communicate detected objects to the user with voice and NLP (soon)
-- 🔄 🚀 Publish on App Store and Play Store (soon)
+- 🔄 Text input (soon)
+- 🔄 Google Admob ads and some restrictions (soon)
+- 🔄 Login as anonymous user (soon)
+- 🔄 In-app purchase (soon)
+- 🎯 Publish on App Store and Play Store (End of project)
+
+- ### Later
+- 🔄 Detect objects in images (Another Project)
+- 🔄 Communicate detected objects to the user with voice and NLP (Another Project)
+
+
 
 ## Features
 

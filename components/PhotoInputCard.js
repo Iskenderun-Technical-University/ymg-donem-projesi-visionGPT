@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View,TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View,TouchableOpacity,Image } from 'react-native'
 import React,{useContext} from 'react'
 import MainContext from '../context/MainContext'
 
@@ -8,35 +8,68 @@ const PhotoInputCard = () => {
     const {takeAndCropPhoto,pickImage,isInputCardsVisible} = useContext(MainContext)
   return (
     <>
-    {isInputCardsVisible && (
-    <View style={styles.infoSectionCard}>
-            <View style={styles.infoSubTitleWrapper}>
-              <Text style={styles.infoText}>Take photo or Select image</Text>
-            </View>
-            <View style={styles.buttonsWrapper}>
-              <TouchableOpacity
-                style={styles.takePhotoButton}
-                onPress={takeAndCropPhoto}
-              >
-                <Text style={styles.buttonTextStyle}>Take Photo</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.takePhotoButton}
-                onPress={pickImage}
-              >
-                <Text style={styles.buttonTextStyle}>Select Image</Text>
-              </TouchableOpacity>
+    {
+      isInputCardsVisible && (
+        <View style={styles.choicesWrapper}>
+        <TouchableOpacity style={styles.choicesSectionLeft} onPress={takeAndCropPhoto}>
+            <Image source={require('../assets/takeAPhotoIcon.png')} style={styles.sectionIcon} />
             
-            </View>
-         
-          </View>
-    )}
+            <Text style={styles.sectionText}>Take a{'\n'}Photo</Text>    
+         </TouchableOpacity>
+         <TouchableOpacity style={styles.choicesSectionRight} onPress={pickImage}>
+         <Image source={require('../assets/selectImageIcon.png')} style={styles.sectionIcon} />
+           
+            <Text style={styles.sectionText}>Choose an{'\n'}Image</Text>    
+         </TouchableOpacity>
+      </View>
+      )
+    }
+    
           </>
   )
 }
 
 export default PhotoInputCard
 const styles = StyleSheet.create({
+  sectionMainTitle:{
+    fontSize:20,
+    textAlign:'center',
+    marginTop:30,
+},
+sectionIcon:{
+    width:50,
+    height:50,
+    marginTop:10,
+},
+sectionText:{   
+    fontSize:18,
+    marginBottom:10,
+    textAlign:'center',
+    color:'grey'
+},
+  choicesWrapper:{
+    flexDirection:'row',
+    justifyContent:'space-between',
+
+},
+choicesSectionLeft:{
+    backgroundColor:'#EEF1FF',
+    height:140,
+    width:140,
+    borderRadius:20,
+    justifyContent:'space-between',
+    alignItems:'center',
+    marginLeft:40,
+},
+choicesSectionRight:{
+    backgroundColor:'#EEF1FF',
+    height:140,
+    width:140,
+    borderRadius:20,
+    justifyContent:'space-between',
+    alignItems:'center',
+    marginRight:40,
+},
     takePhotoButton: {
       backgroundColor: "#7372fd",
       width: "30%",

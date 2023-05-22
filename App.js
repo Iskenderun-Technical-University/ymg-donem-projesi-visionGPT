@@ -15,6 +15,8 @@ import * as Clipboard from 'expo-clipboard';
 import secretTokens from './tokens/SecretTokens';
 import LoginScreen from "./components/LoginScreen";
 import RegisterScreen from "./components/RegisterScreen";
+import NewMainScreen from "./components/NewMainScreen";
+import TextInputSection from "./components/TextInput";
 
 
 const Stack = createNativeStackNavigator();
@@ -117,6 +119,7 @@ const App = () => {
   const handleLogin = () => {
     signInWithEmailAndPassword(auth, email, password)
       .then(async (userCredentials) => {
+        setLoading(true);
         const user = userCredentials.user;
         console.log("Logged in with:", user.email);
         await SecureStore.setItemAsync("userEmail", user.email);
@@ -132,11 +135,13 @@ const App = () => {
             setIsVerified(UserData.isVerified);
             console.log('is verified',UserData.isVerified);
             getDocumentId();
+            setLoading(false);
           });
           setLoggedIn(true);
-
+          setLoading(false);
         } catch (error) {
           console.log(error);
+          setLoading(false);
         }
 
       })
@@ -432,8 +437,9 @@ const App = () => {
             {loggedIn ? (
               
               [
-                
+                <Stack.Screen key="NewMainScreen" name="NewMainScreen" component={NewMainScreen} />,
                 <Stack.Screen key="Main" name="Main" component={Main} />,
+                <Stack.Screen key="TextInput" name="TextInput" component={TextInputSection} />,
                 <Stack.Screen key="Menu" name="Menu" component={Menu} />,
               ]
             ) 
@@ -442,7 +448,9 @@ const App = () => {
               [
                 <Stack.Screen key="Login" name="Login" component={LoginScreen} />,
                 <Stack.Screen key="Register" name="Register" component={RegisterScreen} />,
+                <Stack.Screen key="NewMainScreen" name="NewMainScreen" component={NewMainScreen} />,
                 <Stack.Screen key="Main" name="Main" component={Main} />,
+                <Stack.Screen key="TextInput" name="TextInput" component={TextInputSection} />,
                 <Stack.Screen key="Menu" name="Menu" component={Menu} />,
               ]
             )}
