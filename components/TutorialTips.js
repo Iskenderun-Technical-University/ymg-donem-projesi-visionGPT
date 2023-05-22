@@ -1,9 +1,12 @@
 import { StyleSheet, Text, View,Image } from 'react-native'
 import React, { useContext } from 'react'
 import MainContext from '../context/MainContext'
+import AppPreferencesContext from "../context/AppPreferencesContext";
+import { MaterialIcons } from '@expo/vector-icons';
 
 const TutorialTips = () => {
   const { count, image,isVerified } = useContext(MainContext);
+  const {theme,language} = useContext(AppPreferencesContext);
   return (
     <>
     {
@@ -12,7 +15,7 @@ const TutorialTips = () => {
         <Image source={require('../assets/newVisionGPTIcon.png')} style={styles.visionGPTIcon} />
         <View style={styles.tutorialTips}>
 
-          <Text style={styles.tutorialTipsContent}>
+          <Text style={[styles.tutorialTipsContent,{color:theme.fontColor.secondaryFontColor}]}>
             1- Select an Image or Take a Picture{'\n'}
             2- Crop the field with the texts{'\n'} you want to ask
           </Text>

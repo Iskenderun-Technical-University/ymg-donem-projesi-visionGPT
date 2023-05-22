@@ -1,20 +1,18 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native'
 import React,{useContext} from 'react'
 import MainContext from '../context/MainContext';
+import { MaterialIcons } from '@expo/vector-icons';
+import AppPreferencesContext from '../context/AppPreferencesContext';
 
 
 const MainUITitle = ({navigation}) => {
- 
+  const {theme,language} = useContext(AppPreferencesContext);
  
   return (
     <View style={styles.titleWrapper}>
-      <Text style={styles.titleText}>VisionGPT</Text>
+      <Text style={[styles.titleText,{color:theme.fontColor.primaryFontColor}]}>VisionGPT</Text>
       <TouchableOpacity onPress={()=>navigation.navigate('Menu')}>
-        <Image
-          testID="menu-icon"
-          source={require("../assets/menuIcon.png")}
-          style={styles.menuIcon}
-        />
+        <MaterialIcons name="menu" color={theme.fontColor.primaryFontColor} size={30} />
       </TouchableOpacity>
     </View>
   )
@@ -38,7 +36,6 @@ const styles = StyleSheet.create({
 
   titleText: {
     fontSize: 32,
-    color: "#000000",
   },
 
 });
