@@ -24,7 +24,7 @@ const Main = ({navigation}) => {
       </View>
       {   
         image ==null &&
-        <Text style={styles.visionInputTitle}>Vision Input</Text>
+        <Text style={styles.visionInputTitle}>Visual Input</Text>
       }
    
       <StatusBar style="dark" />

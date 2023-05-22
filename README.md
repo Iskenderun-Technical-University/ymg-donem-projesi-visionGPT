@@ -47,6 +47,7 @@ This mobile application is developed using React Native. The app enables users t
 - ✅ Register and Login with Google and Apple auth (Temporarily disabled in the last update) 
 - ✅ Register with Email (Done)
 - 🔄 Language and theme settings (soon)
+- 🔄 Text input (soon)
 - 🔄 Google Admob ads and some restrictions (soon)
 - 🔄 Login as anonymous user (soon)
 - 🔄 In-app purchase (soon)
