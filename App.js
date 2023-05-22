@@ -34,6 +34,7 @@ const App = () => {
         backgroundColor:'white',
         statusBarTheme:'dark',
         sectionBoxColor:'#EEF1FF',
+        themeName:'Light',
       },
       dark:{
         fontColor:{
@@ -43,11 +44,12 @@ const App = () => {
         backgroundColor:'#212A3E',
         statusBarTheme:'light',
         sectionBoxColor:'#6B778D',
+        themeName:'Dark'
       }
     },
     language:{
-      primaryLanguage:'english',
-      secondaryLanguage:'turkish',
+      primaryLanguage:'English',
+      secondaryLanguage:'Turkish',
     }
   }
 

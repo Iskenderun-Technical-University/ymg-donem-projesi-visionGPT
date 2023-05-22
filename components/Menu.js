@@ -6,23 +6,17 @@ import * as SecureStore from 'expo-secure-store';
 import { signOut } from 'firebase/auth';
 import { auth } from '../firebase';
 import MainContext from '../context/MainContext';
+import AppPreferencesContext from "../context/AppPreferencesContext";
 import { MaterialIcons } from '@expo/vector-icons';
 
 
 
 const Menu = ({navigation}) => {
-    const languages ={
-      english:'English',
-      turkish:'Turkish'
-    }
-    const themes={
-      light:'Light',
-      dark:'Dark'
-    }
+    
     const {setPassword,email,setEmail,setLoggedIn,setCount} = useContext(AuthContext);
+    const {theme,setTheme,language,setLanguage} = useContext(AppPreferencesContext);
     const {isVerified,count} = useContext(MainContext)
-    const [language, setLanguage] = useState(languages.english);
-    const [theme, setTheme] = useState(themes.light);
+    
     
 
     const logout = async () => {
@@ -42,20 +36,20 @@ const Menu = ({navigation}) => {
     
 
   return (
-    <View style={styles.container}>
-        <View style={styles.header}>
-            <TouchableOpacity style={styles.backButtonWrapper} onPress={()=>navigation.goBack()}>
-                <Text style={styles.backButtonText}>{'<'} Back</Text>
-            </TouchableOpacity>
-            
-        </View>
-        <Text style={styles.settingsTitleText}>Menu</Text>
+    <View style={[styles.container,{backgroundColor:theme.backgroundColor}]}>
+        <View style={styles.titleWrapper}>
+      <MaterialIcons name="arrow-back-ios" color={theme.fontColor.primaryFontColor} size={20} />
+      <TouchableOpacity onPress={()=>navigation.goBack()}>
+                <Text style={[styles.backText,{color:theme.fontColor.primaryFontColor}]}>Back</Text>
+          </TouchableOpacity>
+      </View>
+        <Text style={[styles.settingsTitleText,{color:theme.fontColor.primaryFontColor}]}>Menu</Text>
 
         <View style={styles.userInfoWrapper}>
-            <Image source={require('../assets/newIcon.png')} style={styles.avataricon} />
+            <Image source={require('../assets/newVisionGPTIcon.png')} style={styles.avataricon} />
             <View>
-            <Text style={styles.email}>{email}</Text>  
-            <Text style={[styles.verified,{color:isVerified ? 'green' : 'black'}]}>
+            <Text style={[styles.email,{color:theme.fontColor.primaryFontColor}]}>{email}</Text>  
+            <Text style={[styles.verified,{color:isVerified ? 'green' : 'grey'}]}>
                 {isVerified ? 'Verified' : 'Not Verified'}
             </Text>
             </View>
@@ -66,24 +60,19 @@ const Menu = ({navigation}) => {
           <Text style={styles.proTitle}>Upgrade to PRO!</Text>
           <Text style={styles.subProTitle}>no ads no restrictions</Text>
           </View>
-          <Image style={styles.rightArrowIcon} source={require('../assets/rightArrowIcon.png')} />
+          <MaterialIcons name="arrow-forward-ios" style={{marginRight:10}} color={theme.fontColor.primaryFontColor} size={20} />
           
         </View>
         <ScrollView>
-        <Text style={styles.settingsName}>User</Text>
-        
-        <View style={styles.settingsWrapper}>
-        
-        
-          
-          
+        <Text style={[styles.settingsName,{color:theme.fontColor.secondaryFontColor}]}>User</Text>
+        <View style={[styles.settingsWrapper,{backgroundColor:theme.sectionBoxColor}]}>
           <View style={styles.settingRow}>
           <View style={styles.leftTexts}>
-          <Image style={styles.rightArrowIcon} source={require('../assets/checkIcon.png')} />
-          <Text style={styles.settingText}>Verify Email</Text>
+          <MaterialIcons name="check-circle" style={{marginHorizontal:10}} color={theme.fontColor.primaryFontColor} size={20} />
+          <Text style={[styles.settingText,{color:theme.fontColor.primaryFontColor}]}>Verify Email</Text>
           </View>
           <View style={styles.rightTexts}>
-          <Image style={styles.rightArrowIcon} source={require('../assets/rightArrowIcon.png')} />
+          <MaterialIcons name="arrow-forward-ios" style={[styles.inputTextIcon,{marginRight:10}]} color={theme.fontColor.primaryFontColor} size={20} />
           </View>
           </View>
           
@@ -92,94 +81,94 @@ const Menu = ({navigation}) => {
         </View>
 
         
-          <Text style={styles.settingsName}>Preferences</Text>
+          <Text style={[styles.settingsName,{color:theme.fontColor.secondaryFontColor}]}>Preferences</Text>
           
 
-        <View style={styles.settingsWrapper}>
+        <View style={[styles.settingsWrapper,{backgroundColor:theme.sectionBoxColor}]}>
         
           <View style={styles.settingRow}>
           <View style={styles.leftTexts}>
-          <Image style={styles.rightArrowIcon} source={require('../assets/newThemeIcon.png')} />
-          <Text style={styles.settingText}>Theme</Text>
+          <MaterialIcons name="palette" style={{marginHorizontal:10}} color={theme.fontColor.primaryFontColor} size={20} />
+          <Text style={[styles.settingText,{color:theme.fontColor.primaryFontColor}]}>Theme</Text>
           </View>
           <View style={styles.rightTexts}>
-          <Text style={styles.settingTextRight}>{themes.light}</Text>
+          <Text style={[styles.settingTextRight,{color:theme.fontColor.secondaryFontColor}]}>{theme.themeName}</Text>
           <Image style={styles.changeIcon} source={require('../assets/changeIcon.png')} />
           </View>
           </View>
           
           <View style={styles.settingRow}>
           <View style={styles.leftTexts}>
-          <Image style={styles.rightArrowIcon} source={require('../assets/languageIcon.png')} />
-          <Text style={styles.settingText}>Language</Text>
+          <MaterialIcons name="translate" style={{marginHorizontal:10}} color={theme.fontColor.primaryFontColor} size={20} />
+          <Text style={[styles.settingText,{color:theme.fontColor.primaryFontColor}]}>Language</Text>
           </View>
           <View style={styles.rightTexts}>
-          <Text style={styles.settingTextRight}>{languages.english}</Text>
+          <Text style={[styles.settingTextRight,{color:theme.fontColor.secondaryFontColor}]}>{language}</Text>
           <Image style={styles.changeIcon} source={require('../assets/changeIcon.png')} />
           </View>
           </View>
           
 
         </View>
-        <Text style={styles.settingsName}>Help</Text>
+        <Text style={[styles.settingsName,{color:theme.fontColor.secondaryFontColor}]}>Help</Text>
 
-        <View style={styles.settingsWrapper}>
+        <View style={[styles.settingsWrapper,{backgroundColor:theme.sectionBoxColor}]}>
         
         <View style={styles.settingRow}>
           <View style={styles.leftTexts}>
-          <Image style={styles.rightArrowIcon} source={require('../assets/helpCenterIcon.png')} />
-          <Text style={styles.settingText}>Help Center</Text>
+          <MaterialIcons name="help-center" style={{marginHorizontal:10}} color={theme.fontColor.primaryFontColor} size={20} />
+          <Text style={[styles.settingText,{color:theme.fontColor.primaryFontColor}]}>Help Center</Text>
           </View>
           <View style={styles.rightTexts}>
-          <Image style={styles.rightArrowIcon} source={require('../assets/rightArrowIcon.png')} />
+          <MaterialIcons name="arrow-forward-ios" style={[styles.inputTextIcon,{marginRight:10}]} color={theme.fontColor.primaryFontColor} size={20} />
           </View>
           </View>
           
           
           <View style={styles.settingRow}>
           <View style={styles.leftTexts}>
-          <Image style={styles.rightArrowIcon} source={require('../assets/faqIcon.png')} />
-          <Text style={styles.settingText}>FAQ</Text>
+          <MaterialIcons name="help" style={{marginHorizontal:10}} color={theme.fontColor.primaryFontColor} size={20} />
+          <Text style={[styles.settingText,{color:theme.fontColor.primaryFontColor}]}>FAQ</Text>
           </View>
           <View style={styles.rightTexts}>
-          <Image style={styles.rightArrowIcon} source={require('../assets/rightArrowIcon.png')} />
+          <MaterialIcons name="arrow-forward-ios" style={[styles.inputTextIcon,{marginRight:10}]} color={theme.fontColor.primaryFontColor} size={20} />
           </View>
           </View>
           
           <View style={styles.settingRow}>
           <View style={styles.leftTexts}>
-          <Image style={styles.rightArrowIcon} source={require('../assets/privacyIcon.png')} />
-          <Text style={styles.settingText}>Privacy Policy</Text>
+          <MaterialIcons name="lock" style={{marginHorizontal:10}} color={theme.fontColor.primaryFontColor} size={20} />
+          <Text style={[styles.settingText,{color:theme.fontColor.primaryFontColor}]}>Privacy Policy</Text>
           </View>
           <View style={styles.rightTexts}>
-          <Image style={styles.rightArrowIcon} source={require('../assets/rightArrowIcon.png')} />
+          <MaterialIcons name="arrow-forward-ios" style={[styles.inputTextIcon,{marginRight:10}]} color={theme.fontColor.primaryFontColor} size={20} />
           </View>
           </View>
           
           
         </View>
-        <Text style={styles.settingsName}>About</Text>
+        <Text style={[styles.settingsName,{color:theme.fontColor.secondaryFontColor}]}>About</Text>
 
-        <View style={styles.settingsWrapper}>
+        <View style={[styles.settingsWrapper,{backgroundColor:theme.sectionBoxColor}]}>
         
         <View style={styles.settingRow}>
           <View style={styles.leftTexts}>
-          <Image style={styles.rightArrowIcon} source={require('../assets/aboutIcon.png')} />
-          <Text style={styles.settingText}>About VisionGPT</Text>
+          <MaterialIcons name="info" style={{marginHorizontal:10}} color={theme.fontColor.primaryFontColor} size={20} />
+          <Text style={[styles.settingText,{color:theme.fontColor.primaryFontColor}]}>About VisionGPT</Text>
           </View>
           <View style={styles.rightTexts}>
-          <Image style={styles.rightArrowIcon} source={require('../assets/rightArrowIcon.png')} />
+          <MaterialIcons name="arrow-forward-ios" style={[styles.inputTextIcon,{marginRight:10}]} color={theme.fontColor.primaryFontColor} size={20} />
           </View>
           </View>
           
           
           <View style={styles.settingRow}>
           <View style={styles.leftTexts}>
-          <Image style={styles.rightArrowIcon} source={require('../assets/aboutIcon.png')} />
-          <Text style={styles.settingText}>About Developer</Text>
+          <MaterialIcons name="info" style={{marginHorizontal:10}} color={theme.fontColor.primaryFontColor} size={20} />
+          <Text style={[styles.settingText,{color:theme.fontColor.primaryFontColor}]}>About Developer</Text>
           </View>
           <View style={styles.rightTexts}>
-          <Image style={styles.rightArrowIcon} source={require('../assets/rightArrowIcon.png')} />
+          <MaterialIcons name="arrow-forward-ios" style={[styles.inputTextIcon,{marginRight:10}]} color={theme.fontColor.primaryFontColor} size={20} />
           </View>
           </View>
           
@@ -205,6 +194,14 @@ const Menu = ({navigation}) => {
 }
 
 const styles = StyleSheet.create({
+  backText:{
+    fontSize:18,
+  },
+  titleWrapper:{
+    flexDirection:'row',
+    marginTop:70,
+    marginHorizontal:16,
+  },
   proTitle:{
     color:'white',
     fontSize:28,
@@ -274,7 +271,6 @@ const styles = StyleSheet.create({
   settingTextRight:{
     marginRight:5,
     fontSize:16,
-    color:'#999',
     fontWeight:'300',
   },
   divider:{
@@ -297,7 +293,7 @@ const styles = StyleSheet.create({
   settingsWrapper:{
     marginHorizontal:20,
     marginBottom:20,
-    backgroundColor:'#EEF1FF',
+    
     borderRadius:10,  
   },
   userInfoWrapper:{
@@ -325,7 +321,6 @@ const styles = StyleSheet.create({
   },
 container: {
     flex: 1,
-    backgroundColor: "white",
 },
 header: {
     flexDirection: "row",
@@ -343,7 +338,6 @@ verified: {
 },
 email: {
     fontSize: 22,
-    color: "#222",
     fontWeight:'300'
 },
 attempts: {
