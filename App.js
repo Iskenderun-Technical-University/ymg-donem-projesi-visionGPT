@@ -3,6 +3,7 @@ import * as ImagePicker from "expo-image-picker";
 import { Camera } from "expo-camera";
 import MainContext from './context/MainContext';
 import AuthContext from './context/AuthContext';
+import AppPreferencesContext from './context/AppPreferencesContext';
 import Main from "./components/Main";
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -23,6 +24,34 @@ const Stack = createNativeStackNavigator();
 
 const App = () => {
 
+  const appPreferences ={
+    theme:{
+      light:{
+        fontColor:{
+          primaryFontColor:'black',
+          secondaryFontColor:'grey',
+        },
+        backgroundColor:'white',
+        statusBarTheme:'dark',
+        sectionBoxColor:'#EEF1FF',
+        themeName:'Light',
+      },
+      dark:{
+        fontColor:{
+          primaryFontColor:'white',
+          secondaryFontColor:'#B7B7B7',
+        },
+        backgroundColor:'#212A3E',
+        statusBarTheme:'light',
+        sectionBoxColor:'#6B778D',
+        themeName:'Dark'
+      }
+    },
+    language:{
+      primaryLanguage:'English',
+      secondaryLanguage:'Turkish',
+    }
+  }
 
   //STATES START
   const [isInputCardsVisible, setIsInputCardsVisible] = useState(true);
@@ -39,10 +68,41 @@ const App = () => {
   const [inputCode, setInputCode] = useState("");
   const [googleReplied, setGoogleReplied] = useState(false);
   const [isVerified, setIsVerified] = useState(false);
+  const [theme,setTheme] = useState(appPreferences.theme.light);
+  const [language,setLanguage] = useState(appPreferences.language.primaryLanguage);
   //STATES END
 
+    const saveThemeToPhone = async (theme) => {
+      try {
+        await SecureStore.setItemAsync("theme", JSON.stringify(theme));
+      } catch (error) {
+        console.log(error);
+      }
+    };
 
-  
+    const getThemeFromPhone = async () => {
+      try {
+        const theme = await SecureStore.getItemAsync("theme");
+        if (theme) {
+          setTheme(JSON.parse(theme));
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    const changeThemeFromCache = async (theme) => {
+      try {
+        await SecureStore.setItemAsync("theme", JSON.stringify(theme));
+        setTheme(theme);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    
+
+
+    
 
     const loginOrRegister = async (userInfo) => {
       const userRef = collection(db, "userData");
@@ -62,6 +122,7 @@ const App = () => {
         console.log("User registered.");
         setEmail(userInfo.email);
         setLoggedIn(true);
+        saveThemeToPhone(theme);
         setCount(25);
         setIsVerified(true);
         getDocumentId();
@@ -98,6 +159,7 @@ const App = () => {
           console.log("User registered.");
           setEmail(user.email);
           setLoggedIn(true);
+          saveThemeToPhone(theme);
           getDocumentId();
           setCount(25);
           setIsVerified(false);
@@ -135,7 +197,9 @@ const App = () => {
             setIsVerified(UserData.isVerified);
             console.log('is verified',UserData.isVerified);
             getDocumentId();
+            getThemeFromPhone();
             setLoading(false);
+
           });
           setLoggedIn(true);
           setLoading(false);
@@ -180,7 +244,6 @@ const App = () => {
       const userEmail = await SecureStore.getItemAsync("userEmail");
       if (userEmail) {
         setEmail(userEmail);
-    
         const userRef = collection(db, "userData");
         const q = query(userRef, where("email", "==", userEmail));
         const querySnapshot = await getDocs(q);
@@ -189,6 +252,7 @@ const App = () => {
           console.log("User session restored. Email:", userData.email, "count:", userData.count);
           getDocumentId();
           setEmail(userData.email);
+          getThemeFromPhone();
           setLoggedIn(true);
           setCount(userData.count);
           setIsVerified(userData.isVerified);
@@ -379,7 +443,7 @@ const App = () => {
         alert(error);
       }
     } else {
-      alert("Your 25 attempts are over.\n Contact with Owner.");
+      alert("Your attempts are over.\n Contact with Owner.");
     }
   };
 
@@ -413,7 +477,7 @@ const App = () => {
         
       }
     } else {
-      alert("Your 25 attempts are over.");
+      alert("Your attempts are over.");
     }
 
   };
@@ -428,6 +492,8 @@ const App = () => {
     <MainContext.Provider value={{ image, googleResponse, loading, chatGPTResponse, isInputCardsVisible, clearPicture, pickImage, takeAndCropPhoto, count, setCount, inputCode, setInputCode, addAttempt, copyToClipboardChatGPTResponse, copyToClipboardQuestion, googleReplied, setGoogleReplied, setLoadingAnswer, loadingAnswer,isVerified }}>
 
       <AuthContext.Provider value={{ password, setPassword, email, setEmail, handleLogin, loggedIn, setLoggedIn, loading, setCount,loginOrRegister,handleRegister }}>
+        <AppPreferencesContext.Provider value={{theme,setTheme,language,setLanguage,appPreferences,changeThemeFromCache}}>
+
         <NavigationContainer>
           <Stack.Navigator
             screenOptions={{
@@ -458,6 +524,7 @@ const App = () => {
 
           </Stack.Navigator>
         </NavigationContainer>
+        </AppPreferencesContext.Provider>
       </AuthContext.Provider>
     </MainContext.Provider>
 
