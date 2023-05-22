@@ -1,46 +1,52 @@
 import { StyleSheet, Text, View,Image,TouchableOpacity,TextInput } from 'react-native'
 import React, { useContext } from 'react'
 import MainContext from '../context/MainContext'
+import AppPreferencesContext from "../context/AppPreferencesContext";
+import { MaterialIcons } from '@expo/vector-icons';
 
 const TextInputSection = ({navigation}) => {
   const { count, image,isVerified } = useContext(MainContext);
+  const {theme,language} = useContext(AppPreferencesContext);
   return (
-    <>
+    <View style={[styles.container,{backgroundColor:theme.backgroundColor}]}>
     
     <View style={styles.titleWrapper}>
-      <TouchableOpacity style={styles.backButtonWrapper} onPress={()=>navigation.goBack()}>
-                <Text style={styles.backText}>{'<'} Back</Text>
-            </TouchableOpacity>
+      <MaterialIcons name="arrow-back-ios" color={theme.fontColor.primaryFontColor} size={20} />
+      <TouchableOpacity onPress={()=>navigation.goBack()}>
+                <Text style={[styles.backText,{color:theme.fontColor.primaryFontColor}]}>Back</Text>
+          </TouchableOpacity>
       </View>
-      <Text style={styles.TextInput}>Text Input</Text>
+      <Text style={[styles.TextInput,{color:theme.fontColor.primaryFontColor}]}>Text Input</Text>
         <View style={styles.howToUseSectionWrapper}>
         <Image source={require('../assets/newVisionGPTIcon.png')} style={styles.visionGPTIcon} />
         <View style={styles.tutorialTips}>
-          <Text style={styles.tutorialTipsContent}>
+          <Text style={[styles.tutorialTipsContent,,{color:theme.fontColor.secondaryFontColor}]}>
             Type your question below
           </Text>
         </View>
         </View>
-        <View style={styles.textInputWrapper}>
+        <View style={[styles.textInputWrapper,{backgroundColor:theme.sectionBoxColor}]}>
         <TextInput
-                    style={styles.inputTextStyle}
-                    placeholderTextColor={"black"}
+                    style={[styles.inputTextStyle,{color:theme.fontColor.primaryFontColor}]}
+                    placeholderTextColor={theme.fontColor.primaryFontColor}
                     placeholder="Type here..."
                   />
-        <Image source={require('../assets/rightArrowIcon.png')} style={styles.inputTextIcon}/>
+        <MaterialIcons name="arrow-forward-ios" style={styles.inputTextIcon} color={theme.fontColor.primaryFontColor} size={20} />
         </View>
       
       
-    </>
+    </View>
   )
 }
 
 export default TextInputSection;
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
     inputTextIcon:{
-        height:20,
-        width:20,
+       
         marginRight:20,
     },
     inputTextStyle:{
@@ -48,7 +54,6 @@ const styles = StyleSheet.create({
         marginHorizontal:20,
     },
     textInputWrapper:{  
-        backgroundColor:'#DDE6ED',
         height:60,
         marginHorizontal:20,
         borderRadius:20,

@@ -20,7 +20,7 @@ const Main = ({navigation}) => {
   return (
     <View style={[styles.container,{backgroundColor:theme.backgroundColor}]}>
       <View style={styles.titleWrapper}>
-      <MaterialIcons name="arrow-back" color={theme.fontColor.primaryFontColor} size={20} />
+      <MaterialIcons name="arrow-back-ios" color={theme.fontColor.primaryFontColor} size={20} />
       <TouchableOpacity onPress={()=>navigation.goBack()}>
                 <Text style={[styles.backText,{color:theme.fontColor.primaryFontColor}]}>Back</Text>
           </TouchableOpacity>
