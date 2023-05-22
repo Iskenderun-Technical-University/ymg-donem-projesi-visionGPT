@@ -14,9 +14,16 @@ import { MaterialIcons } from '@expo/vector-icons';
 const Menu = ({navigation}) => {
     
     const {setPassword,email,setEmail,setLoggedIn,setCount} = useContext(AuthContext);
-    const {theme,setTheme,language,setLanguage} = useContext(AppPreferencesContext);
+    const {theme,language,setTheme,setLanguage,appPreferences} = useContext(AppPreferencesContext);
     const {isVerified,count} = useContext(MainContext)
     
+    const changeTheme = ()=>{
+      if (theme.themeName === 'Dark'){
+        setTheme(appPreferences.theme.light)
+      }else{
+        setTheme(appPreferences.theme.dark)
+      }
+    }
     
 
     const logout = async () => {
@@ -44,7 +51,6 @@ const Menu = ({navigation}) => {
           </TouchableOpacity>
       </View>
         <Text style={[styles.settingsTitleText,{color:theme.fontColor.primaryFontColor}]}>Menu</Text>
-
         <View style={styles.userInfoWrapper}>
             <Image source={require('../assets/newVisionGPTIcon.png')} style={styles.avataricon} />
             <View>
@@ -86,16 +92,16 @@ const Menu = ({navigation}) => {
 
         <View style={[styles.settingsWrapper,{backgroundColor:theme.sectionBoxColor}]}>
         
-          <View style={styles.settingRow}>
+          <TouchableOpacity style={styles.settingRow} onPress={changeTheme}>
           <View style={styles.leftTexts}>
           <MaterialIcons name="palette" style={{marginHorizontal:10}} color={theme.fontColor.primaryFontColor} size={20} />
           <Text style={[styles.settingText,{color:theme.fontColor.primaryFontColor}]}>Theme</Text>
           </View>
           <View style={styles.rightTexts}>
           <Text style={[styles.settingTextRight,{color:theme.fontColor.secondaryFontColor}]}>{theme.themeName}</Text>
-          <Image style={styles.changeIcon} source={require('../assets/changeIcon.png')} />
+          <MaterialIcons name="cached" style={{marginRight:10}} color={theme.fontColor.primaryFontColor} size={20} />
           </View>
-          </View>
+          </TouchableOpacity>
           
           <View style={styles.settingRow}>
           <View style={styles.leftTexts}>
@@ -104,7 +110,7 @@ const Menu = ({navigation}) => {
           </View>
           <View style={styles.rightTexts}>
           <Text style={[styles.settingTextRight,{color:theme.fontColor.secondaryFontColor}]}>{language}</Text>
-          <Image style={styles.changeIcon} source={require('../assets/changeIcon.png')} />
+          <MaterialIcons name="cached" style={{marginRight:10}} color={theme.fontColor.primaryFontColor} size={20} />
           </View>
           </View>
           
@@ -249,11 +255,6 @@ const styles = StyleSheet.create({
     alignItems:'center',
     justifyContent:'flex-end',
     marginBottom:16,
-  },
-  changeIcon:{
-    width:15,
-    height:15,
-    marginRight:5,
   },
   rightTexts:{
     flexDirection:'row',

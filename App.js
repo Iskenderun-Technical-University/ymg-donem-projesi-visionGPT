@@ -72,7 +72,7 @@ const App = () => {
   const [language,setLanguage] = useState(appPreferences.language.primaryLanguage);
   //STATES END
 
-  
+    
 
     const loginOrRegister = async (userInfo) => {
       const userRef = collection(db, "userData");
