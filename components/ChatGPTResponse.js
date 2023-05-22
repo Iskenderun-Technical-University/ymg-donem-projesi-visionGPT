@@ -6,7 +6,8 @@ import SolutionButton from './SolutionButton';
 
 const ChatGPTResponse = () => {
     const {chatGPTResponse,copyToClipboardChatGPTResponse,loadingAnswer} = useContext(MainContext);
-    
+    //TO-DO
+    //Need a button for this component that stops operations instantly
   return (
     <>
     {
@@ -29,8 +30,10 @@ const ChatGPTResponse = () => {
             </View>
           </View>
         )}
+      
     
     </>
+    
   )
 }
 
