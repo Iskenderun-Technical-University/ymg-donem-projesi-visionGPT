@@ -17,7 +17,7 @@ describe('PhotoInputCard', () => {
       </MainContext.Provider>
     );
 
-    expect(getByText('Take photo or Select image')).toBeTruthy();
+    expect(getByText('Take a Photo')).toBeTruthy();
   });
 
   it('does not render the card when isInputCardsVisible is false', () => {
@@ -33,7 +33,7 @@ describe('PhotoInputCard', () => {
       </MainContext.Provider>
     );
 
-    expect(queryByText('Take photo or Select image')).toBeNull();
+    expect(queryByText('Choose an Image')).toBeNull();
   });
 
   it('calls takeAndCropPhoto when Take Photo button is pressed', () => {
@@ -49,7 +49,7 @@ describe('PhotoInputCard', () => {
       </MainContext.Provider>
     );
 
-    fireEvent.press(getByText('Take Photo'));
+    fireEvent.press(getByText('Take a Photo'));
     expect(mockContext.takeAndCropPhoto).toHaveBeenCalled();
   });
 
@@ -66,7 +66,7 @@ describe('PhotoInputCard', () => {
       </MainContext.Provider>
     );
 
-    fireEvent.press(getByText('Select Image'));
+    fireEvent.press(getByText('Choose an Image'));
     expect(mockContext.pickImage).toHaveBeenCalled();
   });
 });
