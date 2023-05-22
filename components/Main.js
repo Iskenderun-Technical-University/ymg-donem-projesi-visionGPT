@@ -9,25 +9,28 @@ import GoogleTextDetector from "./GoogleTextDetector";
 import ClearAndSolutionButtons from "./ClearAndSolutionButtons";
 import React,{useContext} from "react";
 import MainContext from "../context/MainContext";
-
+import AppPreferencesContext from "../context/AppPreferencesContext";
+import { MaterialIcons } from '@expo/vector-icons';
 
 
 const Main = ({navigation}) => {
   const {image} = useContext(MainContext);
+  const {theme,language} = useContext(AppPreferencesContext);
  
   return (
-    <View style={styles.container}>
+    <View style={[styles.container,{backgroundColor:theme.backgroundColor}]}>
       <View style={styles.titleWrapper}>
-      <TouchableOpacity style={styles.backButtonWrapper} onPress={()=>navigation.goBack()}>
-                <Text style={styles.backText}>{'<'} Back</Text>
-            </TouchableOpacity>
+      <MaterialIcons name="arrow-back" color={theme.fontColor.primaryFontColor} size={20} />
+      <TouchableOpacity onPress={()=>navigation.goBack()}>
+                <Text style={[styles.backText,{color:theme.fontColor.primaryFontColor}]}>Back</Text>
+          </TouchableOpacity>
       </View>
       {   
         image ==null &&
-        <Text style={styles.visionInputTitle}>Visual Input</Text>
+        <Text style={[styles.visionInputTitle,{color:theme.fontColor.primaryFontColor}]}>Visual Input</Text>
       }
    
-      <StatusBar style="dark" />
+      <StatusBar style={theme.StatusBarTheme} />
       <ScrollView>
         <TutorialTips />
         <Picture />
@@ -54,16 +57,15 @@ const styles = StyleSheet.create({
     marginBottom:80,
   },
   titleWrapper:{
-    flexDirection:'row',
     marginTop:70,
     marginHorizontal:16,
-
+    flexDirection:'row',
+    alignItems:'center',
   },
   backText:{
     fontSize:18,
   },
   container: {
-    backgroundColor: "#FFFFFF",
     flex: 1,
   },
 

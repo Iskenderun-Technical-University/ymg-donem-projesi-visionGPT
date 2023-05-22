@@ -6,7 +6,7 @@ import AppPreferencesContext from '../context/AppPreferencesContext';
 import { MaterialIcons } from '@expo/vector-icons';
 
 const NewMainScreen = ({navigation}) => {
-    const {theme,setTheme,language,setLanguage} = useContext(AppPreferencesContext)
+    const {theme,language} = useContext(AppPreferencesContext)
   return (
     <View style={[styles.container,{backgroundColor:theme.backgroundColor}]}>
         <StatusBar style={theme.statusBarTheme} />

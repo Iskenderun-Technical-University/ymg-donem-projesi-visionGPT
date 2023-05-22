@@ -1,25 +1,27 @@
 import { StyleSheet, Text, View,TouchableOpacity,Image } from 'react-native'
 import React,{useContext} from 'react'
 import MainContext from '../context/MainContext'
-
+import AppPreferencesContext from '../context/AppPreferencesContext';
+import { MaterialIcons } from '@expo/vector-icons';
 
 
 const PhotoInputCard = () => {
     const {takeAndCropPhoto,pickImage,isInputCardsVisible} = useContext(MainContext)
+    const {theme,language} = useContext(AppPreferencesContext)
   return (
     <>
     {
       isInputCardsVisible && (
         <View style={styles.choicesWrapper}>
-        <TouchableOpacity style={styles.choicesSectionLeft} onPress={takeAndCropPhoto}>
-            <Image source={require('../assets/takeAPhotoIcon.png')} style={styles.sectionIcon} />
+        <TouchableOpacity style={[styles.choicesSectionLeft,{backgroundColor:theme.sectionBoxColor}]} onPress={takeAndCropPhoto}>
+        <MaterialIcons name="photo-camera" color={theme.fontColor.primaryFontColor} style={{marginTop:10}} size={40} />
             
-            <Text style={styles.sectionText}>Take a{'\n'}Photo</Text>    
+            <Text style={[styles.sectionText,{color:theme.fontColor.primaryFontColor}]}>Take a{'\n'}Photo</Text>    
          </TouchableOpacity>
-         <TouchableOpacity style={styles.choicesSectionRight} onPress={pickImage}>
-         <Image source={require('../assets/selectImageIcon.png')} style={styles.sectionIcon} />
+         <TouchableOpacity style={[styles.choicesSectionRight,{backgroundColor:theme.sectionBoxColor}]} onPress={pickImage}>
+         <MaterialIcons name="image" color={theme.fontColor.primaryFontColor} style={{marginTop:10}} size={40} />
            
-            <Text style={styles.sectionText}>Choose an{'\n'}Image</Text>    
+            <Text style={[styles.sectionText,{color:theme.fontColor.primaryFontColor}]}>Choose an{'\n'}Image</Text>    
          </TouchableOpacity>
       </View>
       )
@@ -45,7 +47,7 @@ sectionText:{
     fontSize:18,
     marginBottom:10,
     textAlign:'center',
-    color:'grey'
+    
 },
   choicesWrapper:{
     flexDirection:'row',
@@ -53,7 +55,7 @@ sectionText:{
 
 },
 choicesSectionLeft:{
-    backgroundColor:'#EEF1FF',
+    
     height:140,
     width:140,
     borderRadius:20,
@@ -62,7 +64,7 @@ choicesSectionLeft:{
     marginLeft:40,
 },
 choicesSectionRight:{
-    backgroundColor:'#EEF1FF',
+  
     height:140,
     width:140,
     borderRadius:20,

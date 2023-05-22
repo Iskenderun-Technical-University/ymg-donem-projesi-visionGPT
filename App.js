@@ -38,7 +38,7 @@ const App = () => {
       dark:{
         fontColor:{
           primaryFontColor:'white',
-          secondaryFontColor:'#393E46',
+          secondaryFontColor:'#B7B7B7',
         },
         backgroundColor:'#212A3E',
         statusBarTheme:'light',
