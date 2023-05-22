@@ -7,18 +7,25 @@ import AddAttemptInput from "./AddAttemptInput";
 import ChatGPTResponse from "./ChatGPTResponse";
 import GoogleTextDetector from "./GoogleTextDetector";
 import ClearAndSolutionButtons from "./ClearAndSolutionButtons";
+import React,{useContext} from "react";
+import MainContext from "../context/MainContext";
 
 
 
 const Main = ({navigation}) => {
-   return (
+  const {image} = useContext(MainContext);
+ 
+  return (
     <View style={styles.container}>
       <View style={styles.titleWrapper}>
       <TouchableOpacity style={styles.backButtonWrapper} onPress={()=>navigation.goBack()}>
                 <Text style={styles.backText}>{'<'} Back</Text>
             </TouchableOpacity>
       </View>
-      <Text style={styles.visionInputTitle}>Vision Input</Text>
+      {   
+        image ==null &&
+        <Text style={styles.visionInputTitle}>Vision Input</Text>
+      }
    
       <StatusBar style="dark" />
       <ScrollView>
@@ -44,6 +51,7 @@ const styles = StyleSheet.create({
     fontWeight:'300',
     marginLeft:30,
     marginTop:24,
+    marginBottom:80,
   },
   titleWrapper:{
     flexDirection:'row',

@@ -2,6 +2,7 @@ import { StyleSheet, Text, View,Image,TouchableOpacity } from 'react-native'
 import { StatusBar } from "expo-status-bar";
 import React from 'react'
 import MainUITitle from './MainUITitle'
+import TextInput from './TextInput';
 
 const NewMainScreen = ({navigation}) => {
   return (
@@ -21,11 +22,11 @@ const NewMainScreen = ({navigation}) => {
             <Text style={styles.sectionMainTitle}>Visual Input</Text>
             <Text style={styles.sectionText}>Take a Photo</Text>    
          </TouchableOpacity>
-         <View style={styles.choicesSectionRight}>
+         <TouchableOpacity style={styles.choicesSectionRight} onPress={()=>navigation.navigate('TextInput')}>
          <Image source={require('../assets/keyboardIcon.png')} style={styles.sectionIcon} />
             <Text style={styles.sectionMainTitle}>Text Input</Text>
             <Text style={styles.sectionText}>Type a Question</Text>    
-         </View>
+         </TouchableOpacity>
     </View>
 
     </View>

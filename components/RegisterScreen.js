@@ -22,6 +22,7 @@ import BouncyCheckbox from "react-native-bouncy-checkbox";
 import secretTokens from "../tokens/SecretTokens";
 import AuthContext from "../context/AuthContext";
 
+
 const RegisterScreen = ({ navigation }) => {
 const [isCheckboxChecked,setIsCheckboxChecked] = useState(false);
 const { password, setPassword, email, setEmail, loading,loginOrRegister,handleRegister} = useContext(AuthContext);
@@ -82,15 +83,13 @@ const { password, setPassword, email, setEmail, loading,loginOrRegister,handleRe
             <Text style={styles.registerTextSub}>Get started free</Text>
 
             <View style={styles.registerInfoWrapper}>
+
               <View style={styles.emailTextTitle}>
-              <Image
-                  source={require("../assets/emailicon.png")}
-                  style={styles.inputEmailIcon}
-                />
+              
                 <Text style={styles.emailText}>Email</Text>
               </View>
 
-              <View style={styles.textInputWrapper}>
+              
                 <View style={styles.textInputWrapperEmail}>
                   <TextInput
                     inputMode="email"
@@ -100,19 +99,20 @@ const { password, setPassword, email, setEmail, loading,loginOrRegister,handleRe
                     value={email}
                     onChangeText={(text)=>setEmail(text)}
                   />
-                </View>
-                
-              </View>
-
-              <View style={styles.emailTextTitle}>
-              <Image
-                  source={require("../assets/passwordicon.png")}
+                  <Image
+                  source={require("../assets/emailicon.png")}
                   style={styles.inputEmailIcon}
                 />
+                </View>
+                
+            
+
+              <View style={styles.emailTextTitle}>
+              
                 <Text style={styles.emailText}>Password</Text>
               </View>
 
-              <View style={styles.textInputWrapper}>
+             
                 <View style={styles.textInputWrapperEmail}>
                   <TextInput
                     style={styles.emailInput}
@@ -122,10 +122,14 @@ const { password, setPassword, email, setEmail, loading,loginOrRegister,handleRe
                     value={password}
                     onChangeText={(text)=>setPassword(text)}
                   />
+                  <Image
+                  source={require("../assets/passwordicon.png")}
+                  style={styles.inputEmailIcon}
+                />
                 </View>
                 
                 
-              </View>
+              
               <View style={styles.checkBox}>
               <BouncyCheckbox textStyle={{ fontFamily: "Inter_200ExtraLight" }} text='I Accept the Terms of Use' fillColor="purple" onPress={alertFunc}/>
               </View>
@@ -255,25 +259,20 @@ const styles = StyleSheet.create({
     marginBottom: 5,
     flexDirection:'row',
   },
-  emailInput: {
-    color: "black",
-    marginTop: 4,
-    textAlign: "center",
-  },
-  textInputWrapper: {
-    flexDirection: "row",
-    justifyContent: "center",
-  },
-  textInputWrapperEmail: {
-    backgroundColor: "rgba(209,209,253,1)",
-    height: 35,
-    borderRadius: 10,
-    borderWidth: 1,
-    borderColor: "rgba(115,114,253,0.7)",
-    alignItems: "center",
-    width: "80%",
-    elevation:10,
-  },
+  emailInput:{
+    height:60,
+    marginHorizontal:20,
+},
+  
+  textInputWrapperEmail:{  
+    backgroundColor:'#DDE6ED',
+    height:45,
+    marginHorizontal:40,
+    borderRadius:15,
+    flexDirection:'row',
+    justifyContent:'space-between',
+    alignItems:'center'
+},
   registerTextSub: {
     color: "black",
     textAlign: "center",

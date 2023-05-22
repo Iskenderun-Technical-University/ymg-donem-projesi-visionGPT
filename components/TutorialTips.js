@@ -11,7 +11,6 @@ const TutorialTips = () => {
         <View style={styles.howToUseSectionWrapper}>
         <Image source={require('../assets/newVisionGPTIcon.png')} style={styles.visionGPTIcon} />
         <View style={styles.tutorialTips}>
-          <Text style={styles.tutorialTipsTitle}>How to use</Text>
 
           <Text style={styles.tutorialTipsContent}>
             1- Select an Image or Take a Picture{'\n'}

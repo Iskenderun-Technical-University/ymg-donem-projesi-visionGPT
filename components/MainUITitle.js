@@ -1,12 +1,15 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native'
-import React from 'react'
+import React,{useContext} from 'react'
+import MainContext from '../context/MainContext';
 
 
 const MainUITitle = ({navigation}) => {
+ 
+ 
   return (
     <View style={styles.titleWrapper}>
       <Text style={styles.titleText}>VisionGPT</Text>
-      <TouchableOpacity onPress={() => navigation.navigate("Menu")}>
+      <TouchableOpacity onPress={()=>navigation.navigate('Menu')}>
         <Image
           testID="menu-icon"
           source={require("../assets/menuIcon.png")}
