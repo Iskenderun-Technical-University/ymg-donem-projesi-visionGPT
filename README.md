@@ -32,7 +32,7 @@ This mobile application is developed using React Native. The app enables users t
 
 
 
-## Screen recording
+## Screen recording (old record)
 ![Screen Recording 2023-05-10 at 03 25 55](https://github.com/mert-donmez/VisionGPT/assets/83416622/6ca3521c-4a1c-4fac-88f1-f62ff760cbd3)
 
 
