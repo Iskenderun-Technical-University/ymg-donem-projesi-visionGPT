@@ -279,10 +279,7 @@ const styles = StyleSheet.create({
     flexDirection:'row'
   },
   registerButtonWrapper:{
-    backgroundColor:'transparent',
-    height:40,
-    justifyContent:'center',
-    marginHorizontal:'10%',
+    marginHorizontal:40,
     marginTop:20,
   },
   registerButtonEmail: {
@@ -292,7 +289,6 @@ const styles = StyleSheet.create({
     alignItems:'center',
     height:40,
     borderRadius: 10,
-    elevation:20,
   },
   bottomWrapper: {
     flex: 1,

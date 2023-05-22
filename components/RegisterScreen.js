@@ -21,6 +21,7 @@ import {
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import secretTokens from "../tokens/SecretTokens";
 import AuthContext from "../context/AuthContext";
+import { MaterialIcons } from '@expo/vector-icons';
 
 
 const RegisterScreen = ({ navigation }) => {
@@ -134,18 +135,11 @@ const { password, setPassword, email, setEmail, loading,loginOrRegister,handleRe
               <BouncyCheckbox textStyle={{ fontFamily: "Inter_200ExtraLight" }} text='I Accept the Terms of Use' fillColor="purple" onPress={alertFunc}/>
               </View>
               <View style={styles.registerButtonWrapper}>
-                <TouchableOpacity style={styles.registerButtonEmail} onPress={isAcceptTermsOfUse}>
-                  <LinearGradient
-                    colors={[        
-                    "rgba(115,114,253,1)",
-                    'rgba(115,114,253,1)',
-                    ]}
-                    start={[0,0]}
-                    end={[1,1]}
-                    style={styles.gradientButton}
-                  >
+                <TouchableOpacity style={styles.registerButtonEmail}
+                 onPress={isAcceptTermsOfUse}
+                disabled={true}>
                     <Text style={styles.registerButtonTextEmail}>Register</Text>
-                  </LinearGradient>
+                    <MaterialIcons name="arrow-forward" color={'white'} size={20} />
                 </TouchableOpacity>
               </View>
               <View style={styles.divider}/>
@@ -221,19 +215,16 @@ const styles = StyleSheet.create({
     width:'100%'
   },
   registerButtonWrapper:{
-    backgroundColor:'transparent',
-    height:40,
-    justifyContent:'center',
-    marginHorizontal:'10%',
+    marginHorizontal:40,
     marginTop:20,
   },
   registerButtonEmail: {
-    backgroundColor: "rgba(115,114,253,0.7)",
+    backgroundColor: "rgba(115,114,253,1)",
+    flexDirection:'row',
+    justifyContent:'center',
+    alignItems:'center',
     height:40,
     borderRadius: 10,
-    justifyContent: "center",
-    alignItems: "center",
-    elevation:20,
   },
   bottomWrapper: {
     flex: 1,
