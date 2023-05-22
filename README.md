@@ -32,8 +32,8 @@ This mobile application is developed using React Native. The app enables users t
 
 
 
-## Screen recording (old record)
-![Screen Recording 2023-05-10 at 03 25 55](https://github.com/mert-donmez/VisionGPT/assets/83416622/6ca3521c-4a1c-4fac-88f1-f62ff760cbd3)
+## Screen recording
+![Screen Recording 2023-05-22 at 04 09 11](https://github.com/Iskenderun-Technical-University/ymg-donem-projesi-visionGPT/assets/83416622/c4f516b8-26ae-498f-9f13-9c80ea281ae6)
 
 
 ## Roadmap
