@@ -42,7 +42,6 @@ const styles = StyleSheet.create({
         height:20,
         width:20,
         marginRight:20,
-
     },
     inputTextStyle:{
         height:60,
