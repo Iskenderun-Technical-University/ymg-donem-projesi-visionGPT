@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image, TouchableOpacity, TextInput, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard } from 'react-native'
+import { StyleSheet, Text, View, Image, TouchableOpacity, TextInput, ScrollView,KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard } from 'react-native'
 import React, { useContext, useEffect, useState } from 'react'
 import MainContext from '../context/MainContext'
 import AppPreferencesContext from "../context/AppPreferencesContext";
@@ -40,50 +40,63 @@ const TextInputSection = ({ navigation }) => {
           </View>
 
           <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+            
           <View style={{flex:1}}>
+            
             { userPrompt === '' && 
           <Text style={[styles.TextInput, { color: theme.fontColor.primaryFontColor }]}>Text Input</Text>
             }
+          
           <View style={styles.howToUseSectionWrapper}>
             {
               userPrompt === ''? 
               <>
             <Image source={require('../assets/newVisionGPTIcon.png')} style={{height: 150,width: 150}} />
-            <Text style={{color: theme.fontColor.secondaryFontColor,fontSize:20}}>
-                How can i help you ? 
+            
+            <Text style={{color: theme.fontColor.secondaryFontColor,fontSize:20,marginRight:40}}>
+                Type your question below
               </Text>
               </>
             : 
             <>
             <Image source={require('../assets/newVisionGPTIcon.png')} style={{height: 100,width: 100,marginTop:30}} />
-            <Text style={{color: theme.fontColor.secondaryFontColor,justifyContent:'flex-start',flex:1}}>
+            <View style={{justifyContent:'flex-start',flex:1,backgroundColor:'#539165',marginRight:'30%',borderTopLeftRadius:20,borderTopRightRadius:20,borderBottomRightRadius:20}}>
+            <Text style={{marginHorizontal:10,marginVertical:15,color:'white'}}>
                 How can i help you ? 
               </Text>
+              </View>
               </>
             }
               
           </View>
           {
             isPress === true && userPrompt !== '' &&
-          <View style={{backgroundColor:'#5C469C',marginLeft:'30%',marginRight:20,borderTopLeftRadius:20,borderTopRightRadius:20,borderBottomLeftRadius:20,}}>
-              <Text style={{marginHorizontal:10,marginVertical:15,color:theme.fontColor.primaryFontColor}}>{userPrompt}</Text>
+          <View style={{backgroundColor:'#8F43EE',marginLeft:'30%',marginRight:20,borderTopLeftRadius:20,borderTopRightRadius:20,borderBottomLeftRadius:20}}>
+              <Text style={{marginHorizontal:10,marginVertical:15,color:'white'}}>{userPrompt}</Text>
           </View>
           }
-
+        
           <View style={[styles.textInputMainWrapper,{justifyContent: userPrompt !=='' ? 'flex-end' : null,marginBottom:30}]}> 
-          <View style={[styles.textInputWrapper, { backgroundColor: theme.sectionBoxColor }]}>
+          <View style={[styles.textInputWrapper, { backgroundColor: theme.sectionBoxColor,marginRight: userPrompt===''?20:40,
+    marginLeft:20, }]}>
             <TextInput
               style={[styles.inputTextStyle, { color: theme.fontColor.primaryFontColor }]}
               placeholderTextColor={theme.fontColor.primaryFontColor}
               placeholder="Type here..."
               onChangeText={(text)=>setUserPrompt(text)}
+              
             />
             <TouchableOpacity onPress={startChat}>
             <MaterialIcons name="arrow-forward-ios" style={styles.inputTextIcon} color={theme.fontColor.primaryFontColor} size={20} />
             </TouchableOpacity>
+            {
+              userPrompt !== '' &&
+            <MaterialIcons name="cancel" style={{marginLeft:5}} color={'#E74646'} size={30} />
+            }
           </View>
           </View>
         </View>
+       
       </TouchableWithoutFeedback>
     </KeyboardAvoidingView>
 
@@ -113,10 +126,10 @@ const styles = StyleSheet.create({
   inputTextStyle: {
     height: 60,
     marginHorizontal: 20,
+    width:'75%',
   },
   textInputWrapper: {
     height: 60,
-    marginHorizontal: 20,
     borderRadius: 20,
     flexDirection: 'row',
     justifyContent: 'space-between',
