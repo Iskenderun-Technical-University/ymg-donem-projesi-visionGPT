@@ -23,6 +23,8 @@ import * as WebBrowser from 'expo-web-browser';
 import * as Google from 'expo-auth-session/providers/google';
 import secretTokens from "../tokens/SecretTokens";
 import { MaterialIcons } from '@expo/vector-icons';
+import AppPreferencesContext from "../context/AppPreferencesContext";
+
 
 
 WebBrowser.maybeCompleteAuthSession();
@@ -33,7 +35,7 @@ const LoginScreen = ({ navigation }) => {
     const [token, setToken] = useState("");
     const [userInfo, setUserInfo] = useState(null);
     const [request, response, promptAsync] = Google.useAuthRequest(secretTokens.googleAuthTokens);
-    
+    const {theme,language} = useContext(AppPreferencesContext);
     
     useEffect(() => {
       if (response?.type === 'success') {
