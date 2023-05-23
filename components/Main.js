@@ -76,9 +76,7 @@ const styles = StyleSheet.create({
     alignItems:'center',
     justifyContent:'space-between',
   },
-  backText:{
-    fontSize:18,
-  },
+  
   container: {
     flex: 1,
   },

@@ -20,6 +20,7 @@ import NewMainScreen from "./components/NewMainScreen";
 import TextInputSection from "./components/TextInput";
 
 
+
 const Stack = createNativeStackNavigator();
 
 const App = () => {

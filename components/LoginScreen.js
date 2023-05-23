@@ -26,6 +26,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import AppPreferencesContext from "../context/AppPreferencesContext";
 
 
+
 WebBrowser.maybeCompleteAuthSession();
 
 const LoginScreen = ({ navigation }) => {
