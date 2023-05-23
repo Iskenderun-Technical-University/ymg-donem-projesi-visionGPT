@@ -5,8 +5,10 @@ import MainUITitle from './MainUITitle'
 import AppPreferencesContext from '../context/AppPreferencesContext';
 import { MaterialIcons } from '@expo/vector-icons';
 
+
 const NewMainScreen = ({navigation}) => {
     const {theme,language} = useContext(AppPreferencesContext)
+    
   return (
     <View style={[styles.container,{backgroundColor:theme.backgroundColor}]}>
         <StatusBar style={theme.statusBarTheme} />
@@ -29,6 +31,7 @@ const NewMainScreen = ({navigation}) => {
             <Text style={[styles.sectionText,{color:theme.fontColor.secondaryFontColor}]}>Type a Question</Text>    
          </TouchableOpacity>
     </View>
+    
 
     </View>
   )
