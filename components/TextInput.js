@@ -1,8 +1,10 @@
-import { StyleSheet, Text, View, Image, TouchableOpacity, TextInput, ScrollView,KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard } from 'react-native'
+import { StyleSheet, Text, View, Image, TouchableOpacity, TextInput, ScrollView,KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard,ImageBackground } from 'react-native'
 import React, { useContext, useEffect, useState } from 'react'
 import MainContext from '../context/MainContext'
 import AppPreferencesContext from "../context/AppPreferencesContext";
 import { MaterialIcons } from '@expo/vector-icons';
+import BotResponseMessage from './BotResponseMessage';
+import UserMessage from './UserMessage';
 
 const TextInputSection = ({ navigation }) => {
   const { count, image, isVerified } = useContext(MainContext);
@@ -10,9 +12,11 @@ const TextInputSection = ({ navigation }) => {
   const [userPrompt, setUserPrompt] = useState('');
   const [isPress,setIsPress] = useState(false);
 
+  
   const startChat = () =>{
     if(userPrompt !== ''){
       setIsPress(true);
+      
     }else{
       setIsPress(false);
     }
@@ -21,27 +25,36 @@ const TextInputSection = ({ navigation }) => {
   useEffect(()=>{
     if(userPrompt === ''){
       setIsPress(false);
+      
     }
   },[userPrompt])
 
   return (
+    
     <KeyboardAvoidingView style={[styles.container, { backgroundColor: theme.backgroundColor }]} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
       
         
           <View style={styles.titleWrapper}>
             <TouchableOpacity onPress={() => navigation.goBack()} style={{ flexDirection: 'row', alignItems: 'center' }}>
               <MaterialIcons name="arrow-back-ios" color={theme.fontColor.primaryFontColor} size={20} />
-              <Text style={[styles.backText, { color: theme.fontColor.primaryFontColor }]}>Back</Text>
             </TouchableOpacity>
+            { userPrompt !==''&&
+            <Text style={{color:theme.fontColor.primaryFontColor,fontSize:20,}}>Chat with bot</Text>
+            }
             <View style={{ flexDirection: 'row', alignItems: 'center', backgroundColor: count > 0 ? '#AA77FF' : '#DF2E38', borderRadius: 20, justifyContent: 'center' }}>
               <MaterialIcons name="local-activity" style={{ marginLeft: 10, marginRight: 10 }} color={'white'} size={20} />
               <Text style={[styles.countText, { color: 'white' }]}>{count}</Text>
             </View>
           </View>
 
+
+          
+            
           <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             
+          
           <View style={{flex:1}}>
+          
             
             { userPrompt === '' && 
           <Text style={[styles.TextInput, { color: theme.fontColor.primaryFontColor }]}>Text Input</Text>
@@ -58,22 +71,21 @@ const TextInputSection = ({ navigation }) => {
               </Text>
               </>
             : 
-            <>
-            <Image source={require('../assets/newVisionGPTIcon.png')} style={{height: 100,width: 100,marginTop:30}} />
-            <View style={{justifyContent:'flex-start',flex:1,backgroundColor:'#539165',marginRight:'30%',borderTopLeftRadius:20,borderTopRightRadius:20,borderBottomRightRadius:20}}>
-            <Text style={{marginHorizontal:10,marginVertical:15,color:'white'}}>
-                How can i help you ? 
-              </Text>
-              </View>
-              </>
+            
+            <BotResponseMessage message={'How can i help you ? '}/>
+              
+              
             }
               
           </View>
           {
             isPress === true && userPrompt !== '' &&
-          <View style={{backgroundColor:'#8F43EE',marginLeft:'30%',marginRight:20,borderTopLeftRadius:20,borderTopRightRadius:20,borderBottomLeftRadius:20}}>
-              <Text style={{marginHorizontal:10,marginVertical:15,color:'white'}}>{userPrompt}</Text>
-          </View>
+            <>
+              <UserMessage userPrompt={userPrompt} />
+              <BotResponseMessage message={'This feature is still under development.\nIt will be available for use in a short while'}/>
+              
+            </>
+          
           }
         
           <View style={[styles.textInputMainWrapper,{justifyContent: userPrompt !=='' ? 'flex-end' : null,marginBottom:30}]}> 
@@ -95,9 +107,13 @@ const TextInputSection = ({ navigation }) => {
             }
           </View>
           </View>
+        
         </View>
+        
+        
        
       </TouchableWithoutFeedback>
+      
     </KeyboardAvoidingView>
 
   )
@@ -168,6 +184,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
+    marginBottom:20,
   },
   backText: {
     fontSize: 18,
