@@ -350,7 +350,7 @@ const App = () => {
       const messages = [
         {
           role: "system",
-          content: "You're a helpful assistant and your name is VisionGPT",
+          content: "You're a helpful friend and your name is VisionGPT",
         },
         ...previousMessages,
         {

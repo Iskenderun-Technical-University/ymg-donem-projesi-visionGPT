@@ -16,6 +16,7 @@ import AppPreferencesContext from "../context/AppPreferencesContext";
 import { MaterialIcons } from "@expo/vector-icons";
 import BotResponseMessage from "./BotResponseMessage";
 import UserMessage from "./UserMessage";
+import ContentLoader from "react-native-easy-content-loader";
 
 const TextInputSection = ({ navigation }) => {
   const {
@@ -43,7 +44,7 @@ const TextInputSection = ({ navigation }) => {
         ...prevBotResponse,
         chatGPTResponse,
       ]);
-      
+
       setChatGPTResponse("");
     }
   }, [chatGPTResponse]);
@@ -73,10 +74,9 @@ const TextInputSection = ({ navigation }) => {
       }
       setUserPrompt([...userPrompt, currentMessage]);
       setUserPrompTime([...userPromptTime, getCurrentTime()]);
-      
+
       let previousMessages = [];
       for (let i = 0; i < userPrompt.length; i++) {
-        
         previousMessages.push({
           role: "user",
           content: userPrompt[i],
@@ -90,13 +90,11 @@ const TextInputSection = ({ navigation }) => {
         }
       }
 
-      // Limit the number of previous messages to the last 5
       previousMessages = previousMessages.slice(-5);
       startChatWithGPT(previousMessages, currentMessage);
       setBotResponseTime([...botResponseTime, getCurrentTime()]);
       setIsPress(true);
       setCurrentMessage("");
-      
     } else {
       setUserPrompt([...userPrompt, currentMessage]);
       setUserPrompTime([...userPromptTime, getCurrentTime()]);
@@ -206,11 +204,14 @@ const TextInputSection = ({ navigation }) => {
                     userPrompt={prompt}
                     userPromptTime={userPromptTime[index]}
                   />
-
-                  <BotResponseMessage
-                    message={botResponse[index]}
-                    botResponseTime={botResponseTime[index]}
-                  />
+                  {loadingAnswer && index === botResponse.length ? (
+                    <ContentLoader active />
+                  ) : (
+                    <BotResponseMessage
+                      message={botResponse[index]}
+                      botResponseTime={botResponseTime[index]}
+                    />
+                  )}
                 </React.Fragment>
               ))}
             </View>
