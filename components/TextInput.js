@@ -33,6 +33,23 @@ const TextInputSection = ({ navigation }) => {
 
   const scrollViewRef = useRef();
 
+
+
+  const getResponsefromBot = () => {
+    setLoading(true);
+    startChatWithGPT(currentMessage);
+  }
+  
+  useEffect(() => {
+    if(chatGPTResponse !== ''){
+      setLoading(false);
+      setBotResponse((prevBotResponse) => [...prevBotResponse, chatGPTResponse]);
+      console.log('bot response : '+ botResponse + 'chatgptanswer: '+ chatGPTResponse);
+      setChatGPTResponse('');
+    }
+  }, [chatGPTResponse]);
+  
+
   
   const getCurrentTime = ()=>{
     let date = new Date(); 
@@ -52,25 +69,22 @@ const TextInputSection = ({ navigation }) => {
     setCurrentMessage('');
   }
 
-  
-
- 
-  
   const startChatEngine = () => {
     
     if (currentMessage === "") {
       return;
     }
-    
-      setUserPrompt([...userPrompt, currentMessage]);
+        setUserPrompt([...userPrompt, currentMessage]);
         setUserPrompTime([...userPromptTime, getCurrentTime()]);
-        setBotResponse([...botResponse, "Wait a second.. " ]);
+        getResponsefromBot();
         setBotResponseTime([...botResponseTime, getCurrentTime()]);
         setIsPress(true);
         setCurrentMessage("");
     
   };
 
+    console.log('bot responses: '+botResponse.length+ 'userPrompts:' + userPrompt.length)
+    console.log('bot responses: '+botResponse+ 'userPrompts:' + userPrompt)
 
   useEffect(() => {
     if (userPrompt[0] === undefined) {
@@ -169,8 +183,15 @@ const TextInputSection = ({ navigation }) => {
             <View>
               {userPrompt.map((prompt, index) => (
                 <React.Fragment key={index}>
+                  
                   <UserMessage userPrompt={prompt} userPromptTime={userPromptTime[index]}/>
-                  <BotResponseMessage message={botResponse[index]} botResponseTime={botResponseTime[index]} />
+                  {
+                    loadingAnswer ? 
+                    null
+                    :
+                    <BotResponseMessage message={botResponse[index]} botResponseTime={botResponseTime[index]} />
+                  }
+                  
                 </React.Fragment>
               ))}
             </View>
