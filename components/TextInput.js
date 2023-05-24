@@ -30,6 +30,7 @@ const TextInputSection = ({ navigation }) => {
 
   const scrollViewRef = useRef();
 
+  
   const getCurrentTime = ()=>{
     let date = new Date(); 
     let hours = date.getHours(); 
@@ -38,6 +39,14 @@ const TextInputSection = ({ navigation }) => {
     minutes = (minutes < 10 ? "0" : "") + minutes;
     let timeString = hours + ":" + minutes;
     return timeString;
+  }
+
+  const clearAllMessages = ()=>{
+    setBotResponse([]);
+    setUserPrompt([]);
+    setUserPrompTime([]);
+    setBotResponseTime([]);
+    setCurrentMessage('')
   }
 
   
@@ -228,12 +237,14 @@ const TextInputSection = ({ navigation }) => {
                 />
               </TouchableOpacity>
               {userPrompt[0] !== undefined && (
+                <TouchableOpacity onPress={clearAllMessages}>
                 <MaterialIcons
                   name="cancel"
                   style={{ marginLeft: 5 }}
                   color={"#E74646"}
                   size={30}
                 />
+                </TouchableOpacity>
                 
               )}
             </View>

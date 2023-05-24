@@ -12,7 +12,7 @@ const BotResponseMessage = ({ message, botResponseTime }) => {
             styles.textWrapper,
             {
               backgroundColor:
-                theme.themeName === "Dark" ? "#394867" : "#DDE6ED",
+                theme.themeName === "Dark" ? "#394867" : "#EEF1FF",
             },
           ]}
         >
@@ -21,7 +21,7 @@ const BotResponseMessage = ({ message, botResponseTime }) => {
           >
             {message}
           </Text>
-          <Text style={styles.timeText}>{botResponseTime}</Text>
+          <Text style={[styles.timeText,{ color: theme.fontColor.primaryFontColor }]}>{botResponseTime}</Text>
         </View>
       </View>
     </>
@@ -42,11 +42,11 @@ const styles = StyleSheet.create({
     color: "white",
   },
   timeText: {
-    color: "white",
     marginBottom: 5,
     textAlign: "right",
     marginRight: 10,
     fontWeight: "100",
+    fontSize:12,
   },
   textWrapper: {
     maxWidth: "70%",
