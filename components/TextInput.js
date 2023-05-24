@@ -185,12 +185,9 @@ const TextInputSection = ({ navigation }) => {
                 <React.Fragment key={index}>
                   
                   <UserMessage userPrompt={prompt} userPromptTime={userPromptTime[index]}/>
-                  {
-                    loadingAnswer ? 
-                    null
-                    :
-                    <BotResponseMessage message={botResponse[index]} botResponseTime={botResponseTime[index]} />
-                  }
+                    
+                  <BotResponseMessage message={loadingAnswer ? 'Just a second..' : botResponse[index]} botResponseTime={botResponseTime[index]} />
+                  
                   
                 </React.Fragment>
               ))}
