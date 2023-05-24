@@ -378,7 +378,7 @@ const App = () => {
       const assistantMessage = data.choices[0].message.content;
       setChatGPTResponse(assistantMessage);
       setLoadingAnswer(false);
-      console.log(assistantMessage);
+      decreaseCount();
       return assistantMessage;
     } catch (error) {
       console.log(error);

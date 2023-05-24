@@ -18,7 +18,7 @@ The prompt that currently only for answering the lesson questions.
 
 ## New Updates
 - VisionGPT upgraded to GPT-3.5 Turbo
-- Now the texts in the picture and the answer can be copied
+- Chat with VisionGPT 
 - Dark/Light Theme
 
 
@@ -27,7 +27,8 @@ The prompt that currently only for answering the lesson questions.
 This mobile application is developed using React Native. The app enables users to take a photo with their camera or select an existing photo from their device. Then, the text in the photo is detected and read using OCR (Optical Character Recognition) technology and sent to the ChatGPT API. The ChatGPT API accepts the text as a prompt and returns a response to the user.
 
 ## Screenshot
-![vision_ss](https://github.com/Iskenderun-Technical-University/ymg-donem-projesi-visionGPT/assets/83416622/69e438d0-9b20-4409-ad55-78dbe565df05)
+![newAppSs](https://github.com/mert-donmez/VisionGPT/assets/83416622/7b531e40-bf83-4efb-87ac-d1d9a784e504)
+
 
 
 
@@ -47,8 +48,8 @@ This mobile application is developed using React Native. The app enables users t
 - ✅ GPT3 to GPT3.5 upgrade (Done)
 - ✅ Register and Login with Google and Apple auth (Temporarily disabled in the last update) 
 - ✅ Register with Email (Done)
-- 🔄 Language and theme settings (soon)
-- 🔄 Text input (soon)
+- ✅ Language and theme settings (Theme settings done)
+- ✅ Text input (soon)
 - 🔄 Google Admob ads and some restrictions (soon)
 - 🔄 Login as anonymous user (soon)
 - 🔄 In-app purchase (soon)

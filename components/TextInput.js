@@ -24,7 +24,6 @@ const TextInputSection = ({ navigation }) => {
     setChatGPTResponse,
     startChatWithGPT,
     loadingAnswer,
-    decreaseCount,
   } = useContext(MainContext);
   const { theme, language } = useContext(AppPreferencesContext);
 
@@ -40,14 +39,11 @@ const TextInputSection = ({ navigation }) => {
 
   useEffect(() => {
     if (chatGPTResponse !== "") {
-      setLoading(false);
       setBotResponse((prevBotResponse) => [
         ...prevBotResponse,
         chatGPTResponse,
       ]);
-      console.log(
-        "bot response : " + botResponse + "chatgptanswer: " + chatGPTResponse
-      );
+      
       setChatGPTResponse("");
     }
   }, [chatGPTResponse]);
@@ -100,7 +96,7 @@ const TextInputSection = ({ navigation }) => {
       setBotResponseTime([...botResponseTime, getCurrentTime()]);
       setIsPress(true);
       setCurrentMessage("");
-      decreaseCount();
+      
     } else {
       setUserPrompt([...userPrompt, currentMessage]);
       setUserPrompTime([...userPromptTime, getCurrentTime()]);
