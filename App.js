@@ -36,6 +36,9 @@ const App = () => {
         statusBarTheme:'dark',
         sectionBoxColor:'#EEF1FF',
         themeName:'Light',
+        speechBubble:{
+          userColor:'#B799FF',
+        },
       },
       dark:{
         fontColor:{
@@ -46,6 +49,9 @@ const App = () => {
         statusBarTheme:'light',
         sectionBoxColor:'#6B778D',
         themeName:'Dark',
+        speechBubble:{
+          userColor:'#8F43EE',
+        },
       }
     },
     language:{
@@ -180,6 +186,13 @@ const App = () => {
     };
 
 
+  const decreaseCount = async () => {
+    const userDocRef = doc(db, "userData", docId);
+    await updateDoc(userDocRef, { count: count - 1 });
+    setCount(count - 1);
+  };
+
+
       
 
  
@@ -200,7 +213,7 @@ const App = () => {
             setCount(UserData.count);
             setEmail(UserData.email);
             setIsVerified(UserData.isVerified);
-            console.log('is verified',UserData.isVerified);
+            
             getDocumentId();
             getThemeFromPhone();
             setLoading(false);
@@ -233,7 +246,7 @@ const App = () => {
       const querySnapshot = await getDocs(q);
       querySnapshot.forEach((doc) => {
         setDocId(doc.id);
-        console.log(doc.id);
+        
       });
     };
    
@@ -261,7 +274,7 @@ const App = () => {
           setLoggedIn(true);
           setCount(userData.count);
           setIsVerified(userData.isVerified);
-          console.log(userData.isVerified);
+         
           if(userData.isVerified ===true){
             changeToVerified();
           }
@@ -330,6 +343,49 @@ const App = () => {
       console.log(error);
     }
   };
+
+  const startChatWithGPT = async (previousMessages, userMessage) => {
+    try {
+      setLoadingAnswer(true);
+      const messages = [
+        {
+          role: "system",
+          content: "You're a helpful assistant and your name is VisionGPT",
+        },
+        ...previousMessages,
+        {
+          role: "user",
+          content: userMessage,
+        },
+      ];
+  
+      const response = await fetch("https://api.openai.com/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${secretTokens.openai}`,
+        },
+        body: JSON.stringify({
+          model: "gpt-3.5-turbo",
+          temperature: 1,
+          messages: messages,
+          max_tokens: 500,
+          top_p: 1,
+        }),
+      });
+  
+      const data = await response.json();
+      const assistantMessage = data.choices[0].message.content;
+      setChatGPTResponse(assistantMessage);
+      setLoadingAnswer(false);
+      decreaseCount();
+      return assistantMessage;
+    } catch (error) {
+      console.log(error);
+      return error;
+    }
+  };
+  
 
 
 
@@ -423,7 +479,6 @@ const App = () => {
         const result = await ImagePicker.launchCameraAsync({
           mediaTypes: ImagePicker.MediaTypeOptions.Images,
           allowsEditing: true,
-          
           quality: 1,
         });
 
@@ -488,7 +543,7 @@ const App = () => {
 
 
   return (
-    <MainContext.Provider value={{ image, googleResponse, loading, chatGPTResponse, isInputCardsVisible, clearPicture, pickImage, takeAndCropPhoto, count, setCount, inputCode, setInputCode, addAttempt, copyToClipboardChatGPTResponse, copyToClipboardQuestion, googleReplied, setGoogleReplied, setLoadingAnswer, loadingAnswer,isVerified }}>
+    <MainContext.Provider value={{ image, googleResponse, loading, chatGPTResponse, isInputCardsVisible, clearPicture, pickImage, takeAndCropPhoto, count, setCount, inputCode, setInputCode, addAttempt, copyToClipboardChatGPTResponse, copyToClipboardQuestion, googleReplied, setGoogleReplied, setLoadingAnswer, loadingAnswer,isVerified,startChatWithGPT,setChatGPTResponse,decreaseCount }}>
 
       <AuthContext.Provider value={{ password, setPassword, email, setEmail, handleLogin, loggedIn, setLoggedIn, loading, setCount,loginOrRegister,handleRegister }}>
         <AppPreferencesContext.Provider value={{theme,setTheme,language,setLanguage,appPreferences,changeThemeFromCache}}>
