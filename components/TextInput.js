@@ -19,7 +19,7 @@ import BotResponseMessage from "./BotResponseMessage";
 import UserMessage from "./UserMessage";
 
 const TextInputSection = ({ navigation }) => {
-  const { count,chatGPTResponse,setChatGPTResponse,startChatWithGPT } = useContext(MainContext);
+  const { count,chatGPTResponse,setChatGPTResponse,startChatWithGPT,loadingAnswer } = useContext(MainContext);
   const { theme, language } = useContext(AppPreferencesContext);
 
   const [userPrompt, setUserPrompt] = useState([]);
@@ -57,38 +57,18 @@ const TextInputSection = ({ navigation }) => {
  
   
   const startChatEngine = () => {
+    
     if (currentMessage === "") {
       return;
     }
-    if (userPrompt[0] !== undefined) {
-      setLoading(true);
-      if (userPrompt[userPrompt.length - 1] === currentMessage) {
-        setUserPrompt([...userPrompt, currentMessage]);
-        setUserPrompTime([...userPromptTime, getCurrentTime()]);
-        setBotResponse([...botResponse, loading ? "Wait a second.. " : startChatEngine(currentMessage)]);
-        setBotResponseTime([...botResponseTime, getCurrentTime()]);
-        setIsPress(true);
-        setCurrentMessage("");
-        setLoading(false);
-      } else {
-        setUserPrompt([...userPrompt, currentMessage]);
-        setUserPrompTime([...userPromptTime, getCurrentTime()]);
-        setBotResponse([...botResponse, loading ? "Wait a second.. " : startChatEngine(currentMessage)]);
-        setBotResponseTime([...botResponseTime, getCurrentTime()]);
-        setIsPress(true);
-        setCurrentMessage("");
-        setLoading(false);
-      }
-    } else {
-      setLoading(true);
+    
       setUserPrompt([...userPrompt, currentMessage]);
-      setUserPrompTime([...userPromptTime, getCurrentTime()]);
-      setBotResponse([...botResponse, loading ? "Wait a second.. " : startChatEngine(currentMessage)]);
-      setBotResponseTime([...botResponseTime, getCurrentTime()]);
-      setIsPress(true);
-      setCurrentMessage("");
-      setLoading(false);
-    }
+        setUserPrompTime([...userPromptTime, getCurrentTime()]);
+        setBotResponse([...botResponse, "Wait a second.. " ]);
+        setBotResponseTime([...botResponseTime, getCurrentTime()]);
+        setIsPress(true);
+        setCurrentMessage("");
+    
   };
 
 
