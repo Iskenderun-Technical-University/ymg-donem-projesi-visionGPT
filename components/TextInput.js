@@ -205,7 +205,18 @@ const TextInputSection = ({ navigation }) => {
                     userPromptTime={userPromptTime[index]}
                   />
                   {loadingAnswer && index === botResponse.length ? (
-                    <ContentLoader active />
+                    <View style={{marginBottom:10,marginLeft:10 }}>
+                      <ContentLoader
+                        active
+                        pRows={1}
+                        pHeight={[50]}
+                        pWidth={['60%']}
+                        primaryColor={theme.themeName === "Dark" ? "#394867" : "#EEF1FF"}
+                        secondaryColor={theme.themeName === "Dark" ? "#645CBB" : "#E5D1FA"}
+                        tHeight={0}
+                        paragraphStyles={{borderTopRightRadius:20,borderBottomLeftRadius:20,borderBottomRightRadius:20}}
+                      />
+                    </View>
                   ) : (
                     <BotResponseMessage
                       message={botResponse[index]}
@@ -236,7 +247,7 @@ const TextInputSection = ({ navigation }) => {
               }}
             >
               <Text style={{ fontSize: 30, color: "grey" }}>
-                {" "}
+                
                 Type your question below
               </Text>
               <MaterialIcons
