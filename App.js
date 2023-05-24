@@ -337,6 +337,45 @@ const App = () => {
     }
   };
 
+  const startChatWithGPT = async (question) => {
+    try {
+      setLoadingAnswer(true);
+      console.log('startChatWithGPT started. Question: '+ question)
+      const response = await fetch("https://api.openai.com/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${secretTokens.openai}`,
+        },
+        body: JSON.stringify({
+          model: "gpt-3.5-turbo",
+          temperature: 1,
+          messages: [
+            {
+              role: "system",
+              content: "You're a helpful assistant"
+            },
+            {
+              role: "user",
+              content: question
+            }
+          ],
+          max_tokens: 500,
+          top_p: 1,
+        }),
+      });
+      console.log('startChatWithGPT continue Question: '+ question)
+      const data = await response.json();
+      console.log('startChatWithGPT finished. Data: '+ data.choices[0].message.content)
+      setChatGPTResponse(data.choices[0].message.content);
+      setLoadingAnswer(false);
+      return data.choices[0].message.content;
+    } catch (error) {
+      console.log(error);
+      return error;
+    }
+  };
+
 
 
   const submitToGoogle = async (base64) => {
@@ -494,7 +533,7 @@ const App = () => {
 
 
   return (
-    <MainContext.Provider value={{ image, googleResponse, loading, chatGPTResponse, isInputCardsVisible, clearPicture, pickImage, takeAndCropPhoto, count, setCount, inputCode, setInputCode, addAttempt, copyToClipboardChatGPTResponse, copyToClipboardQuestion, googleReplied, setGoogleReplied, setLoadingAnswer, loadingAnswer,isVerified }}>
+    <MainContext.Provider value={{ image, googleResponse, loading, chatGPTResponse, isInputCardsVisible, clearPicture, pickImage, takeAndCropPhoto, count, setCount, inputCode, setInputCode, addAttempt, copyToClipboardChatGPTResponse, copyToClipboardQuestion, googleReplied, setGoogleReplied, setLoadingAnswer, loadingAnswer,isVerified,startChatWithGPT }}>
 
       <AuthContext.Provider value={{ password, setPassword, email, setEmail, handleLogin, loggedIn, setLoggedIn, loading, setCount,loginOrRegister,handleRegister }}>
         <AppPreferencesContext.Provider value={{theme,setTheme,language,setLanguage,appPreferences,changeThemeFromCache}}>

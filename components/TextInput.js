@@ -19,14 +19,17 @@ import BotResponseMessage from "./BotResponseMessage";
 import UserMessage from "./UserMessage";
 
 const TextInputSection = ({ navigation }) => {
-  const { count, image, isVerified } = useContext(MainContext);
+  const { count,chatGPTResponse,setChatGPTResponse,startChatWithGPT } = useContext(MainContext);
   const { theme, language } = useContext(AppPreferencesContext);
+
   const [userPrompt, setUserPrompt] = useState([]);
   const [userPromptTime, setUserPrompTime] = useState([]);
   const [botResponse, setBotResponse] = useState([]);
   const [botResponseTime,setBotResponseTime] = useState([]);
   const [isPress, setIsPress] = useState(false);
   const [currentMessage, setCurrentMessage] = useState("");
+  const [loading,setLoading] = useState(false);
+
 
   const scrollViewRef = useRef();
 
@@ -46,37 +49,45 @@ const TextInputSection = ({ navigation }) => {
     setUserPrompt([]);
     setUserPrompTime([]);
     setBotResponseTime([]);
-    setCurrentMessage('')
+    setCurrentMessage('');
   }
 
+  
+
+ 
   
   const startChatEngine = () => {
     if (currentMessage === "") {
       return;
     }
     if (userPrompt[0] !== undefined) {
+      setLoading(true);
       if (userPrompt[userPrompt.length - 1] === currentMessage) {
         setUserPrompt([...userPrompt, currentMessage]);
         setUserPrompTime([...userPromptTime, getCurrentTime()]);
-        setBotResponse([...botResponse, "This feature is not available yet "]);
+        setBotResponse([...botResponse, loading ? "Wait a second.. " : startChatEngine(currentMessage)]);
         setBotResponseTime([...botResponseTime, getCurrentTime()]);
         setIsPress(true);
         setCurrentMessage("");
+        setLoading(false);
       } else {
         setUserPrompt([...userPrompt, currentMessage]);
         setUserPrompTime([...userPromptTime, getCurrentTime()]);
-        setBotResponse([...botResponse, "This feature is not available yet "]);
+        setBotResponse([...botResponse, loading ? "Wait a second.. " : startChatEngine(currentMessage)]);
         setBotResponseTime([...botResponseTime, getCurrentTime()]);
         setIsPress(true);
         setCurrentMessage("");
+        setLoading(false);
       }
     } else {
+      setLoading(true);
       setUserPrompt([...userPrompt, currentMessage]);
       setUserPrompTime([...userPromptTime, getCurrentTime()]);
-      setBotResponse([...botResponse, "This feature is not available yet "]);
+      setBotResponse([...botResponse, loading ? "Wait a second.. " : startChatEngine(currentMessage)]);
       setBotResponseTime([...botResponseTime, getCurrentTime()]);
       setIsPress(true);
       setCurrentMessage("");
+      setLoading(false);
     }
   };
 
