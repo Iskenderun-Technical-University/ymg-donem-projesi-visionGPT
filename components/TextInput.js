@@ -22,12 +22,25 @@ const TextInputSection = ({ navigation }) => {
   const { count, image, isVerified } = useContext(MainContext);
   const { theme, language } = useContext(AppPreferencesContext);
   const [userPrompt, setUserPrompt] = useState([]);
+  const [userPromptTime, setUserPrompTime] = useState([]);
   const [botResponse, setBotResponse] = useState([]);
+  const [botResponseTime,setBotResponseTime] = useState([]);
   const [isPress, setIsPress] = useState(false);
   const [currentMessage, setCurrentMessage] = useState("");
 
   const scrollViewRef = useRef();
- 
+
+  const getCurrentTime = ()=>{
+    let date = new Date(); 
+    let hours = date.getHours(); 
+    let minutes = date.getMinutes(); 
+    hours = (hours < 10 ? "0" : "") + hours;
+    minutes = (minutes < 10 ? "0" : "") + minutes;
+    let timeString = hours + ":" + minutes;
+    return timeString;
+  }
+
+  
   const startChatEngine = () => {
     if (currentMessage === "") {
       return;
@@ -35,22 +48,29 @@ const TextInputSection = ({ navigation }) => {
     if (userPrompt[0] !== undefined) {
       if (userPrompt[userPrompt.length - 1] === currentMessage) {
         setUserPrompt([...userPrompt, currentMessage]);
+        setUserPrompTime([...userPromptTime, getCurrentTime()]);
         setBotResponse([...botResponse, "This feature is not available yet "]);
+        setBotResponseTime([...botResponseTime, getCurrentTime()]);
         setIsPress(true);
         setCurrentMessage("");
       } else {
         setUserPrompt([...userPrompt, currentMessage]);
+        setUserPrompTime([...userPromptTime, getCurrentTime()]);
         setBotResponse([...botResponse, "This feature is not available yet "]);
+        setBotResponseTime([...botResponseTime, getCurrentTime()]);
         setIsPress(true);
         setCurrentMessage("");
       }
     } else {
       setUserPrompt([...userPrompt, currentMessage]);
+      setUserPrompTime([...userPromptTime, getCurrentTime()]);
       setBotResponse([...botResponse, "This feature is not available yet "]);
+      setBotResponseTime([...botResponseTime, getCurrentTime()]);
       setIsPress(true);
       setCurrentMessage("");
     }
   };
+
 
   useEffect(() => {
     if (userPrompt[0] === undefined) {
@@ -141,7 +161,7 @@ const TextInputSection = ({ navigation }) => {
                 
               </>
             ) : (
-              <BotResponseMessage message={"How can i help you ? "} />
+              <BotResponseMessage message={"How can i help you ? "} botResponseTime={botResponseTime[0]} />
             )}
           </View>
           
@@ -149,8 +169,8 @@ const TextInputSection = ({ navigation }) => {
             <View>
               {userPrompt.map((prompt, index) => (
                 <React.Fragment key={index}>
-                  <UserMessage userPrompt={prompt} />
-                  <BotResponseMessage message={botResponse[index]} />
+                  <UserMessage userPrompt={prompt} userPromptTime={userPromptTime[index]}/>
+                  <BotResponseMessage message={botResponse[index]} botResponseTime={botResponseTime[index]} />
                 </React.Fragment>
               ))}
             </View>
@@ -162,8 +182,8 @@ const TextInputSection = ({ navigation }) => {
             style={[
               styles.textInputMainWrapper,
               {
-                justifyContent: userPrompt[0] !== undefined ? "flex-end" : 'flex-end',
-                marginBottom: 40,
+                justifyContent: 'flex-end',
+                marginBottom: 40,marginTop:10
               },
             ]}
           >

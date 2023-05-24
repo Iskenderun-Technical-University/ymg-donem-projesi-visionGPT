@@ -2,14 +2,26 @@ import { StyleSheet, Text, View, Image } from "react-native";
 import React, { useContext, useState } from "react";
 import AppPreferencesContext from "../context/AppPreferencesContext";
 
-const BotResponseMessage = ({ message }) => {
-
-  const {theme} = useContext(AppPreferencesContext)
+const BotResponseMessage = ({ message, botResponseTime }) => {
+  const { theme } = useContext(AppPreferencesContext);
   return (
     <>
       <View style={styles.botResponseWrapper}>
-        <View style={[styles.textWrapper,{ backgroundColor:theme.themeName ==='Dark' ? "#394867":"#DDE6ED"}]}>
-          <Text style={[styles.text,{color:theme.fontColor.primaryFontColor}]}>{message}</Text>
+        <View
+          style={[
+            styles.textWrapper,
+            {
+              backgroundColor:
+                theme.themeName === "Dark" ? "#394867" : "#DDE6ED",
+            },
+          ]}
+        >
+          <Text
+            style={[styles.text, { color: theme.fontColor.primaryFontColor }]}
+          >
+            {message}
+          </Text>
+          <Text style={styles.timeText}>{botResponseTime}</Text>
         </View>
       </View>
     </>
@@ -19,20 +31,36 @@ const BotResponseMessage = ({ message }) => {
 export default BotResponseMessage;
 
 const styles = StyleSheet.create({
-  text: { marginHorizontal: 10, marginVertical: 15, color: "white" },
+  speechBubbleTitle:{
+    marginLeft:10,
+    marginTop:5,
+  },
+  text:{
+    marginHorizontal: 10,
+    marginTop: 15,
+    marginBottom: 5,
+    color: "white",
+  },
+  timeText: {
+    color: "white",
+    marginBottom: 5,
+    textAlign: "right",
+    marginRight: 10,
+    fontWeight: "100",
+  },
   textWrapper: {
-    maxWidth:'70%',
+    maxWidth: "70%",
+    minWidth: "20%",
     marginLeft: 20,
-    borderTopRightRadius:20,
+    borderTopRightRadius: 20,
     borderBottomLeftRadius: 20,
     borderBottomRightRadius: 20,
-    
   },
   botResponseWrapper: {
-    alignItems:'flex-start',
-    justifyContent:'center',
-    flex:1,
-    marginVertical:10,
+    alignItems: "flex-start",
+    justifyContent: "center",
+    flex: 1,
+    marginVertical: 10,
   },
   botResponseText: {
     marginHorizontal: 10,
