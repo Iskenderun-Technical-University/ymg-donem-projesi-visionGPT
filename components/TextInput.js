@@ -9,9 +9,8 @@ import {
   KeyboardAvoidingView,
   TouchableWithoutFeedback,
   Keyboard,
-  
 } from "react-native";
-import React, { useContext, useEffect, useState,useRef } from "react";
+import React, { useContext, useEffect, useState, useRef } from "react";
 import MainContext from "../context/MainContext";
 import AppPreferencesContext from "../context/AppPreferencesContext";
 import { MaterialIcons } from "@expo/vector-icons";
@@ -19,72 +18,98 @@ import BotResponseMessage from "./BotResponseMessage";
 import UserMessage from "./UserMessage";
 
 const TextInputSection = ({ navigation }) => {
-  const { count,chatGPTResponse,setChatGPTResponse,startChatWithGPT,loadingAnswer } = useContext(MainContext);
+  const {
+    count,
+    chatGPTResponse,
+    setChatGPTResponse,
+    startChatWithGPT,
+    loadingAnswer,
+    decreaseCount,
+  } = useContext(MainContext);
   const { theme, language } = useContext(AppPreferencesContext);
 
   const [userPrompt, setUserPrompt] = useState([]);
   const [userPromptTime, setUserPrompTime] = useState([]);
   const [botResponse, setBotResponse] = useState([]);
-  const [botResponseTime,setBotResponseTime] = useState([]);
+  const [botResponseTime, setBotResponseTime] = useState([]);
   const [isPress, setIsPress] = useState(false);
   const [currentMessage, setCurrentMessage] = useState("");
-  const [loading,setLoading] = useState(false);
-
+  const [loading, setLoading] = useState(false);
 
   const scrollViewRef = useRef();
 
-
-
-  const getResponsefromBot = () => {
-    setLoading(true);
-    startChatWithGPT(currentMessage);
-  }
-  
   useEffect(() => {
-    if(chatGPTResponse !== ''){
+    if (chatGPTResponse !== "") {
       setLoading(false);
-      setBotResponse((prevBotResponse) => [...prevBotResponse, chatGPTResponse]);
-      console.log('bot response : '+ botResponse + 'chatgptanswer: '+ chatGPTResponse);
-      setChatGPTResponse('');
+      setBotResponse((prevBotResponse) => [
+        ...prevBotResponse,
+        chatGPTResponse,
+      ]);
+      console.log(
+        "bot response : " + botResponse + "chatgptanswer: " + chatGPTResponse
+      );
+      setChatGPTResponse("");
     }
   }, [chatGPTResponse]);
-  
 
-  
-  const getCurrentTime = ()=>{
-    let date = new Date(); 
-    let hours = date.getHours(); 
-    let minutes = date.getMinutes(); 
+  const getCurrentTime = () => {
+    let date = new Date();
+    let hours = date.getHours();
+    let minutes = date.getMinutes();
     hours = (hours < 10 ? "0" : "") + hours;
     minutes = (minutes < 10 ? "0" : "") + minutes;
     let timeString = hours + ":" + minutes;
     return timeString;
-  }
+  };
 
-  const clearAllMessages = ()=>{
+  const clearAllMessages = () => {
     setBotResponse([]);
     setUserPrompt([]);
     setUserPrompTime([]);
     setBotResponseTime([]);
-    setCurrentMessage('');
-  }
-
-  const startChatEngine = () => {
-    
-    if (currentMessage === "") {
-      return;
-    }
-        setUserPrompt([...userPrompt, currentMessage]);
-        setUserPrompTime([...userPromptTime, getCurrentTime()]);
-        getResponsefromBot();
-        setBotResponseTime([...botResponseTime, getCurrentTime()]);
-        setIsPress(true);
-        setCurrentMessage("");
-    
+    setCurrentMessage("");
   };
 
-    console.log('bot responses: '+botResponse.length+ 'userPrompts:' + userPrompt.length)
-    console.log('bot responses: '+botResponse+ 'userPrompts:' + userPrompt)
+  const startChatEngine = () => {
+    if (count > 0) {
+      if (currentMessage === "") {
+        return;
+      }
+      setUserPrompt([...userPrompt, currentMessage]);
+      setUserPrompTime([...userPromptTime, getCurrentTime()]);
+      
+      let previousMessages = [];
+      for (let i = 0; i < userPrompt.length; i++) {
+        
+        previousMessages.push({
+          role: "user",
+          content: userPrompt[i],
+        });
+
+        if (botResponse[i]) {
+          previousMessages.push({
+            role: "assistant",
+            content: botResponse[i],
+          });
+        }
+      }
+
+      // Limit the number of previous messages to the last 5
+      previousMessages = previousMessages.slice(-5);
+      startChatWithGPT(previousMessages, currentMessage);
+      setBotResponseTime([...botResponseTime, getCurrentTime()]);
+      setIsPress(true);
+      setCurrentMessage("");
+      decreaseCount();
+    } else {
+      setUserPrompt([...userPrompt, currentMessage]);
+      setUserPrompTime([...userPromptTime, getCurrentTime()]);
+      setBotResponse([...botResponse, "Sorry. Your attempts are over."]);
+      setBotResponseTime([...botResponseTime, getCurrentTime()]);
+      setIsPress(true);
+      setCurrentMessage("");
+    }
+  };
 
   useEffect(() => {
     if (userPrompt[0] === undefined) {
@@ -114,8 +139,7 @@ const TextInputSection = ({ navigation }) => {
           >
             Chat with bot
           </Text>
-          
-        ): (
+        ) : (
           <Text
             style={[
               styles.TextInput,
@@ -144,17 +168,14 @@ const TextInputSection = ({ navigation }) => {
         </View>
       </View>
 
-      
-        <>
+      <>
         <ScrollView
-        style={{ flex: 1 }}
-        ref={scrollViewRef}
-        onContentSizeChange={() => {
-          scrollViewRef.current.scrollToEnd({ animated: true });
-        }}
-      >
-          
-
+          style={{ flex: 1 }}
+          ref={scrollViewRef}
+          onContentSizeChange={() => {
+            scrollViewRef.current.scrollToEnd({ animated: true });
+          }}
+        >
           <View style={styles.howToUseSectionWrapper}>
             {userPrompt[0] === undefined ? (
               <>
@@ -170,96 +191,106 @@ const TextInputSection = ({ navigation }) => {
                     marginRight: 40,
                   }}
                 >
-                  How can i help you ? 
+                  How can i help you ?
                 </Text>
-                
               </>
             ) : (
-              <BotResponseMessage message={"How can i help you ? "} botResponseTime={botResponseTime[0]} />
+              <BotResponseMessage
+                message={"How can i help you ? "}
+                botResponseTime={botResponseTime[0]}
+              />
             )}
           </View>
-          
+
           {isPress === true && userPrompt[0] !== undefined && (
             <View>
               {userPrompt.map((prompt, index) => (
                 <React.Fragment key={index}>
-                  
-                  <UserMessage userPrompt={prompt} userPromptTime={userPromptTime[index]}/>
-                    
-                  <BotResponseMessage message={loadingAnswer ? 'Just a second..' : botResponse[index]} botResponseTime={botResponseTime[index]} />
-                  
-                  
+                  <UserMessage
+                    userPrompt={prompt}
+                    userPromptTime={userPromptTime[index]}
+                  />
+
+                  <BotResponseMessage
+                    message={botResponse[index]}
+                    botResponseTime={botResponseTime[index]}
+                  />
                 </React.Fragment>
               ))}
             </View>
           )}
-
-          
         </ScrollView>
         <View
-            style={[
-              styles.textInputMainWrapper,
-              {
-                justifyContent: 'flex-end',
-                marginBottom: 40,marginTop:10
-              },
-            ]}
-          >
+          style={[
+            styles.textInputMainWrapper,
             {
-              userPrompt[0] === undefined && (<View style={{justifyContent:'center',alignItems:'center',marginTop:50}}>
-              <Text style={{fontSize:30,color:'grey'}}> Type your question below</Text>
+              justifyContent: "flex-end",
+              marginBottom: 40,
+              marginTop: 10,
+            },
+          ]}
+        >
+          {userPrompt[0] === undefined && (
+            <View
+              style={{
+                justifyContent: "center",
+                alignItems: "center",
+                marginTop: 50,
+              }}
+            >
+              <Text style={{ fontSize: 30, color: "grey" }}>
+                {" "}
+                Type your question below
+              </Text>
               <MaterialIcons
                 name="expand-more"
                 style={{ marginLeft: 10, marginRight: 10 }}
                 color={"grey"}
                 size={80}
               />
-              </View>)
-            }
-            <View
+            </View>
+          )}
+          <View
+            style={[
+              styles.textInputWrapper,
+              {
+                backgroundColor: theme.sectionBoxColor,
+                marginRight: userPrompt[0] === undefined ? 20 : 40,
+                marginLeft: 20,
+              },
+            ]}
+          >
+            <TextInput
               style={[
-                styles.textInputWrapper,
-                {
-                  backgroundColor: theme.sectionBoxColor,
-                  marginRight: userPrompt[0] === undefined ? 20 : 40,
-                  marginLeft: 20,
-                },
+                styles.inputTextStyle,
+                { color: theme.fontColor.primaryFontColor },
               ]}
-            >
-              
-              <TextInput
-                style={[
-                  styles.inputTextStyle,
-                  { color: theme.fontColor.primaryFontColor },
-                ]}
-                placeholderTextColor={theme.fontColor.primaryFontColor}
-                placeholder="Type here..."
-                onChangeText={setCurrentMessage}
-                value={currentMessage}
+              placeholderTextColor={theme.fontColor.primaryFontColor}
+              placeholder="Type here..."
+              onChangeText={setCurrentMessage}
+              value={currentMessage}
+            />
+            <TouchableOpacity onPress={startChatEngine}>
+              <MaterialIcons
+                name="arrow-forward-ios"
+                style={styles.inputTextIcon}
+                color={theme.fontColor.primaryFontColor}
+                size={20}
               />
-              <TouchableOpacity onPress={startChatEngine}>
-                <MaterialIcons
-                  name="arrow-forward-ios"
-                  style={styles.inputTextIcon}
-                  color={theme.fontColor.primaryFontColor}
-                  size={20}
-                />
-              </TouchableOpacity>
-              {userPrompt[0] !== undefined && (
-                <TouchableOpacity onPress={clearAllMessages}>
+            </TouchableOpacity>
+            {userPrompt[0] !== undefined && (
+              <TouchableOpacity onPress={clearAllMessages}>
                 <MaterialIcons
                   name="cancel"
                   style={{ marginLeft: 5 }}
                   color={"#E74646"}
                   size={30}
                 />
-                </TouchableOpacity>
-                
-              )}
-            </View>
+              </TouchableOpacity>
+            )}
           </View>
-        </>
-     
+        </View>
+      </>
     </KeyboardAvoidingView>
   );
 };
@@ -267,9 +298,7 @@ const TextInputSection = ({ navigation }) => {
 export default TextInputSection;
 
 const styles = StyleSheet.create({
-  textInputMainWrapper: {
-    
-  },
+  textInputMainWrapper: {},
   container: {
     flex: 1,
   },
@@ -334,7 +363,5 @@ const styles = StyleSheet.create({
   TextInput: {
     fontSize: 20,
     fontWeight: "300",
-    
- 
   },
 });

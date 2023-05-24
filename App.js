@@ -186,6 +186,13 @@ const App = () => {
     };
 
 
+  const decreaseCount = async () => {
+    const userDocRef = doc(db, "userData", docId);
+    await updateDoc(userDocRef, { count: count - 1 });
+    setCount(count - 1);
+  };
+
+
       
 
  
@@ -337,9 +344,21 @@ const App = () => {
     }
   };
 
-  const startChatWithGPT = async (question) => {
+  const startChatWithGPT = async (previousMessages, userMessage) => {
     try {
       setLoadingAnswer(true);
+      const messages = [
+        {
+          role: "system",
+          content: "You're a helpful assistant and your name is VisionGPT",
+        },
+        ...previousMessages,
+        {
+          role: "user",
+          content: userMessage,
+        },
+      ];
+  
       const response = await fetch("https://api.openai.com/v1/chat/completions", {
         method: "POST",
         headers: {
@@ -349,30 +368,24 @@ const App = () => {
         body: JSON.stringify({
           model: "gpt-3.5-turbo",
           temperature: 1,
-          messages: [
-            {
-              role: "system",
-              content: "You're a helpful assistant"
-            },
-            {
-              role: "user",
-              content: question
-            }
-          ],
+          messages: messages,
           max_tokens: 500,
           top_p: 1,
         }),
       });
+  
       const data = await response.json();
-      setChatGPTResponse(data.choices[0].message.content);
+      const assistantMessage = data.choices[0].message.content;
+      setChatGPTResponse(assistantMessage);
       setLoadingAnswer(false);
-      console.log(data.choices[0].message.content)
-      return data.choices[0].message.content;
+      console.log(assistantMessage);
+      return assistantMessage;
     } catch (error) {
       console.log(error);
       return error;
     }
   };
+  
 
 
 
@@ -466,7 +479,6 @@ const App = () => {
         const result = await ImagePicker.launchCameraAsync({
           mediaTypes: ImagePicker.MediaTypeOptions.Images,
           allowsEditing: true,
-          
           quality: 1,
         });
 
@@ -531,7 +543,7 @@ const App = () => {
 
 
   return (
-    <MainContext.Provider value={{ image, googleResponse, loading, chatGPTResponse, isInputCardsVisible, clearPicture, pickImage, takeAndCropPhoto, count, setCount, inputCode, setInputCode, addAttempt, copyToClipboardChatGPTResponse, copyToClipboardQuestion, googleReplied, setGoogleReplied, setLoadingAnswer, loadingAnswer,isVerified,startChatWithGPT,setChatGPTResponse }}>
+    <MainContext.Provider value={{ image, googleResponse, loading, chatGPTResponse, isInputCardsVisible, clearPicture, pickImage, takeAndCropPhoto, count, setCount, inputCode, setInputCode, addAttempt, copyToClipboardChatGPTResponse, copyToClipboardQuestion, googleReplied, setGoogleReplied, setLoadingAnswer, loadingAnswer,isVerified,startChatWithGPT,setChatGPTResponse,decreaseCount }}>
 
       <AuthContext.Provider value={{ password, setPassword, email, setEmail, handleLogin, loggedIn, setLoggedIn, loading, setCount,loginOrRegister,handleRegister }}>
         <AppPreferencesContext.Provider value={{theme,setTheme,language,setLanguage,appPreferences,changeThemeFromCache}}>
