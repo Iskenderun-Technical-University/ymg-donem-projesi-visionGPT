@@ -11,7 +11,7 @@ import {
   Keyboard,
   
 } from "react-native";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState,useRef } from "react";
 import MainContext from "../context/MainContext";
 import AppPreferencesContext from "../context/AppPreferencesContext";
 import { MaterialIcons } from "@expo/vector-icons";
@@ -26,6 +26,7 @@ const TextInputSection = ({ navigation }) => {
   const [isPress, setIsPress] = useState(false);
   const [currentMessage, setCurrentMessage] = useState("");
 
+  const scrollViewRef = useRef();
  
   const startChatEngine = () => {
     if (currentMessage === "") {
@@ -111,7 +112,13 @@ const TextInputSection = ({ navigation }) => {
 
       
         <>
-        <ScrollView style={{ flex: 1 }}>
+        <ScrollView
+        style={{ flex: 1 }}
+        ref={scrollViewRef}
+        onContentSizeChange={() => {
+          scrollViewRef.current.scrollToEnd({ animated: true });
+        }}
+      >
           
 
           <View style={styles.howToUseSectionWrapper}>

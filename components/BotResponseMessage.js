@@ -1,31 +1,47 @@
-import { StyleSheet, Text, View,Image } from 'react-native'
-import React, { useState } from 'react'
+import { StyleSheet, Text, View, Image } from "react-native";
+import React, { useContext, useState } from "react";
+import AppPreferencesContext from "../context/AppPreferencesContext";
 
-const BotResponseMessage = ({message}) => {
-    
-   
+const BotResponseMessage = ({ message }) => {
+
+  const {theme} = useContext(AppPreferencesContext)
   return (
     <>
-    
-    <View style={styles.botResponseWrapper}>
-            <View style={{justifyContent:'flex-start',flex:1,backgroundColor:'#394867',marginRight:'30%',borderTopRightRadius:20,borderBottomRightRadius:20,borderBottomLeftRadius:20}}>
-            <Text style={{marginHorizontal:10,marginVertical:15,color:'white'}}>
-                {message}
-              </Text>
-              </View>
-    </View>
+      <View style={styles.botResponseWrapper}>
+        <View style={[styles.textWrapper,{ backgroundColor:theme.themeName ==='Dark' ? "#394867":"#DDE6ED"}]}>
+          <Text style={[styles.text,{color:theme.fontColor.primaryFontColor}]}>{message}</Text>
+        </View>
+      </View>
     </>
-  )
-}
+  );
+};
 
-export default BotResponseMessage
+export default BotResponseMessage;
 
 const styles = StyleSheet.create({
-    botResponseWrapper:{
-        flexDirection: 'row',
-        justifyContent: 'center',
-        marginLeft:20,
-        alignItems:'flex-end',
-        marginVertical:10,
-    },
-})
+  text: { marginHorizontal: 10, marginVertical: 15, color: "white" },
+  textWrapper: {
+    maxWidth:'70%',
+    marginLeft: 20,
+    borderTopRightRadius:20,
+    borderBottomLeftRadius: 20,
+    borderBottomRightRadius: 20,
+    
+  },
+  botResponseWrapper: {
+    alignItems:'flex-start',
+    justifyContent:'center',
+    flex:1,
+    marginVertical:10,
+  },
+  botResponseText: {
+    marginHorizontal: 10,
+    marginVertical: 15,
+  },
+  botResponseImage: {
+    width: 50,
+    height: 50,
+    borderRadius: 50,
+    marginRight: 10,
+  },
+});

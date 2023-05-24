@@ -36,6 +36,9 @@ const App = () => {
         statusBarTheme:'dark',
         sectionBoxColor:'#EEF1FF',
         themeName:'Light',
+        speechBubble:{
+          userColor:'#B799FF',
+        },
       },
       dark:{
         fontColor:{
@@ -46,6 +49,9 @@ const App = () => {
         statusBarTheme:'light',
         sectionBoxColor:'#6B778D',
         themeName:'Dark',
+        speechBubble:{
+          userColor:'#8F43EE',
+        },
       }
     },
     language:{
@@ -200,7 +206,7 @@ const App = () => {
             setCount(UserData.count);
             setEmail(UserData.email);
             setIsVerified(UserData.isVerified);
-            console.log('is verified',UserData.isVerified);
+            
             getDocumentId();
             getThemeFromPhone();
             setLoading(false);
@@ -233,7 +239,7 @@ const App = () => {
       const querySnapshot = await getDocs(q);
       querySnapshot.forEach((doc) => {
         setDocId(doc.id);
-        console.log(doc.id);
+        
       });
     };
    
@@ -261,7 +267,7 @@ const App = () => {
           setLoggedIn(true);
           setCount(userData.count);
           setIsVerified(userData.isVerified);
-          console.log(userData.isVerified);
+         
           if(userData.isVerified ===true){
             changeToVerified();
           }
