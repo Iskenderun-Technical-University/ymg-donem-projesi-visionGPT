@@ -26,7 +26,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 
 const RegisterScreen = ({ navigation }) => {
 const [isCheckboxChecked,setIsCheckboxChecked] = useState(false);
-const { password, setPassword, email, setEmail, loading,loginOrRegister,handleRegister} = useContext(AuthContext);
+const { password, setPassword, email, setEmail, loading,loginOrRegister,handleRegister,loginAnonymously} = useContext(AuthContext);
 
   let [fontsLoaded] = useFonts({
     Inter_900Black,
@@ -55,7 +55,7 @@ const { password, setPassword, email, setEmail, loading,loginOrRegister,handleRe
 
   const isAcceptTermsOfUse = ()=>{
     if (isCheckboxChecked){
-      handleRegister();
+      loginAnonymously();
     }else{
       alert('You have to accept terms of use.');
     }
@@ -131,7 +131,7 @@ const { password, setPassword, email, setEmail, loading,loginOrRegister,handleRe
               <View style={styles.registerButtonWrapper}>
                 <TouchableOpacity style={styles.registerButtonEmail}
                  onPress={isAcceptTermsOfUse}
-                disabled={true}>
+                disabled={false}>
                     <Text style={styles.registerButtonTextEmail}>Register</Text>
                     <MaterialIcons name="arrow-forward" color={'white'} size={20} />
                 </TouchableOpacity>
