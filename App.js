@@ -7,8 +7,9 @@ import AppPreferencesContext from './context/AppPreferencesContext';
 import Main from "./components/Main";
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import DeviceInfo from 'react-native-device-info';
 import { auth, db } from "./firebase";
-import { signInWithEmailAndPassword,createUserWithEmailAndPassword, sendEmailVerification} from "firebase/auth";
+import { signInWithEmailAndPassword,createUserWithEmailAndPassword, sendEmailVerification,signInAnonymously} from "firebase/auth";
 import Menu from "./components/Menu";
 import * as SecureStore from 'expo-secure-store';
 import { collection, query, where, getDocs, updateDoc, doc, getDoc,addDoc } from "firebase/firestore";
@@ -22,6 +23,20 @@ import TextInputSection from "./components/TextInput";
 
 
 const Stack = createNativeStackNavigator();
+
+
+
+const getUniqueID = async () => {
+  uniqueID = await DeviceInfo.getUniqueId();
+  console.log('Unique ID: ', uniqueID);
+  return uniqueID;
+};
+
+getUniqueID();
+
+
+
+
 
 const App = () => {
 
@@ -150,9 +165,74 @@ const App = () => {
         setLoggedIn(true);
       }
     };
+
     
+
+  
+    const loginAnonymously = async () => {
+      const gettingDeviceId = await getUniqueID();
+      signInAnonymously(auth)
+        .then(async (userCredentials) => {
+          const user = userCredentials.user;
+          console.log("Signed in anonymously with:", user.uid);
+          console.log('device id: ', gettingDeviceId);
+          if(user){
+            await SecureStore.setItemAsync("userEmail", user.uid);
+            const userRef = collection(db, "userData");
+            const q = query(userRef, where("uniqueID", "==", gettingDeviceId));
+            const querySnapshot = await getDocs(q);
+            if (querySnapshot.empty) {
+              console.log("User does not exist. Registering...");
+              await SecureStore.setItemAsync("userEmail", user.uid);
+              const userRef = collection(db, "userData");
+              await addDoc(userRef, {
+                uid: user.uid,
+                count: 5,
+                isCodeActive: true,
+                isVerified: false,
+                code: generateSixDigitCode(),
+                uniqueID: gettingDeviceId,
+              });
+              console.log("User registered.");
+              setEmail(gettingDeviceId);
+              setLoggedIn(true);
+              saveThemeToPhone(theme);
+              getDocumentId();
+              setCount(5);
+              setIsVerified(false);
+            } else {
+              console.log("User exists. Logging in...");
+              querySnapshot.forEach((doc) => {
+                const UserData = doc.data();
+                setCount(UserData.count);
+                setEmail(UserData.uniqueID);
+                setIsVerified(true);
+                getDocumentId();
+              });
+              setLoggedIn(true);
+            }
+          }
+        })
+        .catch((error) => {
+          console.log(error+'error is here');
+          
+        });
+    };
+    
+    const deleteAnonymousUser = async () => {
+      const user = auth.currentUser;
+      console.log(user);
+      if (user.isAnonymous) {
+        await user.delete();
+        console.log("Deleted anonymous user.");
+      } else {
+        console.log("User is not anonymous.");
+      }
+    };
+
   
     const handleRegister = () => {
+      gettingDeviceId = String(getUniqueID());
       createUserWithEmailAndPassword(auth, email, password)
         .then(async (userCredentials) => {
           const user = userCredentials.user;
@@ -160,11 +240,13 @@ const App = () => {
           await SecureStore.setItemAsync("userEmail", user.email);
           const userRef = collection(db, "userData");
           await addDoc(userRef, {
-            email: user.email,
+            uid: user.email,
             count: 5,
-            isCodeActive: false,
+            isCodeActive: true,
             isVerified: false,
             code: generateSixDigitCode(),
+            uniqueID: gettingDeviceId,
+            
           });
           sendEmailVerification(auth.currentUser);
           console.log("User registered.");
@@ -178,13 +260,6 @@ const App = () => {
         .catch((error) => alert(error.message));
     };
 
-  
-    const changeToVerified = async () => {
-      const userDocRef = doc(db, "userData", docId);
-      await updateDoc(userDocRef, { isVerified: true });
-      setIsVerified(true);
-    };
-
 
   const decreaseCount = async () => {
     const userDocRef = doc(db, "userData", docId);
@@ -192,8 +267,6 @@ const App = () => {
     setCount(count - 1);
   };
 
-
-      
 
  
   const handleLogin = () => {
@@ -212,14 +285,18 @@ const App = () => {
             const UserData = doc.data();
             setCount(UserData.count);
             setEmail(UserData.email);
-            setIsVerified(UserData.isVerified);
-            
+            setIsVerified(user.emailVerified);
+            if(user.emailVerified === false){
+              sendEmailVerification(auth.currentUser);
+            }
             getDocumentId();
             getThemeFromPhone();
             setLoading(false);
 
           });
-          setLoggedIn(true);
+          
+            setLoggedIn(true);
+          
           setLoading(false);
         } catch (error) {
           console.log(error);
@@ -229,7 +306,6 @@ const App = () => {
       })
       .catch((error) => alert(error.message));
   };
-
 
 
 
@@ -251,41 +327,34 @@ const App = () => {
     };
    
  
-
-  
-
-  
-
-  useEffect(() => {
-    setLoading(true);
-    const restoreUserSession = async () => {
-      const userEmail = await SecureStore.getItemAsync("userEmail");
-      if (userEmail) {
-        setEmail(userEmail);
-        const userRef = collection(db, "userData");
-        const q = query(userRef, where("email", "==", userEmail));
-        const querySnapshot = await getDocs(q);
-        querySnapshot.forEach((doc) => {
-          const userData = doc.data();
-          console.log("User session restored. Email:", userData.email, "count:", userData.count);
-          getDocumentId();
-          setEmail(userData.email);
-          getThemeFromPhone();
-          setLoggedIn(true);
-          setCount(userData.count);
-          setIsVerified(userData.isVerified);
-         
-          if(userData.isVerified ===true){
-            changeToVerified();
-          }
+    useEffect(() => {
+      setLoading(true);
+      const restoreUserSession = async () => {
+        const gettingDeviceId = await getUniqueID();
+        const userEmail = await SecureStore.getItemAsync("userEmail");
+        if (userEmail) {
+          setEmail(userEmail);
+          const userRef = collection(db, "userData");
+          const q = query(userRef, where("uniqueID", "==", gettingDeviceId));
+          const querySnapshot = await getDocs(q);     
+          querySnapshot.forEach((doc) => {
+            const userData = doc.data();
+            console.log("User session restored. Email:", userData.uniqueID, "count:", userData.count);
+            getDocumentId();
+            setEmail(userData.uniqueID);
+            getThemeFromPhone();
+            setLoggedIn(true);
+            setCount(userData.count);
+            setIsVerified(true);
+            setLoading(false);
+          });
+        } else {
           setLoading(false);
         }
-        );
-      }
-      setLoading(false);
-    };
-    restoreUserSession();
-  }, []);
+      };
+      restoreUserSession();
+    }, []);
+    
 
   
 
@@ -545,7 +614,7 @@ const App = () => {
   return (
     <MainContext.Provider value={{ image, googleResponse, loading, chatGPTResponse, isInputCardsVisible, clearPicture, pickImage, takeAndCropPhoto, count, setCount, inputCode, setInputCode, addAttempt, copyToClipboardChatGPTResponse, copyToClipboardQuestion, googleReplied, setGoogleReplied, setLoadingAnswer, loadingAnswer,isVerified,startChatWithGPT,setChatGPTResponse,decreaseCount }}>
 
-      <AuthContext.Provider value={{ password, setPassword, email, setEmail, handleLogin, loggedIn, setLoggedIn, loading, setCount,loginOrRegister,handleRegister }}>
+      <AuthContext.Provider value={{ password, setPassword, email, setEmail, handleLogin, loggedIn, setLoggedIn, loading, setCount,loginOrRegister,handleRegister,loginAnonymously,deleteAnonymousUser }}>
         <AppPreferencesContext.Provider value={{theme,setTheme,language,setLanguage,appPreferences,changeThemeFromCache}}>
 
         <NavigationContainer>
