@@ -37,7 +37,7 @@ const Main = ({navigation}) => {
         <Text style={[styles.visionInputTitle,{color:theme.fontColor.primaryFontColor}]}>Visual Input</Text>
       }
    
-      <StatusBar style={theme.StatusBarTheme} />
+      <StatusBar style={theme.themeName === 'Dark' ? 'light' : 'dark'} />
       <ScrollView>
         <TutorialTips />
         <Picture />
