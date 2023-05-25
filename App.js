@@ -21,20 +21,13 @@ import NewMainScreen from "./components/NewMainScreen";
 import TextInputSection from "./components/TextInput";
 
 
-
 const Stack = createNativeStackNavigator();
-
-
 
 const getUniqueID = async () => {
   uniqueID = await DeviceInfo.getUniqueId();
   console.log('Unique ID: ', uniqueID);
   return uniqueID;
 };
-
-getUniqueID();
-
-
 
 
 
@@ -130,41 +123,7 @@ const App = () => {
 
     
 
-    const loginOrRegister = async (userInfo) => {
-      const userRef = collection(db, "userData");
-      const q = query(userRef, where("email", "==", userInfo.email));
-      const querySnapshot = await getDocs(q);
-      if (querySnapshot.empty) {
-        console.log("User does not exist. Registering...");
-        await SecureStore.setItemAsync("userEmail", userInfo.email);
-        const userRef = collection(db, "userData");
-        await addDoc(userRef, {
-          email: userInfo.email,
-          count: 5,
-          isCodeActive: false,
-          isVerified: true,
-          code: generateSixDigitCode(),
-        });
-        console.log("User registered.");
-        setEmail(userInfo.email);
-        setLoggedIn(true);
-        saveThemeToPhone(theme);
-        setCount(5);
-        setIsVerified(true);
-        getDocumentId();
-      } else {
-        await SecureStore.setItemAsync("userEmail", userInfo.email);
-        console.log("User exists. Logging in...");
-        querySnapshot.forEach((doc) => {
-          const UserData = doc.data();
-          setCount(UserData.count);
-          setEmail(UserData.email);
-          setIsVerified(true);
-          getDocumentId();
-        });
-        setLoggedIn(true);
-      }
-    };
+    
 
     
 
@@ -174,23 +133,22 @@ const App = () => {
       signInAnonymously(auth)
         .then(async (userCredentials) => {
           const user = userCredentials.user;
-          console.log("Signed in anonymously with:", user.uid);
-          console.log('device id: ', gettingDeviceId);
+          console.log("Signed in anonymously with:", gettingDeviceId);
           if(user){
-            await SecureStore.setItemAsync("userEmail", user.uid);
+            await SecureStore.setItemAsync("userEmail", gettingDeviceId);
             const userRef = collection(db, "userData");
             const q = query(userRef, where("uniqueID", "==", gettingDeviceId));
             const querySnapshot = await getDocs(q);
             if (querySnapshot.empty) {
               console.log("User does not exist. Registering...");
-              await SecureStore.setItemAsync("userEmail", user.uid);
+              await SecureStore.setItemAsync("userEmail", gettingDeviceId);
               const userRef = collection(db, "userData");
               await addDoc(userRef, {
-                uid: user.uid,
+                uid: gettingDeviceId,
                 count: 5,
                 isCodeActive: true,
                 isVerified: false,
-                code: generateSixDigitCode(),
+                code: Math.floor(100000 + Math.random() * 900000),
                 uniqueID: gettingDeviceId,
               });
               console.log("User registered.");
@@ -208,8 +166,8 @@ const App = () => {
                 setEmail(UserData.uniqueID);
                 setIsVerified(true);
                 getDocumentId();
+                setLoggedIn(true);
               });
-              setLoggedIn(true);
             }
           }
         })
@@ -231,34 +189,7 @@ const App = () => {
     };
 
   
-    const handleRegister = () => {
-      gettingDeviceId = String(getUniqueID());
-      createUserWithEmailAndPassword(auth, email, password)
-        .then(async (userCredentials) => {
-          const user = userCredentials.user;
-          console.log("Registered with:", user.email);
-          await SecureStore.setItemAsync("userEmail", user.email);
-          const userRef = collection(db, "userData");
-          await addDoc(userRef, {
-            uid: user.email,
-            count: 5,
-            isCodeActive: true,
-            isVerified: false,
-            code: generateSixDigitCode(),
-            uniqueID: gettingDeviceId,
-            
-          });
-          sendEmailVerification(auth.currentUser);
-          console.log("User registered.");
-          setEmail(user.email);
-          setLoggedIn(true);
-          saveThemeToPhone(theme);
-          getDocumentId();
-          setCount(5);
-          setIsVerified(false);
-        })
-        .catch((error) => alert(error.message));
-    };
+    
 
 
   const decreaseCount = async () => {
@@ -268,61 +199,16 @@ const App = () => {
   };
 
 
- 
-  const handleLogin = () => {
-    signInWithEmailAndPassword(auth, email, password)
-      .then(async (userCredentials) => {
-        setLoading(true);
-        const user = userCredentials.user;
-        console.log("Logged in with:", user.email);
-        await SecureStore.setItemAsync("userEmail", user.email);
-        const userEmail = await SecureStore.getItemAsync("userEmail");
-        const userRef = collection(db, "userData");
-        const q = query(userRef, where("email", "==", userEmail));
-        const querySnapshot = await getDocs(q);
-        try {
-          querySnapshot.forEach((doc) => {
-            const UserData = doc.data();
-            setCount(UserData.count);
-            setEmail(UserData.email);
-            setIsVerified(user.emailVerified);
-            if(user.emailVerified === false){
-              sendEmailVerification(auth.currentUser);
-            }
-            getDocumentId();
-            getThemeFromPhone();
-            setLoading(false);
-
-          });
-          
-            setLoggedIn(true);
-          
-          setLoading(false);
-        } catch (error) {
-          console.log(error);
-          setLoading(false);
-        }
-
-      })
-      .catch((error) => alert(error.message));
-  };
-
-
-
-  const generateSixDigitCode = () => {
-    const code = Math.floor(100000 + Math.random() * 900000);
-    return code;
-  };
 
  
     const getDocumentId = async () => {
       const userEmail = await SecureStore.getItemAsync("userEmail");
       const userRef = collection(db, "userData");
-      const q = query(userRef, where("email", "==", userEmail));
+      const q = query(userRef, where("uid", "==", userEmail));
       const querySnapshot = await getDocs(q);
       querySnapshot.forEach((doc) => {
         setDocId(doc.id);
-        
+        console.log("Document ID:", doc.id);
       });
     };
    
@@ -349,6 +235,7 @@ const App = () => {
             setLoading(false);
           });
         } else {
+          
           setLoading(false);
         }
       };
@@ -614,7 +501,7 @@ const App = () => {
   return (
     <MainContext.Provider value={{ image, googleResponse, loading, chatGPTResponse, isInputCardsVisible, clearPicture, pickImage, takeAndCropPhoto, count, setCount, inputCode, setInputCode, addAttempt, copyToClipboardChatGPTResponse, copyToClipboardQuestion, googleReplied, setGoogleReplied, setLoadingAnswer, loadingAnswer,isVerified,startChatWithGPT,setChatGPTResponse,decreaseCount }}>
 
-      <AuthContext.Provider value={{ password, setPassword, email, setEmail, handleLogin, loggedIn, setLoggedIn, loading, setCount,loginOrRegister,handleRegister,loginAnonymously,deleteAnonymousUser }}>
+      <AuthContext.Provider value={{ password, setPassword, email, setEmail, loggedIn, setLoggedIn, loading, setCount,loginAnonymously,deleteAnonymousUser }}>
         <AppPreferencesContext.Provider value={{theme,setTheme,language,setLanguage,appPreferences,changeThemeFromCache}}>
 
         <NavigationContainer>
