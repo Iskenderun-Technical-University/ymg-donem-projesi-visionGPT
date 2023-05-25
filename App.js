@@ -35,8 +35,6 @@ const getUniqueID = async () => {
 getUniqueID();
 
 
-getUniqueID();
-
 
 
 
@@ -188,7 +186,7 @@ const App = () => {
               await SecureStore.setItemAsync("userEmail", user.uid);
               const userRef = collection(db, "userData");
               await addDoc(userRef, {
-                email: user.uid,
+                uid: user.uid,
                 count: 5,
                 isCodeActive: true,
                 isVerified: false,
@@ -242,7 +240,7 @@ const App = () => {
           await SecureStore.setItemAsync("userEmail", user.email);
           const userRef = collection(db, "userData");
           await addDoc(userRef, {
-            email: user.email,
+            uid: user.email,
             count: 5,
             isCodeActive: true,
             isVerified: false,
