@@ -120,16 +120,12 @@ const App = () => {
     },[])
 
     
-
-    
-
-    
-
   
     const loginAnonymously = async () => {
       const gettingDeviceId = await getUniqueID();
       signInAnonymously(auth)
         .then(async (userCredentials) => {
+          setLoading(true);
           const user = userCredentials.user;
           console.log("Signed in anonymously with:", gettingDeviceId);
           if(user){
@@ -145,7 +141,7 @@ const App = () => {
                 uid: gettingDeviceId,
                 count: 5,
                 isCodeActive: true,
-                isVerified: false,
+                isVerified: true,
                 code: Math.floor(100000 + Math.random() * 900000),
                 uniqueID: gettingDeviceId,
               });
@@ -155,7 +151,8 @@ const App = () => {
               saveThemeToPhone(theme);
               getDocumentId();
               setCount(5);
-              setIsVerified(false);
+              setIsVerified(true);
+              setLoading(false);
             } else {
               console.log("User exists. Logging in...");
               querySnapshot.forEach((doc) => {
@@ -165,26 +162,18 @@ const App = () => {
                 setIsVerified(true);
                 getDocumentId();
                 setLoggedIn(true);
+                setLoading(false);
               });
             }
           }
         })
         .catch((error) => {
           console.log(error+'error is here');
+          setLoading(false);
           
         });
     };
     
-    const deleteAnonymousUser = async () => {
-      const user = auth.currentUser;
-      console.log(user);
-      if (user.isAnonymous) {
-        await user.delete();
-        console.log("Deleted anonymous user.");
-      } else {
-        console.log("User is not anonymous.");
-      }
-    };
 
   
     
@@ -377,11 +366,13 @@ const App = () => {
         setLoading(false);
         submitToChatGPT(responseJson.responses[0].fullTextAnnotation.text);
         console.log("submittedChatGPT");
+        
       } else {
         
         setGoogleResponse("");
         setGoogleReplied(false);
         setLoading(false);
+        
         alert("No text was found in the image.");
       }
     } catch (error) {
@@ -494,7 +485,7 @@ const App = () => {
   return (
     <MainContext.Provider value={{ image, googleResponse, loading, chatGPTResponse, isInputCardsVisible, clearPicture, pickImage, takeAndCropPhoto, count, setCount, inputCode, setInputCode, addAttempt, copyToClipboardChatGPTResponse, copyToClipboardQuestion, googleReplied, setGoogleReplied, setLoadingAnswer, loadingAnswer,isVerified,startChatWithGPT,setChatGPTResponse,decreaseCount }}>
 
-      <AuthContext.Provider value={{ password, setPassword, email, setEmail, loggedIn, setLoggedIn, loading, setCount,loginAnonymously,deleteAnonymousUser }}>
+      <AuthContext.Provider value={{ password, setPassword, email, setEmail, loggedIn, setLoggedIn, loading, setCount,loginAnonymously }}>
         <AppPreferencesContext.Provider value={{theme,setTheme,language,setLanguage,appPreferences,changeThemeFromCache}}>
 
         <NavigationContainer>
@@ -515,7 +506,6 @@ const App = () => {
             : 
             (
               [
-                <Stack.Screen key="Login" name="Login" component={LoginScreen} />,
                 <Stack.Screen key="Register" name="Register" component={RegisterScreen} />,
                 <Stack.Screen key="NewMainScreen" name="NewMainScreen" component={NewMainScreen} />,
                 <Stack.Screen key="Main" name="Main" component={Main} />,

@@ -13,7 +13,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 
 const Menu = ({navigation}) => {
     
-    const {setPassword,email,setEmail,setLoggedIn,setCount,deleteAnonymousUser} = useContext(AuthContext);
+    const {setPassword,email,setEmail,setLoggedIn,setCount} = useContext(AuthContext);
     const {theme,language,setTheme,setLanguage,appPreferences,changeThemeFromCache} = useContext(AppPreferencesContext);
     const {isVerified,count} = useContext(MainContext)
     
@@ -28,11 +28,8 @@ const Menu = ({navigation}) => {
     }
 
     
-    
-
     const logout = async () => {
       try {
-        deleteAnonymousUser();
         await signOut(auth);
         await SecureStore.deleteItemAsync("userEmail");
         console.log('logout');
@@ -41,7 +38,7 @@ const Menu = ({navigation}) => {
         setCount(0);
         setPassword('');
         
-        navigation.navigate('Login')
+        navigation.navigate('Register')
       } catch (e) {
         console.error(e);
       }
