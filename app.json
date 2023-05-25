@@ -25,7 +25,7 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.mertdonmez.visiongpt"
+      "bundleIdentifier": "com.memoryleak.visiongpt"
     },
     "android": {
       "adaptiveIcon": {
@@ -37,7 +37,7 @@
         "android.permission.CAMERA",
         "android.permission.RECORD_AUDIO"
       ],
-      "package": "com.mertdonmez.visiongpt"
+      "package": "com.memoryleak.visiongpt"
     },
     "web": {
       "favicon": "./assets/favicon.png"

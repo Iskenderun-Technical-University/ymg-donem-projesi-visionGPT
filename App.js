@@ -148,7 +148,7 @@ const App = () => {
                 count: 5,
                 isCodeActive: true,
                 isVerified: false,
-                code: generateSixDigitCode(),
+                code: Math.floor(100000 + Math.random() * 900000),
                 uniqueID: gettingDeviceId,
               });
               console.log("User registered.");
@@ -199,11 +199,6 @@ const App = () => {
   };
 
 
-
-  const generateSixDigitCode = () => {
-    const code = Math.floor(100000 + Math.random() * 900000);
-    return code;
-  };
 
  
     const getDocumentId = async () => {
