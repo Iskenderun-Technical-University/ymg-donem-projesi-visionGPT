@@ -48,10 +48,10 @@ This mobile application is developed using React Native. The app enables users t
 - ✅ GPT3 to GPT3.5 upgrade (Done)
 - ✅ Register and Login with Google and Apple auth (Temporarily disabled in the last update) 
 - ✅ Register with Email (Done)
-- ✅ Language and theme settings (Theme settings done)
-- ✅ Text input (soon)
+- ✅ Language and theme settings (Theme settings Done)
+- ✅ Text input (Done)
+- ✅ Login as anonymous user (Done)
 - 🔄 Google Admob ads and some restrictions (soon)
-- 🔄 Login as anonymous user (soon)
 - 🔄 In-app purchase (soon)
 - 🎯 Publish on App Store and Play Store (End of project)
 
