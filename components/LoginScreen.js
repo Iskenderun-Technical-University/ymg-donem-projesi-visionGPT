@@ -19,55 +19,20 @@ import {
   Inter_400Regular,
 } from "@expo-google-fonts/inter";
 import AuthContext from "../context/AuthContext";
-import * as WebBrowser from 'expo-web-browser';
-import * as Google from 'expo-auth-session/providers/google';
-import secretTokens from "../tokens/SecretTokens";
 import { MaterialIcons } from '@expo/vector-icons';
 import AppPreferencesContext from "../context/AppPreferencesContext";
 
 
 
-WebBrowser.maybeCompleteAuthSession();
+
 
 const LoginScreen = ({ navigation }) => {
     
-    const { password, setPassword, handleLogin, email, setEmail, loading,loginOrRegister} = useContext(AuthContext);
-    const [token, setToken] = useState("");
-    const [userInfo, setUserInfo] = useState(null);
-    const [request, response, promptAsync] = Google.useAuthRequest(secretTokens.googleAuthTokens);
+    const { password, setPassword, handleLogin, email, setEmail, loading} = useContext(AuthContext);
+
     const {theme,language} = useContext(AppPreferencesContext);
     
-    useEffect(() => {
-      if (response?.type === 'success') {
-        const { authentication } = response;
-        const { accessToken } = authentication;
-        setToken(accessToken);
-        getUserInfo(accessToken);
-      }
-    }, [response]);
-
-
     
-    const getUserInfo = async (accessToken) => {
-      const userInfoResponse = await fetch(
-        "https://www.googleapis.com/userinfo/v2/me",
-        {
-          headers: { Authorization: `Bearer ${accessToken}` },
-        }
-      );
-      const userInfo = await userInfoResponse.json();
-      setUserInfo(userInfo);
-      console.log(userInfo);
-      loginOrRegister(userInfo);
-    };
-
-    const loginWithGoogle = async () => {
-      try {
-        await promptAsync();
-      } catch (err) {
-        console.log(err);
-      }
-    };
 
 
   let [fontsLoaded] = useFonts({

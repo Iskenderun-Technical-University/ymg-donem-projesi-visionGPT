@@ -19,9 +19,9 @@ import {
   Inter_400Regular,
 } from "@expo-google-fonts/inter";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
-import secretTokens from "../tokens/SecretTokens";
 import AuthContext from "../context/AuthContext";
 import { MaterialIcons } from '@expo/vector-icons';
+import secretTokens from "../tokens/SecretTokens";
 
 
 const RegisterScreen = ({ navigation }) => {

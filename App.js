@@ -7,9 +7,9 @@ import AppPreferencesContext from './context/AppPreferencesContext';
 import Main from "./components/Main";
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import DeviceInfo from 'react-native-device-info';
+import DeviceInfo from 'react-native-device-info';  
 import { auth, db } from "./firebase";
-import { signInWithEmailAndPassword,createUserWithEmailAndPassword, sendEmailVerification,signInAnonymously} from "firebase/auth";
+import {signInAnonymously} from "firebase/auth";
 import Menu from "./components/Menu";
 import * as SecureStore from 'expo-secure-store';
 import { collection, query, where, getDocs, updateDoc, doc, getDoc,addDoc } from "firebase/firestore";
@@ -28,8 +28,6 @@ const getUniqueID = async () => {
   console.log('Unique ID: ', uniqueID);
   return uniqueID;
 };
-
-
 
 const App = () => {
 
@@ -294,6 +292,7 @@ const App = () => {
       });
       const data = await response.json();
       setChatGPTResponse(JSON.parse(data.choices[0].message.content));
+      
       setLoadingAnswer(false);
     } catch (error) {
       console.log(error);
@@ -491,12 +490,6 @@ const App = () => {
     }
 
   };
-
-
-
-
-  
-
 
   return (
     <MainContext.Provider value={{ image, googleResponse, loading, chatGPTResponse, isInputCardsVisible, clearPicture, pickImage, takeAndCropPhoto, count, setCount, inputCode, setInputCode, addAttempt, copyToClipboardChatGPTResponse, copyToClipboardQuestion, googleReplied, setGoogleReplied, setLoadingAnswer, loadingAnswer,isVerified,startChatWithGPT,setChatGPTResponse,decreaseCount }}>
