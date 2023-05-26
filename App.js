@@ -147,12 +147,15 @@ const App = () => {
               });
               console.log("User registered.");
               setEmail(gettingDeviceId);
-              setLoggedIn(true);
               saveThemeToPhone(theme);
               getDocumentId();
               setCount(5);
               setIsVerified(true);
+              setLoggedIn(true);
               setLoading(false);
+              
+              
+              
             } else {
               console.log("User exists. Logging in...");
               querySnapshot.forEach((doc) => {
