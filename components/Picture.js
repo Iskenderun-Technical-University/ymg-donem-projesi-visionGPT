@@ -3,11 +3,11 @@ import React, { useContext } from 'react'
 import MainContext from '../context/MainContext'
 
 const Picture = () => {
-  const { image} = useContext(MainContext);
+  const { image,chatGPTResponse} = useContext(MainContext);
   return (
     <>
       {
-        image &&
+        image&&
         <View style={styles.pictureWrapper}>
           <Image source={{ uri: image }} style={styles.picture} resizeMode="contain" testID="picture" />
         </View>

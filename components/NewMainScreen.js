@@ -4,33 +4,50 @@ import React,{useContext} from 'react'
 import MainUITitle from './MainUITitle'
 import AppPreferencesContext from '../context/AppPreferencesContext';
 import { MaterialIcons } from '@expo/vector-icons';
+import MainContext from '../context/MainContext';
+import Picture from './Picture';
+import ClearAnswerButton from './ClearAnswerButton'
 
 
 const NewMainScreen = ({navigation}) => {
     const {theme,language} = useContext(AppPreferencesContext)
+    const {takeAndCropPhoto,pickImage,isInputCardsVisible,image,chatGPTResponse,clearPicture} = useContext(MainContext)
     
   return (
     <View style={[styles.container,{backgroundColor:theme.backgroundColor}]}>
         <StatusBar style={theme.statusBarTheme} />
     <MainUITitle navigation={navigation}/>
-    <View style={styles.tutorialWrapper}>
-    <Image source={require('../assets/newVisionGPTIcon.png')}  style={styles.visionGPTIcon}/>
-    <Text style={[styles.tutorialText,{color:theme.fontColor.primaryFontColor}]}>Scan texts using camera or{'\n'}get answers by typing.</Text>
     
+    {
+        image
+        ?
+        <>
+        <Picture />
+        <View style={{backgroundColor:theme.sectionBoxColor,marginHorizontal:16,borderRadius:20}}>
+        <Text style={{color:theme.fontColor.primaryFontColor,marginHorizontal:10,marginTop:10,marginBottom:10}}>{chatGPTResponse ? chatGPTResponse : 'bir saniye..'}</Text>
+        </View>
+        <View style={{elevation:10}}>
+        <TouchableOpacity onPress={clearPicture} style={{backgroundColor:theme.sectionBoxColor,height:250,justifyContent:'center',alignItems:'center',marginHorizontal:10,borderRadius:20,marginTop:50}}>
+        <MaterialIcons name="photo-camera" color={theme.fontColor.primaryFontColor} style={{marginTop:10}} size={50} />
+            <Text style={{fontSize:40,color:theme.fontColor.primaryFontColor,textAlign:'center'}} >
+                 Başka bir fotoğraf çekmek için tıklayın.
+            </Text>
+        </TouchableOpacity>
+        </View> 
+        
+        </>
+        :
+        <View style={styles.choicesWrapper}>
+        <TouchableOpacity style={[styles.choicesSectionLeft,{backgroundColor:theme.sectionBoxColor}]} onPress={takeAndCropPhoto}>
+        <MaterialIcons name="photo-camera" color={theme.fontColor.primaryFontColor} style={{marginTop:10}} size={50} />
+            <Text style={[styles.sectionMainTitle,{color:theme.fontColor.primaryFontColor}]}>Kamerayı kullanmak için tıklayın.{'\n'}{'\n'}Bu butonu kullanarak fotoğraf çekebilirsiniz ve ben size çektiğiniz fotoğraftaki nesnelerin detaylarını söyleyeceğim.</Text>
+             
+         </TouchableOpacity>
+         
     </View>
 
-    <View style={styles.choicesWrapper}>
-        <TouchableOpacity style={[styles.choicesSectionLeft,{backgroundColor:theme.sectionBoxColor}]} onPress={() => navigation.navigate("Main")}>
-        <MaterialIcons name="center-focus-weak" color={theme.fontColor.primaryFontColor} style={{marginTop:10}} size={40} />
-            <Text style={[styles.sectionMainTitle,{color:theme.fontColor.primaryFontColor}]}>Visual Input</Text>
-            <Text style={[styles.sectionText,{color:theme.fontColor.secondaryFontColor}]}>Take a Photo</Text>    
-         </TouchableOpacity>
-         <TouchableOpacity style={[styles.choicesSectionRight,{backgroundColor:theme.sectionBoxColor}]} onPress={()=>navigation.navigate('TextInput')}>
-         <MaterialIcons name="keyboard" color={theme.fontColor.primaryFontColor} style={{marginTop:10}} size={40} />
-            <Text style={[styles.sectionMainTitle,{color:theme.fontColor.primaryFontColor}]}>Text Input</Text>
-            <Text style={[styles.sectionText,{color:theme.fontColor.secondaryFontColor}]}>Type a Question</Text>    
-         </TouchableOpacity>
-    </View>
+    }
+    
     
 
     </View>
@@ -49,6 +66,8 @@ const styles = StyleSheet.create({
         fontSize:20,
         textAlign:'center',
         marginTop:30,
+        marginHorizontal:10,
+        
     },
     sectionIcon:{
         width:50,
@@ -65,18 +84,20 @@ const styles = StyleSheet.create({
         flex:1,
     },
     choicesWrapper:{
-        flexDirection:'row',
-        justifyContent:'space-between',
-
+        justifyContent:'center',
+        alignContent:'center',
+        marginTop:100,
     },
     choicesSectionLeft:{
      
-        height:140,
-        width:140,
+        height:500,
+        
         borderRadius:20,
-        justifyContent:'space-between',
+        justifyContent:'center',
         alignItems:'center',
-        marginLeft:40,
+        marginHorizontal:10,
+        elevation:5,
+        
     },
     choicesSectionRight:{
         

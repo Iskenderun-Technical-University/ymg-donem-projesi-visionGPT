@@ -14,12 +14,12 @@ const ChatGPTResponse = () => {
       loadingAnswer && 
       <AnswerLoading />
     }
-    {chatGPTResponse && (
+    {chatGPTResponse !=='' && (
           <View style={styles.chatGPTResponseWrapper}>
             <View style={styles.cardTitleWrapper}>
               <Text style={styles.cardTitleText}>Answer</Text>
             </View>
-            <Text style={styles.chatGPTText}>{chatGPTResponse.answer}</Text>
+            <Text style={styles.chatGPTText}>{chatGPTResponse}</Text>
             <View style={styles.copyButtonWrapper}>
               <TouchableOpacity
                 style={styles.copyButton}

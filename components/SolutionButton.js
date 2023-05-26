@@ -29,10 +29,10 @@ const SolutionButton = () => {
                                 </Text>
                                 <View style={styles.solutionTextWrapper}>
                                     <Text style={styles.shortAnswerText}>
-                                    {chatGPTResponse.answer}
+                                    {chatGPTResponse}
                                     </Text>
                                     <Text style={styles.modalText}>
-                                    {chatGPTResponse.solution}
+                                    {chatGPTResponse}
                                     </Text>
                                 </View>
                                 <TouchableOpacity

@@ -46,20 +46,20 @@ const RegisterScreen = ({ navigation }) => {
     <>
       <StatusBar style="dark" />
         <View style={styles.gradientContainer}>
-          <LinearGradient colors={["#7978FF", "#7149C6","#C689C6","#F94892"]} style={styles.gradient}>
+          <LinearGradient colors={["white", "white","white","white","#7149C6"]} style={styles.gradient}>
               {
                 loading ? 
                 
                 <>
                 <Text style={styles.registerText}>
-                Welcome Again! 
+                Tekrar{'\n'}Hoş Geldiniz
               </Text>
               <View style={{justifyContent:'center',alignItems:'center'}}>
               <Image source={require('../assets/newVisionGPTIcon.png')} style={{width:250,height:250}} />
               </View>
                   <Text style={styles.registerTextSub}>
-                    Just a second...{'\n'}
-                  I am preparing the application for you
+                  Bir saniye bekleyin..{'\n'}
+                      Uygulamayı sizin için başlatıyorum
                   </Text>
                   
                   </>
@@ -68,22 +68,23 @@ const RegisterScreen = ({ navigation }) => {
                 : 
                 <>
               <Text style={styles.registerText}>
-              Welcome
+              Hoş Geldiniz
             </Text>
             <View style={{justifyContent:'center',alignItems:'center'}}>
             <Image source={require('../assets/newVisionGPTIcon.png')} style={{width:250,height:250}} />
             </View>
                 <Text style={styles.registerTextSub}>
-                  VisionGPT{"\n"} allows you to provide visual input and engage
-                  in conversations powered by {'\n'}the ChatGPT AI
+                  VisionGPT{"\n"}Görme engelli insanların hayatını kolaylaştırır
                 </Text>
+                <Text style={{marginHorizontal:20,
+                textAlign:'center',marginBottom:20,}}>Telefonunuzun erişilebilirlik ayarları açık olduğu sürece, uygulamayı kullanırken sesli geri bildirimlerle size yardımcı olacağım</Text>
                 <View style={styles.registerButtonWrapper}>
                   <TouchableOpacity
                     style={styles.registerButtonEmail}
                     onPress={startLogin}
                     disabled={false}
                   >
-                    <Text style={styles.registerButtonTextEmail}>Start </Text>
+                    <Text style={styles.registerButtonTextEmail}>Uygulamayı başlat</Text>
 
                     <MaterialIcons
                       name="arrow-forward-ios"
@@ -101,8 +102,7 @@ const RegisterScreen = ({ navigation }) => {
                           marginTop:10,
                         }}
                       >
-                        By clicking 'Start', you agree to our Terms of Use.
-                        We're committed to respecting your rights and privacy.
+                        "Uygulamayı başlat" butonuna tıklayarak kullanım şartlarını kabul etmiş olursunuz.
                       </Text>
                       <TouchableOpacity onPress={()=> alert(secretTokens.termsOfUse)} style={{marginBottom:40}}>
                         <Text style={{
@@ -113,7 +113,7 @@ const RegisterScreen = ({ navigation }) => {
                           marginTop:10,
                           marginBottom:10
 ,                          
-                        }}>Terms of Use</Text>
+                        }}>Kullanım şartları</Text>
                       </TouchableOpacity>
            
                   </View>
@@ -135,23 +135,21 @@ const styles = StyleSheet.create({
 
   registerButtonWrapper: {
     marginHorizontal: 40,
-    
   },
   registerButtonEmail: {
     backgroundColor: "#52006A",
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
-    height: 40,
-    borderRadius: 10,
+    height: 100,
+    borderRadius: 20,
   },
 
   registerButtonTextEmail: {
     color: "white",
-    fontSize: 22,
+    fontSize: 28,
     fontFamily: "Inter_400Regular",
   },
-
 
 
   registerTextSub: {
