@@ -4,10 +4,13 @@ import React,{useContext} from 'react'
 import MainUITitle from './MainUITitle'
 import AppPreferencesContext from '../context/AppPreferencesContext';
 import { MaterialIcons } from '@expo/vector-icons';
+import MainContext from '../context/MainContext';
+import secretTokens from '../tokens/SecretTokens';
 
 
 const NewMainScreen = ({navigation}) => {
     const {theme,language} = useContext(AppPreferencesContext)
+    const {email} = useContext(MainContext)
     
   return (
     <View style={[styles.container,{backgroundColor:theme.backgroundColor}]}>
@@ -16,8 +19,8 @@ const NewMainScreen = ({navigation}) => {
     <View style={styles.tutorialWrapper}>
     <Image source={require('../assets/newVisionGPTIcon.png')}  style={styles.visionGPTIcon}/>
     <Text style={[styles.tutorialText,{color:theme.fontColor.primaryFontColor}]}>Scan texts using camera or{'\n'}get answers by typing.</Text>
-    
     </View>
+    
 
     <View style={styles.choicesWrapper}>
         <TouchableOpacity style={[styles.choicesSectionLeft,{backgroundColor:theme.sectionBoxColor}]} onPress={() => navigation.navigate("Main")}>
@@ -30,6 +33,13 @@ const NewMainScreen = ({navigation}) => {
             <Text style={[styles.sectionMainTitle,{color:theme.fontColor.primaryFontColor}]}>Text Input</Text>
             <Text style={[styles.sectionText,{color:theme.fontColor.secondaryFontColor}]}>Type a Question</Text>    
          </TouchableOpacity>
+    </View>
+
+    <View style={{flex:1,justifyContent:'flex-end',marginBottom:60}}>
+    <TouchableOpacity onPress={()=>alert(secretTokens.tester_message.english)} style={{justifyContent:'center',flexDirection:'row',alignItems:'center',marginTop:50,alignContent:'center',backgroundColor:'#B70404',marginHorizontal:100,borderRadius:10,height:40}}>
+    <MaterialIcons name="warning" color={'white'} size={20} />
+    <Text style={{color:'white',fontSize:18}}>Test User</Text>
+    </TouchableOpacity>
     </View>
     
 

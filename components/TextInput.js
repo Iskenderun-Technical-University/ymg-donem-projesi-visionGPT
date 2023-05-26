@@ -195,6 +195,7 @@ const TextInputSection = ({ navigation }) => {
               <BotResponseMessage
                 message={"How can i help you ? "}
                 botResponseTime={botResponseTime[0]}
+                firstMessage={botResponse.length}
               />
             )}
           </View>
