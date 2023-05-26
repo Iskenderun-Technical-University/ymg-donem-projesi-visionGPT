@@ -191,7 +191,7 @@ const App = () => {
     const getDocumentId = async () => {
       const userEmail = await SecureStore.getItemAsync("userEmail");
       const userRef = collection(db, "userData");
-      const q = query(userRef, where("uid", "==", userEmail));
+      const q = query(userRef, where("uniqueID", "==", userEmail));
       const querySnapshot = await getDocs(q);
       querySnapshot.forEach((doc) => {
         setDocId(doc.id);
