@@ -22,9 +22,8 @@ import AuthContext from "../context/AuthContext";
 import { MaterialIcons } from "@expo/vector-icons";
 import secretTokens from '../tokens/SecretTokens'
 
-const RegisterScreen = ({ navigation }) => {
-  const [isCheckboxChecked, setIsCheckboxChecked] = useState(false);
-  const { loginAnonymously, loading, loggedIn } = useContext(AuthContext);
+const RegisterScreen = () => {
+  const { loginAnonymously, loading } = useContext(AuthContext);
 
   let [fontsLoaded] = useFonts({
     Inter_900Black,
@@ -46,7 +45,7 @@ const RegisterScreen = ({ navigation }) => {
     <>
       <StatusBar style="dark" />
         <View style={styles.gradientContainer}>
-          <LinearGradient colors={["white", "white","white","#C689C6"]} style={styles.gradient}>
+          <LinearGradient colors={["white", "white"]} style={styles.gradient}>
               {
                 loading ? 
                 
@@ -68,14 +67,13 @@ const RegisterScreen = ({ navigation }) => {
                 : 
                 <>
               <Text style={styles.registerText}>
-              Welcome
+              Welcome !
             </Text>
             <View style={{justifyContent:'center',alignItems:'center'}}>
             <Image source={require('../assets/newVisionGPTIcon.png')} style={{width:250,height:250}} />
             </View>
                 <Text style={styles.registerTextSub}>
-                  VisionGPT{"\n"} allows you to provide visual input and engage
-                  in conversations powered by {'\n'}the ChatGPT AI
+                  VisionGPT{"\n"} You can scan text with camera or chat with bot powered by {'\n'}ChatGPT AI
                 </Text>
                 <View style={styles.registerButtonWrapper}>
                   <TouchableOpacity
@@ -84,7 +82,6 @@ const RegisterScreen = ({ navigation }) => {
                     disabled={false}
                   >
                     <Text style={styles.registerButtonTextEmail}>Start </Text>
-
                     <MaterialIcons
                       name="arrow-forward-ios"
                       color={"white"}
@@ -142,13 +139,13 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
-    height: 40,
+    height: 60,
     borderRadius: 10,
   },
 
   registerButtonTextEmail: {
     color: "white",
-    fontSize: 22,
+    fontSize: 27,
     fontFamily: "Inter_400Regular",
   },
 
