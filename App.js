@@ -7,7 +7,7 @@ import AppPreferencesContext from './context/AppPreferencesContext';
 import Main from "./components/Main";
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-// import DeviceInfo from 'react-native-device-info';  
+import DeviceInfo from 'react-native-device-info';  
 import { auth, db } from "./firebase";
 import {signInAnonymously} from "firebase/auth";
 import Menu from "./components/Menu";
@@ -15,7 +15,6 @@ import * as SecureStore from 'expo-secure-store';
 import { collection, query, where, getDocs, updateDoc, doc, getDoc,addDoc } from "firebase/firestore";
 import * as Clipboard from 'expo-clipboard';
 import secretTokens from './tokens/SecretTokens';
-import LoginScreen from "./components/LoginScreen";
 import RegisterScreen from "./components/RegisterScreen";
 import NewMainScreen from "./components/NewMainScreen";
 import TextInputSection from "./components/TextInput";
@@ -23,11 +22,11 @@ import TextInputSection from "./components/TextInput";
 
 const Stack = createNativeStackNavigator();
 
-// const getUniqueID = async () => {
-//   uniqueID = await DeviceInfo.getUniqueId();
-//   console.log('Unique ID: ', uniqueID);
-//   return uniqueID;
-// };
+const getUniqueID = async () => {
+  uniqueID = await DeviceInfo.getUniqueId();
+  console.log('Unique ID: ', uniqueID);
+  return uniqueID;
+};
 
 const App = () => {
 
@@ -122,7 +121,7 @@ const App = () => {
     
   
     const loginAnonymously = async () => {
-      const gettingDeviceId = 'test'
+      const gettingDeviceId = await getUniqueID();
       signInAnonymously(auth)
         .then(async (userCredentials) => {
           setLoading(true);
@@ -138,7 +137,7 @@ const App = () => {
               await SecureStore.setItemAsync("userEmail", gettingDeviceId);
               const userRef = collection(db, "userData");
               await addDoc(userRef, {
-                uid: gettingDeviceId,
+                uid: user.uid,
                 count: 5,
                 isCodeActive: true,
                 isVerified: true,
@@ -179,11 +178,11 @@ const App = () => {
     
 
 
-  const decreaseCount = async () => {
-    const userDocRef = doc(db, "userData", docId);
-    await updateDoc(userDocRef, { count: count - 1 });
-    setCount(count - 1);
-  };
+    const decreaseCount = async () => {
+      const userDocRef = doc(db, "userData", docId);
+      await updateDoc(userDocRef, { count: count - 1 });
+      setCount(count - 1);
+    };
 
 
 
@@ -191,7 +190,7 @@ const App = () => {
     const getDocumentId = async () => {
       const userEmail = await SecureStore.getItemAsync("userEmail");
       const userRef = collection(db, "userData");
-      const q = query(userRef, where("uid", "==", userEmail));
+      const q = query(userRef, where("uniqueID", "==", userEmail));
       const querySnapshot = await getDocs(q);
       querySnapshot.forEach((doc) => {
         setDocId(doc.id);
@@ -203,7 +202,7 @@ const App = () => {
     useEffect(() => {
       setLoading(true);
       const restoreUserSession = async () => {
-        const gettingDeviceId = 'test'
+        const gettingDeviceId = await getUniqueID();
         const userEmail = await SecureStore.getItemAsync("userEmail");
         if (userEmail) {
           setEmail(userEmail);
