@@ -6,6 +6,7 @@ import {
   Image,
   SafeAreaView,
   TextInput,
+  ScrollView,
   TouchableOpacity,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
@@ -21,9 +22,11 @@ import {
 import AuthContext from "../context/AuthContext";
 import { MaterialIcons } from "@expo/vector-icons";
 import secretTokens from '../tokens/SecretTokens'
+import AppPreferencesContext from "../context/AppPreferencesContext";
 
 const RegisterScreen = () => {
   const { loginAnonymously, loading } = useContext(AuthContext);
+  const {theme,language} = useContext(AppPreferencesContext)
 
   let [fontsLoaded] = useFonts({
     Inter_900Black,
@@ -45,43 +48,43 @@ const RegisterScreen = () => {
     <>
       <StatusBar style="dark" />
         <View style={styles.gradientContainer}>
-          <LinearGradient colors={["white", "white"]} style={styles.gradient}>
+          
               {
                 loading ? 
                 
                 <>
-                <Text style={styles.registerText}>
-                Welcome Again! 
+                <LinearGradient colors={["black", "black"]} style={styles.gradient}>
+                <Text style={[styles.registerText,{color:'white'}]}>
+                Get Ready! 
               </Text>
               <View style={{justifyContent:'center',alignItems:'center'}}>
               <Image source={require('../assets/newVisionGPTIcon.png')} style={{width:250,height:250}} />
               </View>
-                  <Text style={styles.registerTextSub}>
-                    Just a second...{'\n'}
-                  I am preparing the application for you
+                  <Text style={[styles.registerTextSub,{color:'white'}]}>
+                  The app is almost ready,{'\n'}it won't take long.
                   </Text>
-                  
+                  </LinearGradient>
                   </>
-                
-                
                 : 
                 <>
-              <Text style={styles.registerText}>
+                <LinearGradient colors={["white", "white"]} style={styles.gradient}>
+              <Text style={[styles.registerText,{color:'black'}]}>
               Welcome !
             </Text>
             <View style={{justifyContent:'center',alignItems:'center'}}>
             <Image source={require('../assets/newVisionGPTIcon.png')} style={{width:250,height:250}} />
             </View>
-                <Text style={styles.registerTextSub}>
-                  VisionGPT{"\n"} You can scan text with camera or chat with bot powered by {'\n'}ChatGPT AI
+                <Text style={[styles.registerTextSub,{color:'grey'}]}>
+                  You can scan text{'\n'}with camera or chat with
                 </Text>
+                <Text style={[styles.registerTextSub,{color:'black',fontSize:36,marginBottom:20}]}>VisionGPT</Text>
                 <View style={styles.registerButtonWrapper}>
                   <TouchableOpacity
                     style={styles.registerButtonEmail}
                     onPress={startLogin}
                     disabled={false}
                   >
-                    <Text style={styles.registerButtonTextEmail}>Start </Text>
+                    <Text style={[styles.registerButtonTextEmail,{color:'white'}]}>Start </Text>
                     <MaterialIcons
                       name="arrow-forward-ios"
                       color={"white"}
@@ -115,12 +118,13 @@ const RegisterScreen = () => {
            
                   </View>
                 </View>
+                </LinearGradient>
                 </>
               }
               
               
             
-          </LinearGradient>
+          
         </View>
 
     </>
@@ -144,7 +148,7 @@ const styles = StyleSheet.create({
   },
 
   registerButtonTextEmail: {
-    color: "white",
+ 
     fontSize: 27,
     fontFamily: "Inter_400Regular",
   },
@@ -152,25 +156,19 @@ const styles = StyleSheet.create({
 
 
   registerTextSub: {
-    color: "#321E1E",
     textAlign: "center",
-    marginBottom: 20,
     marginHorizontal: 16,
     fontSize: 24,
     fontFamily: "Inter_900Black",
   },
   registerText: {
-    color: "black",
+    color: "white",
     textAlign: "center",
     fontSize: 50,
     fontFamily: "Inter_900Black",
   },
   
-  emailText: {
-    color: "black",
-    fontFamily: "Inter_200ExtraLight",
-    fontSize: 15,
-  },
+  
   imageAndTitleWrapper: {
     flexDirection: "row",
     justifyContent: "center",

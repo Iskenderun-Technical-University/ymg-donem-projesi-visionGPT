@@ -1,9 +1,25 @@
 import { StyleSheet, Text, View, Image } from "react-native";
-import React, { useContext, useState } from "react";
+import React, { useContext, useState,useEffect } from "react";
 import AppPreferencesContext from "../context/AppPreferencesContext";
 
 const BotResponseMessage = ({ message, botResponseTime }) => {
   const { theme } = useContext(AppPreferencesContext);
+  const [displayedMessage, setDisplayedMessage] = useState('');
+
+  useEffect(() => {
+    let index = 0;
+    const timer = setInterval(() => {
+      if(index < message.length){
+        setDisplayedMessage((prevMessage) => prevMessage + message[index]);
+        index++;
+      } else {
+        clearInterval(timer);
+      }
+    }, 50); // 100 milisaniye karakter hızı
+    
+    return () => clearInterval(timer); // temizleme
+  }, [message]);
+  
   return (
     <>
       <View style={styles.botResponseWrapper}>
@@ -19,7 +35,7 @@ const BotResponseMessage = ({ message, botResponseTime }) => {
           <Text
             style={[styles.text, { color: theme.fontColor.primaryFontColor }]}
           >
-            {message}
+            {displayedMessage}
           </Text>
           <Text style={[styles.timeText,{ color: theme.fontColor.primaryFontColor }]}>{botResponseTime}</Text>
         </View>
