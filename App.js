@@ -7,7 +7,7 @@ import AppPreferencesContext from './context/AppPreferencesContext';
 import Main from "./components/Main";
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import DeviceInfo from 'react-native-device-info';  
+// import DeviceInfo from 'react-native-device-info';  
 import { auth, db } from "./firebase";
 import {signInAnonymously} from "firebase/auth";
 import Menu from "./components/Menu";
@@ -23,11 +23,11 @@ import TextInputSection from "./components/TextInput";
 
 const Stack = createNativeStackNavigator();
 
-const getUniqueID = async () => {
-  uniqueID = await DeviceInfo.getUniqueId();
-  console.log('Unique ID: ', uniqueID);
-  return uniqueID;
-};
+// const getUniqueID = async () => {
+//   uniqueID = await DeviceInfo.getUniqueId();
+//   console.log('Unique ID: ', uniqueID);
+//   return uniqueID;
+// };
 
 const App = () => {
 
@@ -122,7 +122,7 @@ const App = () => {
     
   
     const loginAnonymously = async () => {
-      const gettingDeviceId = await getUniqueID();
+      const gettingDeviceId = 'TEST'
       signInAnonymously(auth)
         .then(async (userCredentials) => {
           setLoading(true);
@@ -203,7 +203,7 @@ const App = () => {
     useEffect(() => {
       setLoading(true);
       const restoreUserSession = async () => {
-        const gettingDeviceId = await getUniqueID();
+        const gettingDeviceId = 'TEST'
         const userEmail = await SecureStore.getItemAsync("userEmail");
         if (userEmail) {
           setEmail(userEmail);

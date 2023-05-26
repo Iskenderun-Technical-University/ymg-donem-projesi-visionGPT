@@ -46,7 +46,7 @@ const RegisterScreen = ({ navigation }) => {
     <>
       <StatusBar style="dark" />
         <View style={styles.gradientContainer}>
-          <LinearGradient colors={["#7978FF", "#7149C6","#C689C6","#F94892"]} style={styles.gradient}>
+          <LinearGradient colors={["white", "white","white","#C689C6"]} style={styles.gradient}>
               {
                 loading ? 
                 
