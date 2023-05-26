@@ -23,8 +23,9 @@ const Main = ({navigation}) => {
       
           <TouchableOpacity onPress={()=>navigation.goBack()} style={{flexDirection:'row',alignItems:'center'}}>
             <MaterialIcons name="arrow-back-ios" color={theme.fontColor.primaryFontColor} size={20} />
-                <Text style={[styles.backText,{color:theme.fontColor.primaryFontColor}]}>Back</Text>
+                
           </TouchableOpacity>
+          <Text style={[styles.visionInputTitle,{color:theme.fontColor.primaryFontColor}]}>Visual Input</Text>
 
           <View style={{flexDirection:'row',alignItems:'center',backgroundColor:count>0 ? '#AA77FF' : '#DF2E38',borderRadius:20,justifyContent:'center'}}>
           <MaterialIcons name="local-activity" style={{marginLeft:10,marginRight:10}} color={'white'} size={20} />
@@ -32,10 +33,7 @@ const Main = ({navigation}) => {
           </View>
 
       </View>
-      {   
-        image ==null &&
-        <Text style={[styles.visionInputTitle,{color:theme.fontColor.primaryFontColor}]}>Visual Input</Text>
-      }
+    
    
       <StatusBar style={theme.themeName === 'Dark' ? 'light' : 'dark'} />
       <ScrollView>
@@ -63,11 +61,9 @@ const styles = StyleSheet.create({
     marginRight:10,
   },
   visionInputTitle:{
-    fontSize:40,
+    fontSize:20,
     fontWeight:'300',
-    marginLeft:30,
-    marginTop:24,
-    marginBottom:80,
+    
   },
   titleWrapper:{
     marginTop:70,
@@ -75,6 +71,7 @@ const styles = StyleSheet.create({
     flexDirection:'row',
     alignItems:'center',
     justifyContent:'space-between',
+    marginBottom:150,
   },
   
   container: {

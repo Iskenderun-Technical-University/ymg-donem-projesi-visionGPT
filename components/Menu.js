@@ -51,15 +51,16 @@ const Menu = ({navigation}) => {
       
           <TouchableOpacity onPress={()=>navigation.goBack()} style={{flexDirection:'row',alignItems:'center'}}>
           <MaterialIcons name="arrow-back-ios" color={theme.fontColor.primaryFontColor} size={20} />
-                <Text style={[styles.backText,{color:theme.fontColor.primaryFontColor}]}>Back</Text>
+                
           </TouchableOpacity>
+          <Text style={[styles.settingsTitleText,{color:theme.fontColor.primaryFontColor}]}>Menu</Text>
           <View style={{flexDirection:'row',alignItems:'center',backgroundColor:count>0 ? '#AA77FF' : '#DF2E38',borderRadius:20,justifyContent:'center'}}>
           <MaterialIcons name="local-activity" style={{marginLeft:10,marginRight:10}} color={'white'} size={20} />
           <Text style={[styles.countText,{color:'white'}]}>{count}</Text>
           </View>
           
       </View>
-        <Text style={[styles.settingsTitleText,{color:theme.fontColor.primaryFontColor}]}>Menu</Text>
+        
         <View style={styles.userInfoWrapper}>
             <Image source={require('../assets/newVisionGPTIcon.png')} style={styles.avataricon} />
             <View>
@@ -318,10 +319,9 @@ const styles = StyleSheet.create({
     width:150,
   },
   settingsTitleText:{
-    fontSize:40,
+    fontSize:20,
     fontWeight:'300',
-    marginLeft:30,
-    marginTop:24,
+
   },
   backButtonWrapper:{
     flexDirection:'row',

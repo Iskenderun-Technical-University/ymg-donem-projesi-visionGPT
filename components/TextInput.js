@@ -35,8 +35,11 @@ const TextInputSection = ({ navigation }) => {
   const [isPress, setIsPress] = useState(false);
   const [currentMessage, setCurrentMessage] = useState("");
   const [loading, setLoading] = useState(false);
+  
 
   const scrollViewRef = useRef();
+
+  
 
   useEffect(() => {
     if (chatGPTResponse !== "") {
@@ -278,7 +281,10 @@ const TextInputSection = ({ navigation }) => {
               onChangeText={setCurrentMessage}
               value={currentMessage}
             />
-            <TouchableOpacity onPress={startChatEngine}>
+            <TouchableOpacity 
+            onPress={startChatEngine}
+            disabled={currentMessage === "" ? true : false}
+            >
               <MaterialIcons
                 name="arrow-forward-ios"
                 style={styles.inputTextIcon}
