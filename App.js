@@ -23,11 +23,11 @@ import TextInputSection from "./components/TextInput";
 
 const Stack = createNativeStackNavigator();
 
-// const getUniqueID = async () => {
-//   uniqueID = await DeviceInfo.getUniqueId();
-//   console.log('Unique ID: ', uniqueID);
-//   return uniqueID;
-// };
+const getUniqueID = async () => {
+  uniqueID = "test-user"
+  console.log('Unique ID: ', uniqueID);
+  return uniqueID;
+};
 
 const App = () => {
 
@@ -122,7 +122,7 @@ const App = () => {
     
   
     const loginAnonymously = async () => {
-      const gettingDeviceId = 'test'
+      const gettingDeviceId = await getUniqueID();
       signInAnonymously(auth)
         .then(async (userCredentials) => {
           setLoading(true);
@@ -138,7 +138,7 @@ const App = () => {
               await SecureStore.setItemAsync("userEmail", gettingDeviceId);
               const userRef = collection(db, "userData");
               await addDoc(userRef, {
-                uid: gettingDeviceId,
+                uid: user.uid,
                 count: 5,
                 isCodeActive: true,
                 isVerified: true,
@@ -203,7 +203,7 @@ const App = () => {
     useEffect(() => {
       setLoading(true);
       const restoreUserSession = async () => {
-        const gettingDeviceId = 'test'
+        const gettingDeviceId = await getUniqueID();
         const userEmail = await SecureStore.getItemAsync("userEmail");
         if (userEmail) {
           setEmail(userEmail);
@@ -507,6 +507,7 @@ const App = () => {
             : 
             (
               [
+                
                 <Stack.Screen key="Register" name="Register" component={RegisterScreen} />,
                 <Stack.Screen key="NewMainScreen" name="NewMainScreen" component={NewMainScreen} />,
                 <Stack.Screen key="Main" name="Main" component={Main} />,

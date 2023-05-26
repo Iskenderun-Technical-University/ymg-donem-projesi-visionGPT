@@ -80,24 +80,8 @@ const Menu = ({navigation}) => {
           
         </View>
         <ScrollView>
-        <Text style={[styles.settingsName,{color:theme.fontColor.primaryFontColor,marginTop:50}]}>User</Text>
-        <View style={[styles.settingsWrapper,{backgroundColor:theme.sectionBoxColor}]}>
-          <View style={styles.settingRow}>
-          <View style={styles.leftTexts}>
-          <MaterialIcons name="check-circle" style={{marginHorizontal:10}} color={theme.fontColor.primaryFontColor} size={20} />
-          <Text style={[styles.settingText,{color:theme.fontColor.primaryFontColor}]}>Verify Email</Text>
-          </View>
-          <View style={styles.rightTexts}>
-          <MaterialIcons name="arrow-forward-ios" style={[styles.inputTextIcon,{marginRight:10}]} color={theme.fontColor.primaryFontColor} size={20} />
-          </View>
-          </View>
-          
-          
-
-        </View>
-
         
-          <Text style={[styles.settingsName,{color:theme.fontColor.primaryFontColor}]}>Preferences</Text>
+          <Text style={[styles.settingsName,{color:theme.fontColor.primaryFontColor,marginTop:20}]}>Preferences</Text>
           
 
         <View style={[styles.settingsWrapper,{backgroundColor:theme.sectionBoxColor}]}>
@@ -178,15 +162,7 @@ const Menu = ({navigation}) => {
           </View>
           
           
-          <View style={styles.settingRow}>
-          <View style={styles.leftTexts}>
-          <MaterialIcons name="info" style={{marginHorizontal:10}} color={theme.fontColor.primaryFontColor} size={20} />
-          <Text style={[styles.settingText,{color:theme.fontColor.primaryFontColor}]}>About Developer</Text>
-          </View>
-          <View style={styles.rightTexts}>
-          <MaterialIcons name="arrow-forward-ios" style={[styles.inputTextIcon,{marginRight:10}]} color={theme.fontColor.primaryFontColor} size={20} />
-          </View>
-          </View>
+          
           
           
 

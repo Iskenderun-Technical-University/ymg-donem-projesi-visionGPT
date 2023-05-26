@@ -15,9 +15,9 @@ const BotResponseMessage = ({ message, botResponseTime }) => {
       } else {
         clearInterval(timer);
       }
-    }, 50); // 100 milisaniye karakter hızı
+    }, 50); 
     
-    return () => clearInterval(timer); // temizleme
+    return () => clearInterval(timer); 
   }, [message]);
   
   return (
