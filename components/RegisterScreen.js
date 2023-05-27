@@ -23,11 +23,13 @@ import AuthContext from "../context/AuthContext";
 import { MaterialIcons } from "@expo/vector-icons";
 import secretTokens from "../tokens/SecretTokens";
 import AppPreferencesContext from "../context/AppPreferencesContext";
+import MainContext from "../context/MainContext";
 
 const RegisterScreen = () => {
   const { loginAnonymously, loading } = useContext(AuthContext);
   const { theme, language } = useContext(AppPreferencesContext);
   const [buttonDisabled, setButtonDisabled] = useState(false);
+  const {isTester} = useContext(MainContext);
 
   let [fontsLoaded] = useFonts({
     Inter_900Black,
@@ -139,7 +141,9 @@ const RegisterScreen = () => {
                   </TouchableOpacity>
                 </View>
               </View>
-              <TouchableOpacity
+              {
+                isTester && (
+                  <TouchableOpacity
                 onPress={() => alert(secretTokens.tester_message.english)}
                 style={{
                   elevation: 20,
@@ -156,7 +160,10 @@ const RegisterScreen = () => {
               >
                 <MaterialIcons name="bug-report" color={"white"} size={20} />
                 <Text style={{ color: "white", fontSize: 18 }}>Test User</Text>
-              </TouchableOpacity>
+              </TouchableOpacity>)
+
+              }
+              
             </LinearGradient>
           </>
         )}

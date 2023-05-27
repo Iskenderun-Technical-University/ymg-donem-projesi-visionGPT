@@ -27,6 +27,15 @@ const Menu = ({navigation}) => {
       }
     }
 
+    const changeLanguage = ()=>{
+      if(language === 'English'){
+        setLanguage(appPreferences.secondaryLanguage);
+      }else{
+        setLanguage(appPreferences.primaryLanguage);
+      }
+    }
+
+
     
     const logout = async () => {
       try {
@@ -105,7 +114,7 @@ const Menu = ({navigation}) => {
           </View>
           </TouchableOpacity>
           
-          <TouchableOpacity style={styles.settingRow} onPress={()=>alert('On Progress..')}>
+          <TouchableOpacity style={styles.settingRow} onPress={()=>changeLanguage}>
           <View style={styles.leftTexts}>
           <MaterialIcons name="translate" style={{marginHorizontal:10}} color={theme.fontColor.primaryFontColor} size={20} />
           <Text style={[styles.settingText,{color:theme.fontColor.primaryFontColor}]}>Language</Text>
