@@ -15,7 +15,6 @@ import * as SecureStore from 'expo-secure-store';
 import { collection, query, where, getDocs, updateDoc, doc, getDoc,addDoc } from "firebase/firestore";
 import * as Clipboard from 'expo-clipboard';
 import secretTokens from './tokens/SecretTokens';
-import LoginScreen from "./components/LoginScreen";
 import RegisterScreen from "./components/RegisterScreen";
 import NewMainScreen from "./components/NewMainScreen";
 import TextInputSection from "./components/TextInput";
