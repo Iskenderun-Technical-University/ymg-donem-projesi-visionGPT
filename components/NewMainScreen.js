@@ -10,7 +10,7 @@ import secretTokens from '../tokens/SecretTokens';
 
 const NewMainScreen = ({navigation}) => {
     const {theme,language} = useContext(AppPreferencesContext)
-    const {email} = useContext(MainContext)
+    const {email,isTester} = useContext(MainContext)
     
   return (
     <View style={[styles.container,{backgroundColor:theme.backgroundColor}]}>
@@ -34,13 +34,19 @@ const NewMainScreen = ({navigation}) => {
             <Text style={[styles.sectionText,{color:theme.fontColor.secondaryFontColor}]}>Type a Question</Text>    
          </TouchableOpacity>
     </View>
-
-    <View style={{flex:1,justifyContent:'flex-end',marginBottom:60}}>
-    <TouchableOpacity onPress={()=>alert(secretTokens.tester_message.english)} style={{justifyContent:'center',flexDirection:'row',alignItems:'center',marginTop:50,alignContent:'center',backgroundColor:'#B70404',marginHorizontal:100,borderRadius:10,height:40}}>
-    <MaterialIcons name="warning" color={'white'} size={20} />
-    <Text style={{color:'white',fontSize:18}}>Test User</Text>
-    </TouchableOpacity>
-    </View>
+    
+    {
+        isTester ? 
+        <View style={{flex:1,justifyContent:'flex-end',marginBottom:60}}>
+        <TouchableOpacity onPress={()=>alert(secretTokens.tester_message.english)} style={{elevation:20,justifyContent:'center',flexDirection:'row',alignItems:'center',marginTop:50,alignContent:'center',backgroundColor:'#B70404',marginHorizontal:100,borderRadius:10,height:40}}>
+        <MaterialIcons name="bug-report" color={'white'} size={20} />
+        <Text style={{color:'white',fontSize:18}}>Test User</Text>
+        </TouchableOpacity>
+        </View>
+        :
+        null
+    }
+    
     
 
     </View>

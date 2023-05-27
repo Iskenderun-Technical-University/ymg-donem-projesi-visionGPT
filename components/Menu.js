@@ -27,6 +27,15 @@ const Menu = ({navigation}) => {
       }
     }
 
+    const changeLanguage = ()=>{
+      if(language === 'English'){
+        setLanguage(appPreferences.secondaryLanguage);
+      }else{
+        setLanguage(appPreferences.primaryLanguage);
+      }
+    }
+
+
     
     const logout = async () => {
       try {
@@ -64,13 +73,21 @@ const Menu = ({navigation}) => {
         <View style={styles.userInfoWrapper}>
             <Image source={require('../assets/newVisionGPTIcon.png')} style={styles.avataricon} />
             <View>
-            <Text style={[styles.email,{color:theme.fontColor.primaryFontColor}]}>{email}</Text>  
-            <Text style={[styles.verified,{color:isVerified ? 'green' : 'grey'}]}>
-                {isVerified ? 'Verified' : 'Not Verified'}
+            <Text style={[styles.email,{color:theme.fontColor.primaryFontColor}]}>{email}</Text> 
+            {
+              email === 'test-user' ?  
+              <Text style={[styles.verified,{color:'orange'}]}>
+               This is a tester account
             </Text>
+            :
+            <Text style={[styles.verified,{color:isVerified ? 'green' : 'grey'}]}>
+            {isVerified ? 'Verified' : 'Not Verified'}
+        </Text>
+            } 
+            
             </View>
         </View>
-        <View style={[styles.beProWrapper,{backgroundColor: '#AA77FF'}]}>
+        <TouchableOpacity style={[styles.beProWrapper,{backgroundColor: '#AA77FF'}]} onPress={()=>alert('On Progress..')}>
         <MaterialIcons name="auto-awesome" style={[styles.inputTextIcon,{marginLeft:10}]} color={'white'} size={40} />
           <View>
           <Text style={[styles.proTitle,{color:'white'}]}>Upgrade to PRO!</Text>
@@ -78,10 +95,10 @@ const Menu = ({navigation}) => {
           </View>
           <MaterialIcons name="arrow-forward-ios" style={{marginRight:10}} color={'white'} size={20} />
           
-        </View>
+        </TouchableOpacity>
         <ScrollView>
         
-          <Text style={[styles.settingsName,{color:theme.fontColor.primaryFontColor,marginTop:20}]}>Preferences</Text>
+          <Text style={[styles.settingsName,{color:theme.fontColor.primaryFontColor,marginTop:20}]}>Preferences (Active)</Text>
           
 
         <View style={[styles.settingsWrapper,{backgroundColor:theme.sectionBoxColor}]}>
@@ -97,7 +114,7 @@ const Menu = ({navigation}) => {
           </View>
           </TouchableOpacity>
           
-          <View style={styles.settingRow}>
+          <TouchableOpacity style={styles.settingRow} onPress={()=>changeLanguage}>
           <View style={styles.leftTexts}>
           <MaterialIcons name="translate" style={{marginHorizontal:10}} color={theme.fontColor.primaryFontColor} size={20} />
           <Text style={[styles.settingText,{color:theme.fontColor.primaryFontColor}]}>Language</Text>
@@ -106,15 +123,15 @@ const Menu = ({navigation}) => {
           <Text style={[styles.settingTextRight,{color:theme.fontColor.primaryFontColor}]}>{language}</Text>
           <MaterialIcons name="cached" style={{marginRight:10}} color={theme.fontColor.primaryFontColor} size={20} />
           </View>
-          </View>
+          </TouchableOpacity>
           
 
         </View>
-        <Text style={[styles.settingsName,{color:theme.fontColor.primaryFontColor}]}>Help</Text>
+        <Text style={[styles.settingsName,{color:theme.fontColor.primaryFontColor}]}>Help (On Progress)</Text>
 
         <View style={[styles.settingsWrapper,{backgroundColor:theme.sectionBoxColor}]}>
         
-        <View style={styles.settingRow}>
+        <TouchableOpacity style={styles.settingRow}>
           <View style={styles.leftTexts}>
           <MaterialIcons name="help-center" style={{marginHorizontal:10}} color={theme.fontColor.primaryFontColor} size={20} />
           <Text style={[styles.settingText,{color:theme.fontColor.primaryFontColor}]}>Help Center</Text>
@@ -122,10 +139,10 @@ const Menu = ({navigation}) => {
           <View style={styles.rightTexts}>
           <MaterialIcons name="arrow-forward-ios" style={[styles.inputTextIcon,{marginRight:10}]} color={theme.fontColor.primaryFontColor} size={20} />
           </View>
-          </View>
+          </TouchableOpacity>
           
           
-          <View style={styles.settingRow}>
+          <TouchableOpacity style={styles.settingRow}>
           <View style={styles.leftTexts}>
           <MaterialIcons name="help" style={{marginHorizontal:10}} color={theme.fontColor.primaryFontColor} size={20} />
           <Text style={[styles.settingText,{color:theme.fontColor.primaryFontColor}]}>FAQ</Text>
@@ -133,9 +150,9 @@ const Menu = ({navigation}) => {
           <View style={styles.rightTexts}>
           <MaterialIcons name="arrow-forward-ios" style={[styles.inputTextIcon,{marginRight:10}]} color={theme.fontColor.primaryFontColor} size={20} />
           </View>
-          </View>
+          </TouchableOpacity>
           
-          <View style={styles.settingRow}>
+          <TouchableOpacity style={styles.settingRow}>
           <View style={styles.leftTexts}>
           <MaterialIcons name="lock" style={{marginHorizontal:10}} color={theme.fontColor.primaryFontColor} size={20} />
           <Text style={[styles.settingText,{color:theme.fontColor.primaryFontColor}]}>Privacy Policy</Text>
@@ -143,15 +160,15 @@ const Menu = ({navigation}) => {
           <View style={styles.rightTexts}>
           <MaterialIcons name="arrow-forward-ios" style={[styles.inputTextIcon,{marginRight:10}]} color={theme.fontColor.primaryFontColor} size={20} />
           </View>
-          </View>
+          </TouchableOpacity>
           
           
         </View>
-        <Text style={[styles.settingsName,{color:theme.fontColor.primaryFontColor}]}>About</Text>
+        <Text style={[styles.settingsName,{color:theme.fontColor.primaryFontColor}]}>About (On Progress)</Text>
 
         <View style={[styles.settingsWrapper,{backgroundColor:theme.sectionBoxColor}]}>
         
-        <View style={styles.settingRow}>
+        <TouchableOpacity style={styles.settingRow}>
           <View style={styles.leftTexts}>
           <MaterialIcons name="info" style={{marginHorizontal:10}} color={theme.fontColor.primaryFontColor} size={20} />
           <Text style={[styles.settingText,{color:theme.fontColor.primaryFontColor}]}>About VisionGPT</Text>
@@ -159,7 +176,7 @@ const Menu = ({navigation}) => {
           <View style={styles.rightTexts}>
           <MaterialIcons name="arrow-forward-ios" style={[styles.inputTextIcon,{marginRight:10}]} color={theme.fontColor.primaryFontColor} size={20} />
           </View>
-          </View>
+          </TouchableOpacity>
           
           
           

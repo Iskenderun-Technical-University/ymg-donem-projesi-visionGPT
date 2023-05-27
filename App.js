@@ -15,10 +15,10 @@ import * as SecureStore from 'expo-secure-store';
 import { collection, query, where, getDocs, updateDoc, doc, getDoc,addDoc } from "firebase/firestore";
 import * as Clipboard from 'expo-clipboard';
 import secretTokens from './tokens/SecretTokens';
-import LoginScreen from "./components/LoginScreen";
 import RegisterScreen from "./components/RegisterScreen";
 import NewMainScreen from "./components/NewMainScreen";
 import TextInputSection from "./components/TextInput";
+
 
 
 const Stack = createNativeStackNavigator();
@@ -29,8 +29,10 @@ const getUniqueID = async () => {
   return uniqueID;
 };
 
-const App = () => {
 
+
+const App = () => {
+  
   const appPreferences ={
     theme:{
       light:{
@@ -83,6 +85,7 @@ const App = () => {
   const [isVerified, setIsVerified] = useState(false);
   const [theme,setTheme] = useState(appPreferences.theme.light);
   const [language,setLanguage] = useState(appPreferences.language.primaryLanguage);
+  const [isTester, setIsTester] = useState(false);
   //STATES END
 
     const saveThemeToPhone = async (theme) => {
@@ -92,6 +95,20 @@ const App = () => {
         console.log(error);
       }
     };
+
+    const isTesterMode = async () => {
+      try {
+        const testerMode = await getUniqueID();
+        if (testerMode === "test-user") {
+          setIsTester(true);
+          console.log("Tester mode on");
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    isTesterMode();
 
 
     const getThemeFromPhone = async () => {
@@ -147,12 +164,15 @@ const App = () => {
               });
               console.log("User registered.");
               setEmail(gettingDeviceId);
-              setLoggedIn(true);
               saveThemeToPhone(theme);
               getDocumentId();
               setCount(5);
               setIsVerified(true);
+              setLoggedIn(true);
               setLoading(false);
+              
+              
+              
             } else {
               console.log("User exists. Logging in...");
               querySnapshot.forEach((doc) => {
@@ -484,7 +504,7 @@ const App = () => {
   };
 
   return (
-    <MainContext.Provider value={{ image, googleResponse, loading, chatGPTResponse, isInputCardsVisible, clearPicture, pickImage, takeAndCropPhoto, count, setCount, inputCode, setInputCode, addAttempt, copyToClipboardChatGPTResponse, copyToClipboardQuestion, googleReplied, setGoogleReplied, setLoadingAnswer, loadingAnswer,isVerified,startChatWithGPT,setChatGPTResponse,decreaseCount }}>
+    <MainContext.Provider value={{ image, googleResponse, loading, chatGPTResponse, isInputCardsVisible, clearPicture, pickImage, takeAndCropPhoto, count, setCount, inputCode, setInputCode, addAttempt, copyToClipboardChatGPTResponse, copyToClipboardQuestion, googleReplied, setGoogleReplied, setLoadingAnswer, loadingAnswer,isVerified,startChatWithGPT,setChatGPTResponse,decreaseCount,isTester }}>
 
       <AuthContext.Provider value={{ password, setPassword, email, setEmail, loggedIn, setLoggedIn, loading, setCount,loginAnonymously }}>
         <AppPreferencesContext.Provider value={{theme,setTheme,language,setLanguage,appPreferences,changeThemeFromCache}}>

@@ -21,12 +21,15 @@ import {
 } from "@expo-google-fonts/inter";
 import AuthContext from "../context/AuthContext";
 import { MaterialIcons } from "@expo/vector-icons";
-import secretTokens from '../tokens/SecretTokens'
+import secretTokens from "../tokens/SecretTokens";
 import AppPreferencesContext from "../context/AppPreferencesContext";
+import MainContext from "../context/MainContext";
 
 const RegisterScreen = () => {
   const { loginAnonymously, loading } = useContext(AuthContext);
-  const {theme,language} = useContext(AppPreferencesContext)
+  const { theme, language } = useContext(AppPreferencesContext);
+  const [buttonDisabled, setButtonDisabled] = useState(false);
+  const {isTester} = useContext(MainContext);
 
   let [fontsLoaded] = useFonts({
     Inter_900Black,
@@ -41,102 +44,137 @@ const RegisterScreen = () => {
   }
 
   const startLogin = () => {
+    setButtonDisabled(true);
     loginAnonymously();
   };
 
   return (
     <>
       <StatusBar style="dark" />
-        <View style={styles.gradientContainer}>
-          
-              {
-                loading ? 
-                
-                <>
-                <LinearGradient colors={["black", "black"]} style={styles.gradient}>
-                <Text style={[styles.registerText,{color:'white'}]}>
-                Get Ready! 
+      <View style={styles.gradientContainer}>
+        {loading ? (
+          <>
+            <LinearGradient colors={["black", "black"]} style={styles.gradient}>
+              <Text style={[styles.registerText, { color: "white" }]}>
+                Get Ready!
               </Text>
-              <View style={{justifyContent:'center',alignItems:'center'}}>
-              <Image source={require('../assets/newVisionGPTIcon.png')} style={{width:250,height:250}} />
+              <View style={{ justifyContent: "center", alignItems: "center" }}>
+                <Image
+                  source={require("../assets/newVisionGPTIcon.png")}
+                  style={{ width: 250, height: 250 }}
+                />
               </View>
-                  <Text style={[styles.registerTextSub,{color:'white'}]}>
-                  The app is almost ready,{'\n'}it won't take long.
-                  </Text>
-                  </LinearGradient>
-                  </>
-                : 
-                <>
-                <LinearGradient colors={["white", "white"]} style={styles.gradient}>
-              <Text style={[styles.registerText,{color:'black'}]}>
-              Welcome !
-            </Text>
-            <View style={{justifyContent:'center',alignItems:'center'}}>
-            <Image source={require('../assets/newVisionGPTIcon.png')} style={{width:250,height:250}} />
-            </View>
-                <Text style={[styles.registerTextSub,{color:'grey'}]}>
-                  You can scan text{'\n'}with camera or chat with
-                </Text>
-                <Text style={[styles.registerTextSub,{color:'black',fontSize:36,marginBottom:20}]}>VisionGPT</Text>
-                <View style={styles.registerButtonWrapper}>
-                  <TouchableOpacity
-                    style={styles.registerButtonEmail}
-                    onPress={startLogin}
-                    disabled={false}
+              <Text style={[styles.registerTextSub, { color: "white" }]}>
+                The app is almost ready,{"\n"}it won't take long.
+              </Text>
+            </LinearGradient>
+          </>
+        ) : (
+          <>
+            <LinearGradient colors={["white", "white"]} style={styles.gradient}>
+              <Text style={[styles.registerText, { color: "black" }]}>
+                Welcome !
+              </Text>
+              <View style={{ justifyContent: "center", alignItems: "center" }}>
+                <Image
+                  source={require("../assets/newVisionGPTIcon.png")}
+                  style={{ width: 250, height: 250 }}
+                />
+              </View>
+              <Text style={[styles.registerTextSub, { color: "grey" }]}>
+                You can scan text{"\n"}with camera or chat with
+              </Text>
+              <Text
+                style={[
+                  styles.registerTextSub,
+                  { color: "black", fontSize: 36, marginBottom: 20 },
+                ]}
+              >
+                VisionGPT
+              </Text>
+              <View style={styles.registerButtonWrapper}>
+                <TouchableOpacity
+                  style={styles.registerButtonEmail}
+                  onPress={startLogin}
+                  disabled={buttonDisabled}
+                >
+                  <Text
+                    style={[styles.registerButtonTextEmail, { color: "white" }]}
                   >
-                    <Text style={[styles.registerButtonTextEmail,{color:'white'}]}>Start </Text>
-                    <MaterialIcons
-                      name="arrow-forward-ios"
-                      color={"white"}
-                      size={18}
-                    />
+                    Start{" "}
+                  </Text>
+                  <MaterialIcons
+                    name="arrow-forward-ios"
+                    color={"white"}
+                    size={18}
+                  />
+                </TouchableOpacity>
+                <View>
+                  <Text
+                    style={{
+                      fontSize: 10,
+                      textAlign: "center",
+                      color: "black",
+                      fontWeight: "300",
+                      marginTop: 10,
+                    }}
+                  >
+                    By clicking 'Start', you agree to our Terms of Use. We're
+                    committed to respecting your rights and privacy.
+                  </Text>
+                  <TouchableOpacity
+                    onPress={() => alert(secretTokens.termsOfUse)}
+                    style={{ marginBottom: 40 }}
+                  >
+                    <Text
+                      style={{
+                        fontSize: 10,
+                        textAlign: "center",
+                        color: "black",
+                        fontWeight: "500",
+                        marginTop: 10,
+                        marginBottom: 10,
+                      }}
+                    >
+                      Terms of Use
+                    </Text>
                   </TouchableOpacity>
-                  <View>
-                      <Text
-                        style={{
-                          fontSize: 10,
-                          textAlign: "center",
-                          color: "black",
-                          fontWeight: "300",
-                          marginTop:10,
-                        }}
-                      >
-                        By clicking 'Start', you agree to our Terms of Use.
-                        We're committed to respecting your rights and privacy.
-                      </Text>
-                      <TouchableOpacity onPress={()=> alert(secretTokens.termsOfUse)} style={{marginBottom:40}}>
-                        <Text style={{
-                          fontSize: 10,
-                          textAlign: "center",
-                          color: "black",
-                          fontWeight: "500",
-                          marginTop:10,
-                          marginBottom:10
-,                          
-                        }}>Terms of Use</Text>
-                      </TouchableOpacity>
-           
-                  </View>
                 </View>
-                </LinearGradient>
-                </>
+              </View>
+              {
+                isTester && (
+                  <TouchableOpacity
+                onPress={() => alert(secretTokens.tester_message.english)}
+                style={{
+                  elevation: 20,
+                  justifyContent: "center",
+                  flexDirection: "row",
+                  alignItems: "center",
+                  marginTop: 50,
+                  alignContent: "center",
+                  backgroundColor: "#B70404",
+                  marginHorizontal: 100,
+                  borderRadius: 10,
+                  height: 40,
+                }}
+              >
+                <MaterialIcons name="bug-report" color={"white"} size={20} />
+                <Text style={{ color: "white", fontSize: 18 }}>Test User</Text>
+              </TouchableOpacity>)
+
               }
               
-              
-            
-          
-        </View>
-
+            </LinearGradient>
+          </>
+        )}
+      </View>
     </>
   );
 };
 
 const styles = StyleSheet.create({
- 
-
   registerButtonWrapper: {
     marginHorizontal: 40,
-    
   },
   registerButtonEmail: {
     backgroundColor: "#52006A",
@@ -148,12 +186,9 @@ const styles = StyleSheet.create({
   },
 
   registerButtonTextEmail: {
- 
     fontSize: 27,
     fontFamily: "Inter_400Regular",
   },
-
-
 
   registerTextSub: {
     textAlign: "center",
@@ -167,8 +202,7 @@ const styles = StyleSheet.create({
     fontSize: 50,
     fontFamily: "Inter_900Black",
   },
-  
-  
+
   imageAndTitleWrapper: {
     flexDirection: "row",
     justifyContent: "center",
@@ -184,7 +218,7 @@ const styles = StyleSheet.create({
   },
   gradient: {
     flex: 1,
-    justifyContent:'center',
+    justifyContent: "center",
   },
   welcomeText: {
     fontSize: 60,
