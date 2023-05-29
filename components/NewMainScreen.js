@@ -31,24 +31,26 @@ const NewMainScreen = ({navigation}) => {
                 {language === 'English' ? "Visual Input" : 'Görsel Girdi'}
             </Text>
             <Text style={[styles.sectionText,{color:theme.fontColor.secondaryFontColor}]}>
-                {language === 'English' ? 'Take a Photo' : 'Fotoğraf Çek'}
+                {language === 'English' ? 'Take a Photo' : 'Fotograf Cek'}
                 </Text>    
          </TouchableOpacity>
          <TouchableOpacity style={[styles.choicesSectionRight,{backgroundColor:theme.sectionBoxColor}]} onPress={()=>navigation.navigate('TextInput')}>
          <MaterialIcons name="keyboard" color={theme.fontColor.primaryFontColor} style={{marginTop:10}} size={40} />
             <Text style={[styles.sectionMainTitle,{color:theme.fontColor.primaryFontColor}]}>
-                {language === 'English' ? "Text Input" : 'Yazı Girdisi'}
+                {language === 'English' ? "Text Input" : 'Yazi Girdisi'}
                 </Text>
-            <Text style={[styles.sectionText,{color:theme.fontColor.secondaryFontColor}]}>Type a Question</Text>    
+            <Text style={[styles.sectionText,{color:theme.fontColor.secondaryFontColor}]}>
+                {language === 'English' ? 'Type a Question' : 'Bir soru yazin'}
+                </Text>    
          </TouchableOpacity>
     </View>
     
     {
         isTester ? 
         <View style={{flex:1,justifyContent:'flex-end',marginBottom:60}}>
-        <TouchableOpacity onPress={()=>alert(secretTokens.tester_message.english)} style={{elevation:20,justifyContent:'center',flexDirection:'row',alignItems:'center',marginTop:50,alignContent:'center',backgroundColor:'#B70404',marginHorizontal:100,borderRadius:10,height:40}}>
+        <TouchableOpacity onPress={()=>alert(language === 'English' ? secretTokens.tester_message.english : secretTokens.tester_message.turkish)} style={{elevation:20,justifyContent:'center',flexDirection:'row',alignItems:'center',marginTop:50,alignContent:'center',backgroundColor:'#B70404',marginHorizontal:100,borderRadius:10,height:40}}>
         <MaterialIcons name="bug-report" color={'white'} size={20} />
-        <Text style={{color:'white',fontSize:18}}>Test User</Text>
+        <Text style={{color:'white',fontSize:18}}>{language === 'English' ? 'Test User' : 'Test Kullanicisi'}</Text>
         </TouchableOpacity>
         </View>
         :
