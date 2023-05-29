@@ -18,19 +18,27 @@ const NewMainScreen = ({navigation}) => {
     <MainUITitle navigation={navigation}/>
     <View style={styles.tutorialWrapper}>
     <Image source={require('../assets/newVisionGPTIcon.png')}  style={styles.visionGPTIcon}/>
-    <Text style={[styles.tutorialText,{color:theme.fontColor.primaryFontColor}]}>Scan texts using camera or{'\n'}get answers by typing.</Text>
+    <Text style={[styles.tutorialText,{color:theme.fontColor.primaryFontColor}]}>
+        {language === 'English' ? "Scan texts using camera or\nget answers by typing." : 'Kamera ile yazilari tarayin ya da\nyazarak cevaplar alin.'}
+        </Text>
     </View>
     
 
     <View style={styles.choicesWrapper}>
         <TouchableOpacity style={[styles.choicesSectionLeft,{backgroundColor:theme.sectionBoxColor}]} onPress={() => navigation.navigate("Main")}>
         <MaterialIcons name="center-focus-weak" color={theme.fontColor.primaryFontColor} style={{marginTop:10}} size={40} />
-            <Text style={[styles.sectionMainTitle,{color:theme.fontColor.primaryFontColor}]}>Visual Input</Text>
-            <Text style={[styles.sectionText,{color:theme.fontColor.secondaryFontColor}]}>Take a Photo</Text>    
+            <Text style={[styles.sectionMainTitle,{color:theme.fontColor.primaryFontColor}]}>
+                {language === 'English' ? "Visual Input" : 'Görsel Girdi'}
+            </Text>
+            <Text style={[styles.sectionText,{color:theme.fontColor.secondaryFontColor}]}>
+                {language === 'English' ? 'Take a Photo' : 'Fotoğraf Çek'}
+                </Text>    
          </TouchableOpacity>
          <TouchableOpacity style={[styles.choicesSectionRight,{backgroundColor:theme.sectionBoxColor}]} onPress={()=>navigation.navigate('TextInput')}>
          <MaterialIcons name="keyboard" color={theme.fontColor.primaryFontColor} style={{marginTop:10}} size={40} />
-            <Text style={[styles.sectionMainTitle,{color:theme.fontColor.primaryFontColor}]}>Text Input</Text>
+            <Text style={[styles.sectionMainTitle,{color:theme.fontColor.primaryFontColor}]}>
+                {language === 'English' ? "Text Input" : 'Yazı Girdisi'}
+                </Text>
             <Text style={[styles.sectionText,{color:theme.fontColor.secondaryFontColor}]}>Type a Question</Text>    
          </TouchableOpacity>
     </View>
