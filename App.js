@@ -18,6 +18,7 @@ import secretTokens from './tokens/SecretTokens';
 import RegisterScreen from "./components/RegisterScreen";
 import NewMainScreen from "./components/NewMainScreen";
 import TextInputSection from "./components/TextInput";
+import { get } from "react-native/Libraries/TurboModule/TurboModuleRegistry";
 
 
 
@@ -136,6 +137,35 @@ const App = () => {
 
     },[])
 
+    const saveLanguageToPhone = async (language) => {
+      try {
+        await SecureStore.setItemAsync("language", JSON.stringify(language));
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    const getLanguageFromPhone = async () => {
+      try {
+        const language = await SecureStore.getItemAsync("language");
+        if (language) {
+          setLanguage(JSON.parse(language));
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    const changeLanguageFromCache = async (language) => {
+      try {
+        await SecureStore.setItemAsync("language", JSON.stringify(language));
+        setLanguage(language);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+
     
   
     const loginAnonymously = async () => {
@@ -165,6 +195,7 @@ const App = () => {
               console.log("User registered.");
               setEmail(gettingDeviceId);
               saveThemeToPhone(theme);
+              saveLanguageToPhone(language);
               getDocumentId();
               setCount(5);
               setIsVerified(true);
@@ -236,6 +267,7 @@ const App = () => {
             getDocumentId();
             setEmail(userData.uniqueID);
             getThemeFromPhone();
+            getLanguageFromPhone();
             setLoggedIn(true);
             setCount(userData.count);
             setIsVerified(true);
@@ -507,7 +539,7 @@ const App = () => {
     <MainContext.Provider value={{ image, googleResponse, loading, chatGPTResponse, isInputCardsVisible, clearPicture, pickImage, takeAndCropPhoto, count, setCount, inputCode, setInputCode, addAttempt, copyToClipboardChatGPTResponse, copyToClipboardQuestion, googleReplied, setGoogleReplied, setLoadingAnswer, loadingAnswer,isVerified,startChatWithGPT,setChatGPTResponse,decreaseCount,isTester }}>
 
       <AuthContext.Provider value={{ password, setPassword, email, setEmail, loggedIn, setLoggedIn, loading, setCount,loginAnonymously }}>
-        <AppPreferencesContext.Provider value={{theme,setTheme,language,setLanguage,appPreferences,changeThemeFromCache}}>
+        <AppPreferencesContext.Provider value={{theme,setTheme,language,setLanguage,appPreferences,changeThemeFromCache,changeLanguageFromCache}}>
 
         <NavigationContainer>
           <Stack.Navigator
