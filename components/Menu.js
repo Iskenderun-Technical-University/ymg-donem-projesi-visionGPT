@@ -14,7 +14,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 const Menu = ({navigation}) => {
     
     const {setPassword,email,setEmail,setLoggedIn,setCount} = useContext(AuthContext);
-    const {theme,language,setTheme,setLanguage,appPreferences,changeThemeFromCache} = useContext(AppPreferencesContext);
+    const {theme,language,setTheme,setLanguage,appPreferences,changeThemeFromCache,changeLanguageFromCache} = useContext(AppPreferencesContext);
     const {isVerified,count} = useContext(MainContext)
     
     const changeTheme = () =>{
@@ -30,8 +30,10 @@ const Menu = ({navigation}) => {
     const changeLanguage = ()=>{
       if(language === 'English'){
         setLanguage(appPreferences.language.secondaryLanguage);
+        changeLanguageFromCache(appPreferences.language.secondaryLanguage);
       }else{
         setLanguage(appPreferences.language.primaryLanguage);
+        changeLanguageFromCache(appPreferences.language.primaryLanguage);
       }
     }
 
