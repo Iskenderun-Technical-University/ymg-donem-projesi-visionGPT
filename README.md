@@ -39,7 +39,7 @@ This mobile application is developed using React Native. The app enables users t
 
 
 ## Roadmap
-
+- ### ✅ Project Start (May 2, 2023)
 - ✅ Design user interface (Done)
 - ✅ Use iOS and Android camera (Done)
 - ✅ Detect text in images with OCR (Done)
