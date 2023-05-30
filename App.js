@@ -20,16 +20,20 @@ import NewMainScreen from "./components/NewMainScreen";
 import TextInputSection from "./components/TextInput";
 
 
+
+
 const Stack = createNativeStackNavigator();
 
 const getUniqueID = async () => {
-  uniqueID = await DeviceInfo.getUniqueId();
+  uniqueID = await DeviceInfo.getUniqueId(); //if tester mode on change it to test-user
   console.log('Unique ID: ', uniqueID);
   return uniqueID;
 };
 
-const App = () => {
 
+
+const App = () => {
+  
   const appPreferences ={
     theme:{
       light:{
@@ -82,6 +86,7 @@ const App = () => {
   const [isVerified, setIsVerified] = useState(false);
   const [theme,setTheme] = useState(appPreferences.theme.light);
   const [language,setLanguage] = useState(appPreferences.language.primaryLanguage);
+  const [isTester, setIsTester] = useState(false);
   //STATES END
 
     const saveThemeToPhone = async (theme) => {
@@ -91,6 +96,20 @@ const App = () => {
         console.log(error);
       }
     };
+
+    const isTesterMode = async () => {
+      try {
+        const testerMode = await getUniqueID();
+        if (testerMode === "test-user") {
+          setIsTester(true);
+          console.log("Tester mode on");
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    isTesterMode();
 
 
     const getThemeFromPhone = async () => {
@@ -103,6 +122,7 @@ const App = () => {
         console.log(error);
       }
     };
+    
 
     const changeThemeFromCache = async (theme) => {
       try {
@@ -117,6 +137,37 @@ const App = () => {
       getThemeFromPhone();
 
     },[])
+
+    const saveLanguageToPhone = async (language) => {
+      try {
+        await SecureStore.setItemAsync("language", JSON.stringify(language));
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    const getLanguageFromPhone = async () => {
+      try {
+        const language = await SecureStore.getItemAsync("language");
+        if (language) {
+          setLanguage(JSON.parse(language));
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    getLanguageFromPhone();
+    
+    const changeLanguageFromCache = async (language) => {
+      try {
+        await SecureStore.setItemAsync("language", JSON.stringify(language));
+        setLanguage(language);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
 
     
   
@@ -146,12 +197,16 @@ const App = () => {
               });
               console.log("User registered.");
               setEmail(gettingDeviceId);
-              setLoggedIn(true);
               saveThemeToPhone(theme);
+              saveLanguageToPhone(language);
               getDocumentId();
               setCount(5);
               setIsVerified(true);
+              setLoggedIn(true);
               setLoading(false);
+              
+              
+              
             } else {
               console.log("User exists. Logging in...");
               querySnapshot.forEach((doc) => {
@@ -215,6 +270,7 @@ const App = () => {
             getDocumentId();
             setEmail(userData.uniqueID);
             getThemeFromPhone();
+            getLanguageFromPhone();
             setLoggedIn(true);
             setCount(userData.count);
             setIsVerified(true);
@@ -267,7 +323,7 @@ const App = () => {
           messages: [
             {
               role: "system",
-              content: secretTokens.prompt
+              content: language==='English' ? secretTokens.prompt : secretTokens.prompt_tr,
             },
             {
               role: "user",
@@ -293,7 +349,7 @@ const App = () => {
       const messages = [
         {
           role: "system",
-          content: "You're a helpful friend and your name is VisionGPT. You reply the questions with short answer as you can",
+          content: language==='English' ? secretTokens.chatPrompt : secretTokens.chatPrompt_tr,
         },
         ...previousMessages,
         {
@@ -373,7 +429,7 @@ const App = () => {
         setGoogleReplied(false);
         setLoading(false);
         
-        alert("No text was found in the image.");
+        alert(language === 'English' ? 'No text found in picture.' : 'Resimde metin bulunamadi.' );
       }
     } catch (error) {
       console.log(error, "submitToGoogle");
@@ -483,10 +539,10 @@ const App = () => {
   };
 
   return (
-    <MainContext.Provider value={{ image, googleResponse, loading, chatGPTResponse, isInputCardsVisible, clearPicture, pickImage, takeAndCropPhoto, count, setCount, inputCode, setInputCode, addAttempt, copyToClipboardChatGPTResponse, copyToClipboardQuestion, googleReplied, setGoogleReplied, setLoadingAnswer, loadingAnswer,isVerified,startChatWithGPT,setChatGPTResponse,decreaseCount }}>
+    <MainContext.Provider value={{ image, googleResponse, loading, chatGPTResponse, isInputCardsVisible, clearPicture, pickImage, takeAndCropPhoto, count, setCount, inputCode, setInputCode, addAttempt, copyToClipboardChatGPTResponse, copyToClipboardQuestion, googleReplied, setGoogleReplied, setLoadingAnswer, loadingAnswer,isVerified,startChatWithGPT,setChatGPTResponse,decreaseCount,isTester }}>
 
       <AuthContext.Provider value={{ password, setPassword, email, setEmail, loggedIn, setLoggedIn, loading, setCount,loginAnonymously }}>
-        <AppPreferencesContext.Provider value={{theme,setTheme,language,setLanguage,appPreferences,changeThemeFromCache}}>
+        <AppPreferencesContext.Provider value={{theme,setTheme,language,setLanguage,appPreferences,changeThemeFromCache,changeLanguageFromCache}}>
 
         <NavigationContainer>
           <Stack.Navigator
@@ -506,6 +562,7 @@ const App = () => {
             : 
             (
               [
+                
                 <Stack.Screen key="Register" name="Register" component={RegisterScreen} />,
                 <Stack.Screen key="NewMainScreen" name="NewMainScreen" component={NewMainScreen} />,
                 <Stack.Screen key="Main" name="Main" component={Main} />,

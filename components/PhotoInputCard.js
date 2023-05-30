@@ -16,12 +16,12 @@ const PhotoInputCard = () => {
         <TouchableOpacity style={[styles.choicesSectionLeft,{backgroundColor:theme.sectionBoxColor}]} onPress={takeAndCropPhoto}>
         <MaterialIcons name="photo-camera" color={theme.fontColor.primaryFontColor} style={{marginTop:10}} size={40} />
             
-            <Text style={[styles.sectionText,{color:theme.fontColor.primaryFontColor}]}>Take a{'\n'}Photo</Text>    
+            <Text style={[styles.sectionText,{color:theme.fontColor.primaryFontColor}]}>{language ==='English' ? 'Take a\nPhoto' : 'Bir Fotograf Cekin'}</Text>    
          </TouchableOpacity>
          <TouchableOpacity style={[styles.choicesSectionRight,{backgroundColor:theme.sectionBoxColor}]} onPress={pickImage}>
          <MaterialIcons name="image" color={theme.fontColor.primaryFontColor} style={{marginTop:10}} size={40} />
            
-            <Text style={[styles.sectionText,{color:theme.fontColor.primaryFontColor}]}>Choose an{'\n'}Image</Text>    
+            <Text style={[styles.sectionText,{color:theme.fontColor.primaryFontColor}]}>{language ==='English' ? 'Choose an\n Image' : 'Bir Fotograf\nSecin'}</Text>    
          </TouchableOpacity>
       </View>
       )
