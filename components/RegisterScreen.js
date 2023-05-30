@@ -188,7 +188,7 @@ const RegisterScreen = () => {
                 }}
               >
                 <MaterialIcons name="bug-report" color={"white"} size={20} />
-                <Text style={{ color: "white", fontSize: 18 }}>Test User</Text>
+                <Text style={{color:'white',fontSize:18}}>{language === 'English' ? 'Test User' : 'Test Kullanicisi'}</Text>
               </TouchableOpacity>)
 
               }
