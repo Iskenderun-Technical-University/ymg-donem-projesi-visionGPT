@@ -20,6 +20,7 @@ The prompt that currently only for answering the lesson questions.
 - VisionGPT upgraded to GPT-3.5 Turbo
 - Chat with VisionGPT 
 - Dark/Light Theme
+- English/Turkish Language
 
 
 ## About the Project
@@ -46,18 +47,17 @@ This mobile application is developed using React Native. The app enables users t
 - ✅ Sessions, Firebase database and user actions (Done)
 - ✅ First .apk build (Done)
 - ✅ GPT3 to GPT3.5 upgrade (Done)
-- ✅ Register and Login with Google and Apple auth (Will be removed with next update) 
-- ✅ Register with Email (Will be removed with next update)
-- ✅ Language and theme settings (Theme settings Done)
+- ✅ Register and Login with Google and Apple auth (Removed) 
+- ✅ Register with Email (Removed)
+- ✅ Language and theme settings (Done)
 - ✅ Text input (Done)
 - ✅ Login as anonymous user (Done)
-- 🔄 Google Admob ads and some restrictions (soon)
-- 🔄 In-app purchase (soon)
-- 🎯 Publish on App Store and Play Store (End of project)
+- ### Project Finished
 
 - ### Later
-- 🔄 Detect objects in images (Another Project)
-- 🔄 Communicate detected objects to the user with voice and NLP (Another Project)
+- 🔄 Google Admob ads and some restrictions (soon)
+- 🔄 In-app purchase (soon)
+- 🎯 Publish on App Store and Play Store
 
 
 
@@ -65,6 +65,7 @@ This mobile application is developed using React Native. The app enables users t
 
 - Photo capturing and selection functionality
 - Reading text from photos using OCR
+- Chat with Bot
 - Communicating with the ChatGPT API
 - Displaying responses from the ChatGPT API
 
