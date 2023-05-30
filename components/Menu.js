@@ -82,14 +82,7 @@ const Menu = ({navigation}) => {
             </Text>
             :
             <Text style={[styles.verified,{color: isVerified ? 'green' : 'grey'}]}>
-            {
-              isVerified && 
-              language === 'English' ? 'Verified' : 'Onayli Hesap'
-            }
-            {
-              isVerified === false &&
-              language === 'English' ? 'Not Verified' : 'Onaysiz Hesap'
-            }
+            {language ==='English' ? isVerified ? 'Verified' : 'Not Verified' : isVerified ? 'Hesap Onaylandi' : 'Hesap Onaylanmadi'}
         </Text>
             } 
             

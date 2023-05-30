@@ -7,7 +7,7 @@ import AppPreferencesContext from './context/AppPreferencesContext';
 import Main from "./components/Main";
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-// import DeviceInfo from 'react-native-device-info';  
+import DeviceInfo from 'react-native-device-info';  
 import { auth, db } from "./firebase";
 import {signInAnonymously} from "firebase/auth";
 import Menu from "./components/Menu";
@@ -18,14 +18,14 @@ import secretTokens from './tokens/SecretTokens';
 import RegisterScreen from "./components/RegisterScreen";
 import NewMainScreen from "./components/NewMainScreen";
 import TextInputSection from "./components/TextInput";
-import { get } from "react-native/Libraries/TurboModule/TurboModuleRegistry";
+
 
 
 
 const Stack = createNativeStackNavigator();
 
 const getUniqueID = async () => {
-  uniqueID = "test-user" //if tester mode on change it to test-user
+  uniqueID = DeviceInfo.getUniqueId(); //if tester mode on change it to test-user
   return uniqueID;
 };
 
