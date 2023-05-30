@@ -25,7 +25,8 @@ import TextInputSection from "./components/TextInput";
 const Stack = createNativeStackNavigator();
 
 const getUniqueID = async () => {
-  uniqueID = DeviceInfo.getUniqueId(); //if tester mode on change it to test-user
+  uniqueID = await DeviceInfo.getUniqueId(); //if tester mode on change it to test-user
+  console.log('Unique ID: ', uniqueID);
   return uniqueID;
 };
 
@@ -232,11 +233,11 @@ const App = () => {
     
 
 
-  const decreaseCount = async () => {
-    const userDocRef = doc(db, "userData", docId);
-    await updateDoc(userDocRef, { count: count - 1 });
-    setCount(count - 1);
-  };
+    const decreaseCount = async () => {
+      const userDocRef = doc(db, "userData", docId);
+      await updateDoc(userDocRef, { count: count - 1 });
+      setCount(count - 1);
+    };
 
 
 
