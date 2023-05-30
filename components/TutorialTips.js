@@ -16,8 +16,7 @@ const TutorialTips = () => {
         <View style={styles.tutorialTips}>
 
           <Text style={[styles.tutorialTipsContent,{color:theme.fontColor.secondaryFontColor}]}>
-            {language==='English' ? `1- Select an Image or Take a Picture\n
-            2- Crop the field with the texts\nyou want to ask` : `1- Bir resim secin veya cekin\n2- Sormak istediginiz metinleri\nkare icine alin`}
+            {language==='English' ? `1- Select an Image or Take a Picture\n2- Crop the field with the texts\nyou want to ask` : `1- Bir resim secin veya cekin\n2- Sormak istediginiz metinleri\nkare icine alin`}
             
           </Text>
         </View>
