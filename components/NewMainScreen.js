@@ -28,7 +28,7 @@ const NewMainScreen = ({navigation}) => {
         <TouchableOpacity style={[styles.choicesSectionLeft,{backgroundColor:theme.sectionBoxColor}]} onPress={() => navigation.navigate("Main")}>
         <MaterialIcons name="center-focus-weak" color={theme.fontColor.primaryFontColor} style={{marginTop:10}} size={40} />
             <Text style={[styles.sectionMainTitle,{color:theme.fontColor.primaryFontColor}]}>
-                {language === 'English' ? "Visual Input" : 'Görsel Girdi'}
+                {language === 'English' ? "Visual Input" : 'Gorsel Girdi'}
             </Text>
             <Text style={[styles.sectionText,{color:theme.fontColor.secondaryFontColor}]}>
                 {language === 'English' ? 'Take a Photo' : 'Fotograf Cek'}

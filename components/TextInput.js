@@ -101,7 +101,7 @@ const TextInputSection = ({ navigation }) => {
     } else {
       setUserPrompt([...userPrompt, currentMessage]);
       setUserPrompTime([...userPromptTime, getCurrentTime()]);
-      setBotResponse([...botResponse, "Sorry. Your attempts are over."]);
+      setBotResponse([...botResponse, language ==='English' ? 'Sorry your attempts are over.' : 'Uzgunum deneme hakkiniz bitti.']);
       setBotResponseTime([...botResponseTime, getCurrentTime()]);
       setIsPress(true);
       setCurrentMessage("");
@@ -134,7 +134,7 @@ const TextInputSection = ({ navigation }) => {
           <Text
             style={{ color: theme.fontColor.primaryFontColor, fontSize: 20 }}
           >
-            Chat with bot
+            {language ==='English' ?'Chat with VisionGPT' : 'VisionGPT ile sohbet et'}
           </Text>
         ) : (
           <Text
@@ -143,7 +143,7 @@ const TextInputSection = ({ navigation }) => {
               { color: theme.fontColor.primaryFontColor },
             ]}
           >
-            Text Input
+            {language ==='English' ? 'Text Input' : 'Yazi Girdisi'}
           </Text>
         )}
         <View
@@ -188,12 +188,12 @@ const TextInputSection = ({ navigation }) => {
                     marginRight: 40,
                   }}
                 >
-                  How can i help you ?
+                  {language ==='English' ? 'How can i help you?' : 'Nasil yardimci olabilirim ?'}
                 </Text>
               </>
             ) : (
               <BotResponseMessage
-                message={"How can i help you ? "}
+                message={language ==='English' ? 'How can i help you? ' : 'Nasil yardimci olabilirim ?'}
                 botResponseTime={botResponseTime[0]}
                 firstMessage={botResponse.length}
               />
@@ -252,7 +252,7 @@ const TextInputSection = ({ navigation }) => {
             >
               <Text style={{ fontSize: 30, color: "grey" }}>
                 
-                Type your question below
+                {language ==='English' ? 'Start Chat' : 'Sohbete Basla'}
               </Text>
               <MaterialIcons
                 name="expand-more"
@@ -278,7 +278,7 @@ const TextInputSection = ({ navigation }) => {
                 { color: theme.fontColor.primaryFontColor },
               ]}
               placeholderTextColor={theme.fontColor.primaryFontColor}
-              placeholder="Type here..."
+              placeholder={language ==='English' ? 'Type Here..' : 'Buraya yazin..'}
               onChangeText={setCurrentMessage}
               value={currentMessage}
             />

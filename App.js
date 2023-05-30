@@ -26,7 +26,6 @@ const Stack = createNativeStackNavigator();
 
 const getUniqueID = async () => {
   uniqueID = "test-user" //if tester mode on change it to test-user
-  console.log('Unique ID: ', uniqueID);
   return uniqueID;
 };
 
@@ -320,7 +319,7 @@ const App = () => {
           messages: [
             {
               role: "system",
-              content: secretTokens.prompt
+              content: language==='English' ? secretTokens.prompt : secretTokens.prompt_tr,
             },
             {
               role: "user",
@@ -346,7 +345,7 @@ const App = () => {
       const messages = [
         {
           role: "system",
-          content: "You're a helpful friend and your name is VisionGPT. You reply the questions with short answer as you can",
+          content: language==='English' ? secretTokens.chatPrompt : secretTokens.chatPrompt_tr,
         },
         ...previousMessages,
         {
@@ -426,7 +425,7 @@ const App = () => {
         setGoogleReplied(false);
         setLoading(false);
         
-        alert("No text was found in the image.");
+        alert(language === 'English' ? 'No text found in picture.' : 'Resimde metin bulunamadi.' );
       }
     } catch (error) {
       console.log(error, "submitToGoogle");
