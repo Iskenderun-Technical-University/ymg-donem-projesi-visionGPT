@@ -25,7 +25,7 @@ const Main = ({navigation}) => {
             <MaterialIcons name="arrow-back-ios" color={theme.fontColor.primaryFontColor} size={20} />
                 
           </TouchableOpacity>
-          <Text style={[styles.visionInputTitle,{color:theme.fontColor.primaryFontColor}]}>Visual Input</Text>
+          <Text style={[styles.visionInputTitle,{color:theme.fontColor.primaryFontColor}]}>{language ==='English' ? 'Visual Input' : 'Gorsel Girdi'}</Text>
 
           <View style={{flexDirection:'row',alignItems:'center',backgroundColor:count>0 ? '#AA77FF' : '#DF2E38',borderRadius:20,justifyContent:'center'}}>
           <MaterialIcons name="local-activity" style={{marginLeft:10,marginRight:10}} color={'white'} size={20} />

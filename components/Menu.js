@@ -77,19 +77,12 @@ const Menu = ({navigation}) => {
             {
               email === 'test-user' ?  
               <Text style={[styles.verified,{color:'orange'}]}>
-                {language === 'English' ? 'This is a tester account' : 'Bu bir test hesabi'}
+                {language === 'English' ? 'This is a tester account' : 'Bu bir tester hesabi'}
               
             </Text>
             :
             <Text style={[styles.verified,{color: isVerified ? 'green' : 'grey'}]}>
-            {
-              isVerified && 
-              language === 'English' ? 'Verified' : 'Onayli Hesap'
-            }
-            {
-              isVerified === false &&
-              language === 'English' ? 'Not Verified' : 'Onaysiz Hesap'
-            }
+            {language ==='English' ? isVerified ? 'Verified' : 'Not Verified' : isVerified ? 'Hesap Onaylandi' : 'Hesap Onaylanmadi'}
         </Text>
             } 
             
@@ -98,8 +91,8 @@ const Menu = ({navigation}) => {
         <TouchableOpacity style={[styles.beProWrapper,{backgroundColor: '#AA77FF'}]} onPress={()=>alert('On Progress..')}>
         <MaterialIcons name="auto-awesome" style={[styles.inputTextIcon,{marginLeft:10}]} color={'white'} size={40} />
           <View>
-          <Text style={[styles.proTitle,{color:'white'}]}>Upgrade to PRO!</Text>
-          <Text style={{color:'white'}}>no ads no restrictions</Text>
+          <Text style={[styles.proTitle,{color:'white'}]}>{language === 'English' ? 'Upgrade to Pro !' : 'Pro Versiyona Yukselt !'}</Text>
+          <Text style={{color:'white'}}>{language === 'English' ? 'No ads No Restrictions' : 'Reklam yok Kisitlama yok'}</Text>
           </View>
           <MaterialIcons name="arrow-forward-ios" style={{marginRight:10}} color={'white'} size={20} />
           
@@ -130,7 +123,7 @@ const Menu = ({navigation}) => {
           <Text style={[styles.settingText,{color:theme.fontColor.primaryFontColor}]}>{language === 'English' ? 'Language' : 'Dil'}</Text>
           </View>
           <View style={styles.rightTexts}>
-          <Text style={[styles.settingTextRight,{color:theme.fontColor.primaryFontColor}]}>{language}</Text>
+          <Text style={[styles.settingTextRight,{color:theme.fontColor.primaryFontColor}]}>{language === 'English' ? 'English' : 'Turkce'}</Text>
           <MaterialIcons name="cached" style={{marginRight:10}} color={theme.fontColor.primaryFontColor} size={20} />
           </View>
           </TouchableOpacity>

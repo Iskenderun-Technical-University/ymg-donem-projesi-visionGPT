@@ -27,7 +27,7 @@ import MainContext from "../context/MainContext";
 
 const RegisterScreen = () => {
   const { loginAnonymously, loading } = useContext(AuthContext);
-  const { theme, language } = useContext(AppPreferencesContext);
+  const { theme, language,setLanguage,changeLanguageFromCache,appPreferences } = useContext(AppPreferencesContext);
   const [buttonDisabled, setButtonDisabled] = useState(false);
   const {isTester} = useContext(MainContext);
 
@@ -47,6 +47,15 @@ const RegisterScreen = () => {
     setButtonDisabled(true);
     loginAnonymously();
   };
+  const changeLanguage = ()=>{
+    if(language === 'English'){
+      setLanguage(appPreferences.language.secondaryLanguage);
+      changeLanguageFromCache(appPreferences.language.secondaryLanguage);
+    }else{
+      setLanguage(appPreferences.language.primaryLanguage);
+      changeLanguageFromCache(appPreferences.language.primaryLanguage);
+    }
+  }
 
   return (
     <>
@@ -56,7 +65,7 @@ const RegisterScreen = () => {
           <>
             <LinearGradient colors={["black", "black"]} style={styles.gradient}>
               <Text style={[styles.registerText, { color: "white" }]}>
-                Get Ready!
+                {language ==='English' ? 'Getting\nReady...' : 'Hazirlaniyor...'}
               </Text>
               <View style={{ justifyContent: "center", alignItems: "center" }}>
                 <Image
@@ -65,15 +74,33 @@ const RegisterScreen = () => {
                 />
               </View>
               <Text style={[styles.registerTextSub, { color: "white" }]}>
-                The app is almost ready,{"\n"}it won't take long.
+                {language ==='English' ? "It won't take long" : "Uzun surmeyecek"}
               </Text>
             </LinearGradient>
           </>
         ) : (
           <>
             <LinearGradient colors={["white", "white"]} style={styles.gradient}>
+              <View style={styles.langButtonWrapper}>
+              <TouchableOpacity onPress={changeLanguage} style={{backgroundColor:'white',borderWidth:2,borderColor:'black',borderRadius:20,flexDirection:'row',justifyContent:'center',alignItems:'center',alignContent:'center'}}>
+              <MaterialIcons
+                    name="language"
+                    color={"black"}
+                    size={30}
+                    
+                  />
+                <Text style={{textAlign:'center',color:'black',fontSize:15,marginHorizontal:5,marginVertical:5}}>{language ==='English' ? 'English' : 'Turkce'}</Text>
+                <MaterialIcons
+                    name="cached"
+                    color={"black"}
+                    size={20}
+                    
+                  />
+                
+              </TouchableOpacity>
+              </View>
               <Text style={[styles.registerText, { color: "black" }]}>
-                Welcome !
+                {language === 'English' ? 'Welcome !' : 'Hosgeldiniz !'}
               </Text>
               <View style={{ justifyContent: "center", alignItems: "center" }}>
                 <Image
@@ -82,7 +109,8 @@ const RegisterScreen = () => {
                 />
               </View>
               <Text style={[styles.registerTextSub, { color: "grey" }]}>
-                You can scan text{"\n"}with camera or chat with
+                {language === 'English' ? 'You can scan text\nwith camera or chat with' : 'Metinleri kamera ile\ntarayin veya sohbet edin.'}
+                
               </Text>
               <Text
                 style={[
@@ -101,7 +129,7 @@ const RegisterScreen = () => {
                   <Text
                     style={[styles.registerButtonTextEmail, { color: "white" }]}
                   >
-                    Start{" "}
+                    {language =='English' ? 'Start' : 'Basla'}
                   </Text>
                   <MaterialIcons
                     name="arrow-forward-ios"
@@ -119,11 +147,12 @@ const RegisterScreen = () => {
                       marginTop: 10,
                     }}
                   >
-                    By clicking 'Start', you agree to our Terms of Use. We're
-                    committed to respecting your rights and privacy.
+                    {language ==='English' ? "By clicking Start, you agree to our Terms of Use.\n We're committed to respecting your rights and privacy." : "Başlat'a tıklayarak Kullanım Koşullarımızı kabul etmiş olursunuz.\nHaklarınıza ve gizliliğinize saygı göstermeyi taahhüt ediyoruz."}
+
+                    
                   </Text>
                   <TouchableOpacity
-                    onPress={() => alert(secretTokens.termsOfUse)}
+                    onPress={() => alert(language ==='English' ? secretTokens.termsOfUse : secretTokens.termsOfUse_tr)}
                     style={{ marginBottom: 40 }}
                   >
                     <Text
@@ -136,7 +165,7 @@ const RegisterScreen = () => {
                         marginBottom: 10,
                       }}
                     >
-                      Terms of Use
+                      {language ==='English' ? 'Terms of Use' : 'Kullanim Kosullari'}
                     </Text>
                   </TouchableOpacity>
                 </View>
@@ -144,7 +173,7 @@ const RegisterScreen = () => {
               {
                 isTester && (
                   <TouchableOpacity
-                onPress={() => alert(secretTokens.tester_message.english)}
+                onPress={() => alert(language ==='English' ? secretTokens.tester_message.english : secretTokens.tester_message.turkish)}
                 style={{
                   elevation: 20,
                   justifyContent: "center",
@@ -159,7 +188,7 @@ const RegisterScreen = () => {
                 }}
               >
                 <MaterialIcons name="bug-report" color={"white"} size={20} />
-                <Text style={{ color: "white", fontSize: 18 }}>Test User</Text>
+                <Text style={{color:'white',fontSize:18}}>{language === 'English' ? 'Test User' : 'Test Kullanicisi'}</Text>
               </TouchableOpacity>)
 
               }
@@ -171,8 +200,15 @@ const RegisterScreen = () => {
     </>
   );
 };
+//align lang button to right
 
 const styles = StyleSheet.create({
+  langButtonWrapper:{
+    alignItems:'flex-end',
+    marginRight:16,    
+    justifyContent:'center',
+   
+  },
   registerButtonWrapper: {
     marginHorizontal: 40,
   },

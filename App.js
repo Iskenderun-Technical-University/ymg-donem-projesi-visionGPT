@@ -7,7 +7,7 @@ import AppPreferencesContext from './context/AppPreferencesContext';
 import Main from "./components/Main";
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-// import DeviceInfo from 'react-native-device-info';  
+import DeviceInfo from 'react-native-device-info';  
 import { auth, db } from "./firebase";
 import {signInAnonymously} from "firebase/auth";
 import Menu from "./components/Menu";
@@ -18,15 +18,14 @@ import secretTokens from './tokens/SecretTokens';
 import RegisterScreen from "./components/RegisterScreen";
 import NewMainScreen from "./components/NewMainScreen";
 import TextInputSection from "./components/TextInput";
-import { get } from "react-native/Libraries/TurboModule/TurboModuleRegistry";
+
 
 
 
 const Stack = createNativeStackNavigator();
 
 const getUniqueID = async () => {
-  uniqueID = "test-user" //if tester mode on change it to test-user
-  console.log('Unique ID: ', uniqueID);
+  uniqueID = DeviceInfo.getUniqueId(); //if tester mode on change it to test-user
   return uniqueID;
 };
 
@@ -122,6 +121,7 @@ const App = () => {
         console.log(error);
       }
     };
+    
 
     const changeThemeFromCache = async (theme) => {
       try {
@@ -156,6 +156,8 @@ const App = () => {
       }
     };
 
+    getLanguageFromPhone();
+    
     const changeLanguageFromCache = async (language) => {
       try {
         await SecureStore.setItemAsync("language", JSON.stringify(language));
@@ -320,7 +322,7 @@ const App = () => {
           messages: [
             {
               role: "system",
-              content: secretTokens.prompt
+              content: language==='English' ? secretTokens.prompt : secretTokens.prompt_tr,
             },
             {
               role: "user",
@@ -346,7 +348,7 @@ const App = () => {
       const messages = [
         {
           role: "system",
-          content: "You're a helpful friend and your name is VisionGPT. You reply the questions with short answer as you can",
+          content: language==='English' ? secretTokens.chatPrompt : secretTokens.chatPrompt_tr,
         },
         ...previousMessages,
         {
@@ -426,7 +428,7 @@ const App = () => {
         setGoogleReplied(false);
         setLoading(false);
         
-        alert("No text was found in the image.");
+        alert(language === 'English' ? 'No text found in picture.' : 'Resimde metin bulunamadi.' );
       }
     } catch (error) {
       console.log(error, "submitToGoogle");
