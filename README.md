@@ -52,7 +52,8 @@ This mobile application is developed using React Native. The app enables users t
 - ✅ Language and theme settings (Done)
 - ✅ Text input (Done)
 - ✅ Login as anonymous user (Done)
-- ### Project Finished
+- ### ✅ Project Finished (May 31, 2023)
+- 🎨 UI improvements (continually)
 
 - ### Later
 - 🔄 Google Admob ads and some restrictions (soon)
