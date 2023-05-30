@@ -56,7 +56,7 @@ const RegisterScreen = () => {
           <>
             <LinearGradient colors={["black", "black"]} style={styles.gradient}>
               <Text style={[styles.registerText, { color: "white" }]}>
-                Get Ready!
+                {language ==='English' ? 'Getting\nReady...' : 'Hazirlaniyor...'}
               </Text>
               <View style={{ justifyContent: "center", alignItems: "center" }}>
                 <Image
@@ -65,7 +65,7 @@ const RegisterScreen = () => {
                 />
               </View>
               <Text style={[styles.registerTextSub, { color: "white" }]}>
-                The app is almost ready,{"\n"}it won't take long.
+                {language ==='English' ? "It won't take long" : "Uzun surmeyecek"}
               </Text>
             </LinearGradient>
           </>

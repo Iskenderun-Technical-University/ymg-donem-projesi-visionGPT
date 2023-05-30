@@ -121,6 +121,7 @@ const App = () => {
         console.log(error);
       }
     };
+    
 
     const changeThemeFromCache = async (theme) => {
       try {
@@ -155,6 +156,8 @@ const App = () => {
       }
     };
 
+    getLanguageFromPhone();
+    
     const changeLanguageFromCache = async (language) => {
       try {
         await SecureStore.setItemAsync("language", JSON.stringify(language));
