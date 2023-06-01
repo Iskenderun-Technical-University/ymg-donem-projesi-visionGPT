@@ -7,7 +7,7 @@ import AppPreferencesContext from './context/AppPreferencesContext';
 import Main from "./components/Main";
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import DeviceInfo from 'react-native-device-info';  
+//import DeviceInfo from 'react-native-device-info';  
 import { auth, db } from "./firebase";
 import {signInAnonymously} from "firebase/auth";
 import Menu from "./components/Menu";
@@ -25,7 +25,7 @@ import TextInputSection from "./components/TextInput";
 const Stack = createNativeStackNavigator();
 
 const getUniqueID = async () => {
-  uniqueID = await DeviceInfo.getUniqueId(); //if tester mode on change it to test-user
+  uniqueID = 'test-user' //if tester mode on change it to test-user
   console.log('Unique ID: ', uniqueID);
   return uniqueID;
 };
@@ -87,6 +87,7 @@ const App = () => {
   const [theme,setTheme] = useState(appPreferences.theme.light);
   const [language,setLanguage] = useState(appPreferences.language.primaryLanguage);
   const [isTester, setIsTester] = useState(false);
+  const [buttonDisabled, setButtonDisabled] = useState(false);
   //STATES END
 
     const saveThemeToPhone = async (theme) => {
@@ -173,6 +174,7 @@ const App = () => {
   
     const loginAnonymously = async () => {
       const gettingDeviceId = await getUniqueID();
+      setButtonDisabled(true);
       signInAnonymously(auth)
         .then(async (userCredentials) => {
           setLoading(true);
@@ -204,6 +206,7 @@ const App = () => {
               setIsVerified(true);
               setLoggedIn(true);
               setLoading(false);
+              setButtonDisabled(false);
               
               
               
@@ -217,6 +220,7 @@ const App = () => {
                 getDocumentId();
                 setLoggedIn(true);
                 setLoading(false);
+                setButtonDisabled(false);
               });
             }
           }
@@ -224,6 +228,7 @@ const App = () => {
         .catch((error) => {
           console.log(error+'error is here');
           setLoading(false);
+          setButtonDisabled(false);
           
         });
     };
@@ -432,7 +437,7 @@ const App = () => {
         alert(language === 'English' ? 'No text found in picture.' : 'Resimde metin bulunamadi.' );
       }
     } catch (error) {
-      console.log(error, "submitToGoogle");
+      console.log(error, "submitToGoogle error");
       alert(error)
     }
   };
@@ -539,7 +544,7 @@ const App = () => {
   };
 
   return (
-    <MainContext.Provider value={{ image, googleResponse, loading, chatGPTResponse, isInputCardsVisible, clearPicture, pickImage, takeAndCropPhoto, count, setCount, inputCode, setInputCode, addAttempt, copyToClipboardChatGPTResponse, copyToClipboardQuestion, googleReplied, setGoogleReplied, setLoadingAnswer, loadingAnswer,isVerified,startChatWithGPT,setChatGPTResponse,decreaseCount,isTester }}>
+    <MainContext.Provider value={{ image, googleResponse, loading, chatGPTResponse, isInputCardsVisible, clearPicture, pickImage, takeAndCropPhoto, count, setCount, inputCode, setInputCode, addAttempt, copyToClipboardChatGPTResponse, copyToClipboardQuestion, googleReplied, setGoogleReplied, setLoadingAnswer, loadingAnswer,isVerified,startChatWithGPT,setChatGPTResponse,decreaseCount,isTester,buttonDisabled }}>
 
       <AuthContext.Provider value={{ password, setPassword, email, setEmail, loggedIn, setLoggedIn, loading, setCount,loginAnonymously }}>
         <AppPreferencesContext.Provider value={{theme,setTheme,language,setLanguage,appPreferences,changeThemeFromCache,changeLanguageFromCache}}>
