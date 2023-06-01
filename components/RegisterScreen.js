@@ -28,8 +28,8 @@ import MainContext from "../context/MainContext";
 const RegisterScreen = () => {
   const { loginAnonymously, loading } = useContext(AuthContext);
   const { theme, language,setLanguage,changeLanguageFromCache,appPreferences } = useContext(AppPreferencesContext);
-  const [buttonDisabled, setButtonDisabled] = useState(false);
-  const {isTester} = useContext(MainContext);
+  
+  const {isTester,buttonDisabled} = useContext(MainContext);
 
   let [fontsLoaded] = useFonts({
     Inter_900Black,
@@ -44,9 +44,9 @@ const RegisterScreen = () => {
   }
 
   const startLogin = () => {
-    setButtonDisabled(true);
     loginAnonymously();
   };
+
   const changeLanguage = ()=>{
     if(language === 'English'){
       setLanguage(appPreferences.language.secondaryLanguage);
