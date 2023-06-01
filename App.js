@@ -25,7 +25,7 @@ import TextInputSection from "./components/TextInput";
 const Stack = createNativeStackNavigator();
 
 const getUniqueID = async () => {
-  uniqueID = DeviceInfo.getUniqueId(); //if tester mode on change it to test-user
+  uniqueID = await DeviceInfo.getUniqueId(); //if tester mode on change it to test-user
   return uniqueID;
 };
 
