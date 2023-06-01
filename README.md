@@ -112,8 +112,5 @@ If you would like to contribute to this project, please check out the [Contribut
 
 
 ## UML
-
-![newUml](https://user-images.githubusercontent.com/83416622/236022745-8909715e-596e-4872-a185-79b06a3e9ea6.png)
-
-
+![new-white-uml](https://github.com/Iskenderun-Technical-University/ymg-donem-projesi-visionGPT/assets/83416622/47d76682-83fe-4fa3-832c-34294bcb0d67)
 
