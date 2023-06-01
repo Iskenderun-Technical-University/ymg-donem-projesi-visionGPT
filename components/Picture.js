@@ -26,7 +26,6 @@ const styles = StyleSheet.create({
   pictureWrapper: {
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 16,
     elevation:10,
     marginBottom:20,
     
