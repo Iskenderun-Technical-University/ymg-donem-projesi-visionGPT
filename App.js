@@ -7,7 +7,7 @@ import AppPreferencesContext from './context/AppPreferencesContext';
 import Main from "./components/Main";
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-//import DeviceInfo from 'react-native-device-info';  
+import DeviceInfo from 'react-native-device-info';  
 import { auth, db } from "./firebase";
 import {signInAnonymously} from "firebase/auth";
 import Menu from "./components/Menu";
@@ -25,7 +25,7 @@ import TextInputSection from "./components/TextInput";
 const Stack = createNativeStackNavigator();
 
 const getUniqueID = async () => {
-  uniqueID = 'test-user' //if tester mode on change it to test-user
+  uniqueID = await DeviceInfo.getUniqueId(); //if tester mode on change it to test-user
   console.log('Unique ID: ', uniqueID);
   return uniqueID;
 };
