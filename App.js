@@ -437,7 +437,7 @@ const App = () => {
         alert(language === 'English' ? 'No text found in picture.' : 'Resimde metin bulunamadi.' );
       }
     } catch (error) {
-      console.log(error, "submitToGoogle");
+      console.log(error, "submitToGoogle error");
       alert(error)
     }
   };

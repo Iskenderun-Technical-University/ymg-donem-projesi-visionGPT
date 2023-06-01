@@ -2,9 +2,11 @@ import { StyleSheet, Text, View,TouchableOpacity } from 'react-native'
 import React,{useContext, useEffect} from 'react'
 import MainContext from '../context/MainContext'
 import QuestionLoading from './QuestionLoading'
+import AppPreferencesContext from '../context/AppPreferencesContext'
 
 const GoogleTextDetector = () => {
     const {googleReplied,googleResponse,copyToClipboardQuestion,clearPicture,image,loading}=useContext(MainContext)
+    const {theme,language} = useContext(AppPreferencesContext)
     
     
   return (
@@ -13,11 +15,11 @@ const GoogleTextDetector = () => {
       <QuestionLoading />
     }
     {googleReplied  && image && loading === false &&(
-        <View style={styles.googleResponseWrapper}>
+        <View style={[styles.googleResponseWrapper,{backgroundColor:theme.sectionBoxColor}]}>
           <View style={styles.questionTitleWrapper}>
-            <Text style={styles.questionTitleText}>Question</Text>
+            <Text style={[styles.questionTitleText,{color:theme.fontColor.primaryFontColor }]}>Detected Text</Text>
           </View>
-          <Text testID="question-text" style={styles.googleResponseText}>
+          <Text testID="question-text" style={[styles.googleResponseText,{color: theme.fontColor.primaryFontColor }]}>
             {googleResponse}
           </Text>
           <View style={styles.questionCopyButtonWrapper}>
@@ -33,7 +35,7 @@ const GoogleTextDetector = () => {
       )
     } 
     { googleReplied === false && image && loading === false &&
-      <View style={[styles.googleResponseWrapper,{alignItems:'center'}]}>
+      <View style={[styles.googleResponseWrapper,{alignItems:'center',backgroundColor:theme.sectionBoxColor}]}>
       <View style={styles.questionTitleWrapper}>
         <Text style={styles.questionTitleText}>Error</Text>
       </View>
@@ -83,11 +85,10 @@ const styles = StyleSheet.create({
         elevation:5,
       },
       googleResponseWrapper: {
-        backgroundColor: "#F6F1F1",
         borderRadius: 10,
-        marginTop: 3,
+        justifyContent:'center',
+        alignContent:'center',
         marginHorizontal:16,
-        elevation:10,
       },
       googleResponseText: {
         marginTop: 10,
@@ -95,7 +96,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 5,
         fontSize: 10,
         textAlign: "left",
-        color: "#212A3E",
+        
       },
     
 })

@@ -5,10 +5,10 @@ import SolutionButton from './SolutionButton'
 import MainContext from '../context/MainContext'
 
 const ClearAndSolutionButtons = () => {
-  const { chatGPTResponse } = useContext(MainContext);
+  const { chatGPTResponse,googleResponse } = useContext(MainContext);
   return (
         <>
-        { chatGPTResponse !== '' &&
+        { googleResponse !== '' &&
     <View style={styles.buttonsWrapper}>
         <SolutionButton />
         <ClearAnswerButton />
@@ -24,7 +24,6 @@ const styles = StyleSheet.create({
     buttonsWrapper:{
         flexDirection:'row',
         justifyContent:'space-between',
-        backgroundColor:'white',
         marginHorizontal:16,
         borderRadius:10,
         height:50,

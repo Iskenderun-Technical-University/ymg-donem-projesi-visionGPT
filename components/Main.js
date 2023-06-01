@@ -19,7 +19,7 @@ const Main = ({navigation}) => {
  
   return (
     <View style={[styles.container,{backgroundColor:theme.backgroundColor}]}>
-      <View style={styles.titleWrapper}>
+      <View style={[styles.titleWrapper,{marginBottom:image ? 20 : 150}]}>
       
           <TouchableOpacity onPress={()=>navigation.goBack()} style={{flexDirection:'row',alignItems:'center'}}>
             <MaterialIcons name="arrow-back-ios" color={theme.fontColor.primaryFontColor} size={20} />
@@ -38,7 +38,6 @@ const Main = ({navigation}) => {
       <StatusBar style={theme.themeName === 'Dark' ? 'light' : 'dark'} />
       <ScrollView>
         <TutorialTips />
-        <Picture />
         <GoogleTextDetector />
         <AddAttemptInput />
         <PhotoInputCard />
@@ -71,7 +70,7 @@ const styles = StyleSheet.create({
     flexDirection:'row',
     alignItems:'center',
     justifyContent:'space-between',
-    marginBottom:150,
+    
   },
   
   container: {
