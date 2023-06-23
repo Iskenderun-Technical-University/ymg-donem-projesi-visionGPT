@@ -49,7 +49,7 @@ const Menu = ({navigation}) => {
     <View style={[styles.container,{backgroundColor:theme.backgroundColor}]}>
         <View style={styles.titleWrapper}>
       
-          <TouchableOpacity onPress={()=>navigation.goBack()} style={{flexDirection:'row',alignItems:'center'}}>
+          <TouchableOpacity onPress={()=>navigation.navigate('NewMainScreen')} style={{flexDirection:'row',alignItems:'center'}}>
           <MaterialIcons name="arrow-back-ios" color={theme.fontColor.primaryFontColor} size={20} />
                 <Text style={[styles.backText,{color:theme.fontColor.primaryFontColor}]}>Back</Text>
           </TouchableOpacity>
@@ -69,38 +69,9 @@ const Menu = ({navigation}) => {
             </Text>
             </View>
         </View>
-        <View style={[styles.beProWrapper,{backgroundColor: '#AA77FF'}]}>
-        <MaterialIcons name="auto-awesome" style={[styles.inputTextIcon,{marginLeft:10}]} color={'white'} size={40} />
-          <View>
-          <Text style={[styles.proTitle,{color:'white'}]}>Upgrade to PRO!</Text>
-          <Text style={{color:'white'}}>no ads no restrictions</Text>
-          </View>
-          <MaterialIcons name="arrow-forward-ios" style={{marginRight:10}} color={'white'} size={20} />
-          
-        </View>
         <ScrollView>
-        <Text style={[styles.settingsName,{color:theme.fontColor.primaryFontColor,marginTop:50}]}>User</Text>
-        <View style={[styles.settingsWrapper,{backgroundColor:theme.sectionBoxColor}]}>
-          <View style={styles.settingRow}>
-          <View style={styles.leftTexts}>
-          <MaterialIcons name="check-circle" style={{marginHorizontal:10}} color={theme.fontColor.primaryFontColor} size={20} />
-          <Text style={[styles.settingText,{color:theme.fontColor.primaryFontColor}]}>Verify Email</Text>
-          </View>
-          <View style={styles.rightTexts}>
-          <MaterialIcons name="arrow-forward-ios" style={[styles.inputTextIcon,{marginRight:10}]} color={theme.fontColor.primaryFontColor} size={20} />
-          </View>
-          </View>
-          
-          
-
-        </View>
-
-        
           <Text style={[styles.settingsName,{color:theme.fontColor.primaryFontColor}]}>Preferences</Text>
-          
-
         <View style={[styles.settingsWrapper,{backgroundColor:theme.sectionBoxColor}]}>
-        
           <TouchableOpacity style={styles.settingRow} onPress={changeTheme}>
           <View style={styles.leftTexts}>
           <MaterialIcons name="palette" style={{marginHorizontal:10}} color={theme.fontColor.primaryFontColor} size={20} />
@@ -111,7 +82,6 @@ const Menu = ({navigation}) => {
           <MaterialIcons name="cached" style={{marginRight:10}} color={theme.fontColor.primaryFontColor} size={20} />
           </View>
           </TouchableOpacity>
-          
           <View style={styles.settingRow}>
           <View style={styles.leftTexts}>
           <MaterialIcons name="translate" style={{marginHorizontal:10}} color={theme.fontColor.primaryFontColor} size={20} />

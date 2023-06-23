@@ -38,7 +38,7 @@ const NewMainScreen = ({navigation}) => {
         </>
         :
         <View style={styles.choicesWrapper}>
-        <TouchableOpacity style={[styles.choicesSectionLeft,{backgroundColor:theme.sectionBoxColor}]} onPress={takeAndCropPhoto}>
+        <TouchableOpacity style={[styles.choicesSectionLeft,{backgroundColor:theme.sectionBoxColor}]} onPress={pickImage}>
         <MaterialIcons name="photo-camera" color={theme.fontColor.primaryFontColor} style={{marginTop:10}} size={50} />
             <Text style={[styles.sectionMainTitle,{color:theme.fontColor.primaryFontColor}]}>Kamerayı kullanmak için tıklayın.{'\n'}{'\n'}Bu butonu kullanarak fotoğraf çekebilirsiniz ve ben size çektiğiniz fotoğraftaki nesnelerin detaylarını söyleyeceğim.</Text>
              

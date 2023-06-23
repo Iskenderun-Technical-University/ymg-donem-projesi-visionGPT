@@ -485,7 +485,6 @@ const App = () => {
 
   return (
     <MainContext.Provider value={{ image, googleResponse, loading, chatGPTResponse, isInputCardsVisible, clearPicture, pickImage, takeAndCropPhoto, count, setCount, inputCode, setInputCode, addAttempt, copyToClipboardChatGPTResponse, copyToClipboardQuestion, googleReplied, setGoogleReplied, setLoadingAnswer, loadingAnswer,isVerified,startChatWithGPT,setChatGPTResponse,decreaseCount }}>
-
       <AuthContext.Provider value={{ password, setPassword, email, setEmail, loggedIn, setLoggedIn, loading, setCount,loginAnonymously }}>
         <AppPreferencesContext.Provider value={{theme,setTheme,language,setLanguage,appPreferences,changeThemeFromCache}}>
 
@@ -498,6 +497,7 @@ const App = () => {
             {loggedIn ? (
               
               [
+                
                 <Stack.Screen key="NewMainScreen" name="NewMainScreen" component={NewMainScreen} />,
                 <Stack.Screen key="Main" name="Main" component={Main} />,
                 <Stack.Screen key="TextInput" name="TextInput" component={TextInputSection} />,
@@ -512,6 +512,7 @@ const App = () => {
                 <Stack.Screen key="Main" name="Main" component={Main} />,
                 <Stack.Screen key="TextInput" name="TextInput" component={TextInputSection} />,
                 <Stack.Screen key="Menu" name="Menu" component={Menu} />,
+                
               ]
             )}
 
