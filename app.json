@@ -1,0 +1,51 @@
+{
+  "expo": {
+    "scheme": "vision-gpt",
+    "plugins": [
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Allow $(PRODUCT_NAME) to access your camera."
+        }
+      ]
+    ],
+    "name": "VisionGPT",
+    "slug": "vision-gpt",
+    "version": "3.0.1",
+    "orientation": "portrait",
+    "icon": "./assets/newIcon.png",
+    "userInterfaceStyle": "dark",
+    "splash": {
+      "image": "./assets/newSplashScreenImage.png",
+      "resizeMode": "cover",
+      "backgroundColor": "#ffffff"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.memoryleak.visiongpt"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/newIcon.png",
+        "backgroundColor": "#ffffff",
+        "googleServicesFile": "./google-services.json"
+      },
+      "permissions": [
+        "android.permission.CAMERA",
+        "android.permission.RECORD_AUDIO"
+      ],
+      "package": "com.memoryleak.visiongpt"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "675b8399-b6fd-43ef-a2be-07db430a1169"
+      }
+    }
+  }
+}
