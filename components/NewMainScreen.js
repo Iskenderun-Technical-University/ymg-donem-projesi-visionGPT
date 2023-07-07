@@ -16,8 +16,8 @@ const NewMainScreen = ({navigation}) => {
   return (
     <View style={[styles.container,{backgroundColor:theme.backgroundColor}]}>
         <StatusBar style={theme.statusBarTheme} />
-    <MainUITitle navigation={navigation}/>
-    
+        <MainUITitle navigation={navigation}/>
+        
     {
         image
         ?
@@ -97,6 +97,7 @@ const styles = StyleSheet.create({
         alignItems:'center',
         marginHorizontal:10,
         elevation:5,
+        borderWidth:0.2
         
     },
     choicesSectionRight:{
