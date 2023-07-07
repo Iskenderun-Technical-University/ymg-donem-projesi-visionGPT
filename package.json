@@ -1,5 +1,5 @@
 {
-  "name": "vision-gpt",
+  "name": "vision-gpt-visualdetect",
   "version": "3.0.1",
   "scripts": {
     "start": "expo start --dev-client",

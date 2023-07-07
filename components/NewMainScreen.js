@@ -24,7 +24,7 @@ const NewMainScreen = ({navigation}) => {
         <>
         <Picture />
         <View style={{backgroundColor:theme.sectionBoxColor,marginHorizontal:16,borderRadius:20}}>
-        <Text style={{color:theme.fontColor.primaryFontColor,marginHorizontal:10,marginTop:10,marginBottom:10}}>{chatGPTResponse ? chatGPTResponse : 'bir saniye..'}</Text>
+        <Text style={{color:theme.fontColor.primaryFontColor,marginHorizontal:10,marginTop:10,marginBottom:10}}>{chatGPTResponse ? chatGPTResponse : 'Lutfen bekleyiniz..'}</Text>
         </View>
         <View style={{elevation:10}}>
         <TouchableOpacity onPress={clearPicture} style={{backgroundColor:theme.sectionBoxColor,height:250,justifyContent:'center',alignItems:'center',marginHorizontal:10,borderRadius:20,marginTop:50}}>
@@ -38,7 +38,7 @@ const NewMainScreen = ({navigation}) => {
         </>
         :
         <View style={styles.choicesWrapper}>
-        <TouchableOpacity style={[styles.choicesSectionLeft,{backgroundColor:theme.sectionBoxColor}]} onPress={pickImage}>
+        <TouchableOpacity style={[styles.choicesSectionLeft,{backgroundColor:theme.sectionBoxColor}]} onPress={takeAndCropPhoto}>
         <MaterialIcons name="photo-camera" color={theme.fontColor.primaryFontColor} style={{marginTop:10}} size={50} />
             <Text style={[styles.sectionMainTitle,{color:theme.fontColor.primaryFontColor}]}>Kamerayı kullanmak için tıklayın.{'\n'}{'\n'}Bu butonu kullanarak fotoğraf çekebilirsiniz ve ben size çektiğiniz fotoğraftaki nesnelerin detaylarını söyleyeceğim.</Text>
              
@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
         alignItems:'center',
         marginHorizontal:10,
         elevation:5,
-        borderWidth:0.2
+     
         
     },
     choicesSectionRight:{

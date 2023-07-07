@@ -122,7 +122,7 @@ const App = () => {
     
   
     const loginAnonymously = async () => {
-      const gettingDeviceId = 'test'
+      const gettingDeviceId = 'simulator-device'
       signInAnonymously(auth)
         .then(async (userCredentials) => {
           setLoading(true);
@@ -203,7 +203,7 @@ const App = () => {
     useEffect(() => {
       setLoading(true);
       const restoreUserSession = async () => {
-        const gettingDeviceId = 'test'
+        const gettingDeviceId = 'simulator-device'
         const userEmail = await SecureStore.getItemAsync("userEmail");
         if (userEmail) {
           setEmail(userEmail);

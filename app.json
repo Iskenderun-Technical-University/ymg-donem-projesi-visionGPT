@@ -1,6 +1,6 @@
 {
   "expo": {
-    "scheme": "vision-gpt",
+    "scheme": "vision-gpt-visual-detect",
     "plugins": [
       [
         "expo-camera",
@@ -9,7 +9,7 @@
         }
       ]
     ],
-    "name": "VisionGPT",
+    "name": "VisionGPT: Visual Detect",
     "slug": "vision-gpt",
     "version": "3.0.1",
     "orientation": "portrait",
@@ -25,7 +25,7 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.memoryleak.visiongpt"
+      "bundleIdentifier": "com.memoryleak.visiongpt_visualdetect"
     },
     "android": {
       "adaptiveIcon": {
@@ -37,14 +37,14 @@
         "android.permission.CAMERA",
         "android.permission.RECORD_AUDIO"
       ],
-      "package": "com.memoryleak.visiongpt"
+      "package": "com.memoryleak.visiongpt_visualdetect"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "extra": {
       "eas": {
-        "projectId": "675b8399-b6fd-43ef-a2be-07db430a1169"
+        "projectId": "675b8399-b6fd-43ef-a2be-07db430a1169" 
       }
     }
   }
